@@ -230,21 +230,13 @@ class Job_Metabox extends Core\Metabox {
 				'type'        => 'text_url',
 				'description' => esc_html__( 'Please Enter Your Job SKU', 'opaljob' ),
 			],
-			[
-				'id'              => $prefix . 'map',
-				'name'            => esc_html__( 'Location', 'opaljob' ),
-				'type'            => 'opal_map',
-				'sanitization_cb' => 'opal_map_sanitise',
-				'split_values'    => true,
-			],
 
 			[
-				'name' => esc_html__( 'Postal Code / Zip', 'opaljob' ),
-				'id'   => $prefix . 'zipcode',
-				'type' => 'text',
-
+				'id'          => "{$prefix}video",
+				'name'        => esc_html__( 'Video', 'opaljob' ),
+				'type'        => 'text_url',
+				'description' => esc_html__( 'Input for videos, audios from Youtube, Vimeo and all supported sites by WordPress. It has preview feature.', 'opaljob' ),
 			],
-			
 			[
 				'name'       => esc_html__( 'Address', 'opaljob' ),
 				'id'         => $prefix . 'address',
@@ -254,13 +246,20 @@ class Job_Metabox extends Core\Metabox {
 				],
 			],
 
+			[
+				'id'              => $prefix . 'map',
+				'name'            => esc_html__( 'Location', 'opaljob' ),
+				'type'            => 'map',
+				'sanitization_cb' => 'opal_map_sanitise',
+				'split_values'    => true,
+			],
 
 			[
-				'id'          => "{$prefix}video",
-				'name'        => esc_html__( 'Video', 'opaljob' ),
-				'type'        => 'text_url',
-				'description' => esc_html__( 'Input for videos, audios from Youtube, Vimeo and all supported sites by WordPress. It has preview feature.', 'opaljob' ),
-			],
+				'name' => esc_html__( 'Postal Code / Zip', 'opaljob' ),
+				'id'   => $prefix . 'zipcode',
+				'type' => 'text',
+
+			]
 		];
 
 		return apply_filters( 'opaljob_postype_job_information_metaboxes_fields', $fields );
