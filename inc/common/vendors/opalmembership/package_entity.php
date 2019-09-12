@@ -270,6 +270,10 @@ class Package_Entity {
 	public function get_user_package_featured_listings () {
 		return $this->get_user_meta( 'package_featured_listings' );
 	}
+
+	public function get_user_package_listing_expired_unit() {
+		return $this->get_user_meta( 'package_listing_expired_unit' );
+	}
 	/**
 	 * Gets meta box value
 	 *
@@ -368,7 +372,6 @@ class Package_Entity {
 
 		return $seconds * $duration;
     }
-
 
     /*
      * Method that returns the expiration date of the subscription plan

@@ -46,7 +46,7 @@ class Membership  implements Intergration{
 	 * @return string
 	 */
 	public function register_frontend_actions() {
- 		
+ 		 
  		define( "OPALJOB_MEMBERSHIP_PREFIX", OPAL_JOB_METABOX_PREFIX );
  		require_once( 'functions.php' );
  		if( get_current_user_id() ){

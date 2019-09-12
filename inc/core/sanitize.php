@@ -82,8 +82,8 @@ class Sanitize {
 			case 'datetime' :
 			case 'datetime-local' :
 			case 'time' :
-			case 'week' :
-				$sanitized = strtotime( $this->data );
+			case 'week' : 
+				$sanitized = sanitize_text_field( $this->data );
 				break;
 			case 'range' :
 				$sanitized = intval( $this->data );

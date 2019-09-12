@@ -79,6 +79,8 @@ class Job_Package_Handler {
 		 */
 		add_action( 'opalmembership_after_update_user_membership' , array( $this,'on_set_user_update_membership') , 10, 3 );
 
+		// Check to see if user posted first time.
+		add_action( 'transition_post_status', array( $this, 'update_pending_to_publish' ) , 99, 3 );
 	}
 	/**
 	 * Render Sidebar
@@ -98,7 +100,7 @@ class Job_Package_Handler {
 
 		if( $this->user_id && !is_admin() ){ 
 
-			$package_id    =  get_user_meta( $this->user_id, OPALMEMBERSHIP_USER_PREFIX_.'package_id' , true );
+			$package_id    =  $this->get_current_user_meta( 'package_id' );
 			$this->package = new Package_entity( $package_id, $this->user_id );
 
 			$this->hooks_process_submit_job();
@@ -135,6 +137,19 @@ class Job_Package_Handler {
 		 */
 		// add_action( 'opalmembership_content_single_before' 			, array( $this, 'render_membership_pricing_box' ) );
 	}
+
+
+	function update_pending_to_publish( $new, $old, $post ) {
+
+		
+	 
+	    if ( ( $new == 'publish' ) && ( $old != 'publish' ) && ( $post->post_type == 'opaljob_job' ) ) {
+	        $this->update_user_post_date_expired( $post );
+	    } else {
+	    	return;
+	    }
+	}
+
 
 	public function hooks_process_submit_job () {
 			
@@ -402,7 +417,7 @@ class Job_Package_Handler {
 		        $new_listings = -1;
 		    }
 			
-			$listing_expired_unit =  $this->package->get_listing_expired_unit();
+			$listing_expired_unit =  (int) $this->package->get_listing_expired_unit();
 
 		    /**
 		     * Update new number of packages listings and featured listing.
@@ -456,11 +471,41 @@ class Job_Package_Handler {
 		 
 		opaljob_update_package_number_listings( $this->user_id );
 		// update showing expired time
+		$this->update_post_date_expired( $job_id );
 		
 	}
 
-	public function update_post_date_expired ( $job_id ) {
+	public function update_user_post_date_expired ( $post ) {
+		$time 	 = time();
 
+		$unit 	 = get_user_meta( $post->post_author, OPALMEMBERSHIP_USER_PREFIX_.'package_listing_expired_unit', true );
+
+		if( $unit ) {  
+ 
+			$this->update_post_meta( $post->ID, 'expired_date', date( 'm/d/Y', intval($time+$unit) )  );
+		}
+	}
+
+	public function update_post_date_expired ( $job_id ) {
+		$time 	 = time();
+		$unit 	 = $this->get_current_user_meta( 'package_listing_expired_unit' ); 
+		if( $unit ) {
+			$this->update_post_meta( $job_id, 'expired_date', date(  'm/d/Y', intval($time+$unit) )  );
+		}
+	}
+
+	/**
+	 * Hooked method to display more information about actived package.
+	 *
+	 */
+	private function get_current_user_meta( $key ) {
+
+		return get_user_meta( $this->user_id, OPALMEMBERSHIP_USER_PREFIX_.$key , true );
+	}
+
+	private function update_post_meta( $job_id, $key, $value ) {  
+		 
+		return update_post_meta( $job_id, OPAL_JOB_METABOX_PREFIX.$key, $value );
 	}
 
 	/**
