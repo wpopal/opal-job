@@ -88,7 +88,7 @@ function opaljob_check_package_downgrade_status( $user_id, $package_id ){
 }
 
 /**
- * Check Current User having permission to add new property or not?
+ * Check Current User having permission to add new job or not?
  */
 function opaljob_check_has_add_listing( $user_id, $package_id=null ){
 
@@ -166,8 +166,14 @@ function opaljob_update_package_number_listings( $user_id ) {
 
 
 /**
- * Check
- */
+ * Render Sidebar
+ *
+ *  Display Sidebar on left side and next is main content 
+ *
+ * @since 1.0
+ *
+ * @return string
+ */ 
 function opaljob_is_membership_valid( $user_id = null ){
   //   $package_id = (int)get_user_meta( $user_id, OPALJOB_MEMBERSHIP_PREFIX.'package_id', true );
    return Opalmembership_User::is_membership_valid( $user_id );
@@ -175,8 +181,14 @@ function opaljob_is_membership_valid( $user_id = null ){
  
     
 /**
+ * Render Sidebar
  *
- */
+ *  Display Sidebar on left side and next is main content 
+ *
+ * @since 1.0
+ *
+ * @return string
+ */ 
 function opaljob_listing_set_to_expire( $post_id ){
 
     $prop = array(

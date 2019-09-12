@@ -12,7 +12,7 @@ namespace Opal_Job\Common\Vendors\Opalmembership;
 
 use  Opal_Job\Common\Vendors\Opalmembership\Package_entity;
 /**
- * @class OpalJob_Membership: as vendor class is using for processing logic with update/set permission for user submitting property.
+ * @class OpalJob_Membership: as vendor class is using for processing logic with update/set permission for user submitting job.
  *
  * @version 1.0
  */

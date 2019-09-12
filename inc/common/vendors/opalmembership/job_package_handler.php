@@ -12,7 +12,7 @@ namespace Opal_Job\Common\Vendors\Opalmembership;
 
 use  Opal_Job\Common\Vendors\Opalmembership\Package_entity;
 /**
- * @class OpalJob_Membership: as vendor class is using for processing logic with update/set permission for user submitting property.
+ * @class OpalJob_Membership: as vendor class is using for processing logic with update/set permission for user submitting job.
  *
  * @version 1.0
  */
@@ -139,10 +139,10 @@ class Job_Package_Handler {
 			
 
 			/**
-			 * HOOK TO My Jobs Page Set action to check when user set property as featured.
+			 * HOOK TO My Jobs Page Set action to check when user set job as featured.
 			 */
-			add_filter( 'opaljob_set_feature_property_checked'      , array( $this,'feature_property_checked')  );
-			add_action( 'opaljob_toggle_featured_property_before'   , array( $this,'update_featured_remaining_listing'), 10, 2 );
+			add_filter( 'opaljob_set_feature_job_checked'      , array( $this,'feature_job_checked')  );
+			add_action( 'opaljob_toggle_featured_job_before'   , array( $this,'update_featured_remaining_listing'), 10, 2 );
 
 			// update remaining listing
 			add_action( 'opaljob/submission/process_new/after'		 , array( $this, 'update_remainng_listing' ) , 10, 3 );
@@ -411,7 +411,7 @@ class Job_Package_Handler {
 	}
 
 	/**
-	 * This function is called when user set property as featured.
+	 * This function is called when user set job as featured.
 	 *
 	 *  @return boolean. true is user having permission.
 	 */
@@ -420,11 +420,11 @@ class Job_Package_Handler {
 	}
 
 	/**
-	 * This function is called when user set property as featured.
+	 * This function is called when user set job as featured.
 	 *
 	 *  @return boolean. true is user having permission.
 	 */
-	public function feature_property_checked(){
+	public function feature_job_checked(){
 		global $current_user;
 	    wp_get_current_user();
 	    $user_id =   $current_user->ID;
@@ -516,7 +516,7 @@ class Job_Package_Handler {
 
 
 	/**
-	 * Check permission to allow creating any property. The package is not valid, it is automatic redirect to membership page.
+	 * Check permission to allow creating any job. The package is not valid, it is automatic redirect to membership page.
 	 *
 	 * @since 1.0
 	 *

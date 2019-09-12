@@ -15,7 +15,7 @@ use Opal_Job\Common\Vendors\Opalmembership\Job_Package_Handler;
 use Opal_Job\Common\Vendors\Opalmembership\Apply_Package_Handler;
 
 /**
- * @class OpalJob_Membership: as vendor class is using for processing logic with update/set permission for user submitting property.
+ * @class OpalJob_Membership: as vendor class is using for processing logic with update/set permission for user submitting job.
  *
  * @version 1.0
  */
@@ -48,7 +48,7 @@ class Membership  implements Intergration{
 	public function register_frontend_actions() {
  		
  		define( "OPALJOB_MEMBERSHIP_PREFIX", OPAL_JOB_METABOX_PREFIX );
-
+ 		require_once( 'functions.php' );
  		if( get_current_user_id() ){
  			// show menu in dashboard 
  			add_filter( 'opaljob_dashboard_employer_menu' , array( $this, 'membership_menu' )  );
