@@ -116,8 +116,9 @@ class Job_Package_Handler {
 
 			add_action( 'opaljob/submision/render_submit_form/before'  	     , array( $this, 'check_membership_validation_message' ) );
 
-			add_action( 'opaljob_process_edit_submission_before'  , array( $this, 'check_edit_post' )  );
-			add_action( 'opaljob_process_add_submission_before'   , array( $this, 'check_add_post' )  );
+			// hook actions logic 		
+			add_action( 'opaljob/submission/process_new/edit'  , array( $this, 'check_edit_post' )  );
+			add_action( 'opaljob/submission/process_new/before'   , array( $this, 'check_add_post' )  );
 			/// check before uploading image
 			
 			/**
@@ -400,13 +401,16 @@ class Job_Package_Handler {
 		    if ( $pack_unlimited_listings == 1 ) {
 		        $new_listings = -1;
 		    }
-		
+			
+			$listing_expired_unit =  $this->package->get_listing_expired_unit();
+
 		    /**
 		     * Update new number of packages listings and featured listing.
 		     */ 
 		    $this->update_user_meta( 'package_id', $package_id );
 		    $this->update_user_meta( 'package_listings', $new_listings );
 		    $this->update_user_meta( 'package_featured_listings', $new_featured_listings ); 
+		    $this->update_user_meta( 'package_listing_expired_unit', $listing_expired_unit ); 
 		}
 	}
 
@@ -451,8 +455,11 @@ class Job_Package_Handler {
 	public function update_remainng_listing( $job_id , $isedit=true ){
 		 
 		opaljob_update_package_number_listings( $this->user_id );
-
 		// update showing expired time
+		
+	}
+
+	public function update_post_date_expired ( $job_id ) {
 
 	}
 

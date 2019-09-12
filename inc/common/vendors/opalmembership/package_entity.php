@@ -131,11 +131,11 @@ class Package_Entity {
 
 	public $employer = null ;
 
-	public function __construct ( $_id , $user_id ) { 
+	public function __construct ( $_id , $user_id=0 ) { 
 
 		$package = WP_Post::get_instance( $_id );
 		$this->ID = $_id;
-		$this->user_id = $user_id;
+		$this->user_id = $user_id ? $user_id : get_current_user_id();
 
 		return $this->setup( $package );
 	}
@@ -301,4 +301,81 @@ class Package_Entity {
 	public static function get_package_type( $id ) {
 		return  get_post_meta( $id, OPAL_JOB_METABOX_PREFIX.'package_type', true );
 	}
+
+	/**
+	 * Gets meta box value
+	 *
+	 * Return create post with format by args,it support type: ago, date 
+	 *
+	 * @access public
+	 * @param $key
+	 * @param $single
+	 * @return string
+	 */
+	public function get_listing_expired_unit () {
+
+		if ( ! ( $duration = absint( $this->get_meta( 'listing_expired' ) ) ) ) {
+    		$duration = 1;
+    	}
+
+        $duration_unit = $this->get_meta( 'listing_duration_unit' ); 
+
+		switch ($duration_unit){
+
+			case 'day':
+				$seconds = 60*60*24;
+				break;
+			case 'week':
+				$seconds = 60*60*24*7;
+			break;
+			case 'month':
+				$seconds = 60*60*24*30;
+				break;    
+			case 'year':
+				$seconds = 60*60*24*365;
+				break;    
+		}
+
+		return $seconds * $duration;
+	}
+
+	/**
+	 *  
+	 */
+    public function get_expiration_unit_time(){
+
+    	if ( ! ( $duration = absint( $this->get_meta( 'duration' ) ) ) ) {
+    		$duration = 1;
+    	}
+
+        $duration_unit = $this->get_meta( 'duration_unit' ); 
+
+		switch ($duration_unit){
+
+			case 'day':
+				$seconds = 60*60*24;
+				break;
+			case 'week':
+				$seconds = 60*60*24*7;
+			break;
+			case 'month':
+				$seconds = 60*60*24*30;
+				break;    
+			case 'year':
+				$seconds = 60*60*24*365;
+				break;    
+		}
+
+		return $seconds * $duration;
+    }
+
+
+    /*
+     * Method that returns the expiration date of the subscription plan
+     *
+     */
+    public function get_listing_expiration_date( $actived_time = false ) {
+    	$expired_date  =  ($actived_time + $this->get_expiration_unit_time());
+        return  $expired_date;
+    }
 }
