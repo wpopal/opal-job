@@ -1,0 +1,79 @@
+.opaljob-description {
+	color:#babab8;
+	font-size:90%;
+	margin-bottom:3px;	
+	font-style: italic;
+}
+.required {
+	color:$danger;
+}
+/////
+.opaljob-metabox-panel-wrap {
+ 	border-radius:5px;
+ 	justify-content: space-around;
+ 	background:#FFF;
+ 	padding: 15px; 
+	.opaljob-form-data-tabs {
+		background-color:#fafafa;
+		padding:00px;
+		a {
+			display:block;
+ 			padding:10px 20px;
+			text-decoration:none;		
+			border-bottom:solid 3px $border-color;
+		}
+		li {
+			display:inline-block;
+		}
+		li.active {
+			background:#EEE;
+			a {
+				border-bottom-color:$primary
+			}
+		}
+	}
+	.metabox-form-footer {
+		text-align:right;
+	}	
+} 
+
+//// 
+.opaljob-repeatable-field-section {
+	table {
+		width:100%;
+	}
+	.opaljob-template {
+		display:none;
+	}
+
+	.button-action {
+		cursor:hand;
+		cursor:pointer;
+		padding-left:5px;
+		padding-right:5px;
+	}
+	.opal-row-body {
+		padding:15px;
+		background-color:#fcfcfc
+	}
+	.button-action-group {
+	 	display:inline-block;
+	 	float:right;
+
+	}
+	.opal-row-head {
+		border-bottom:solid 3px $border-color;
+		position: relative;
+ 
+		padding:8px 0px;
+ 
+		.repeat-title {
+			font-size:14px;
+			margin:0;
+			display:inline-block;
+		}
+	}
+	.opaljob-add-repeater-field-section-row-wrap {
+		padding:15px;
+	}
+}

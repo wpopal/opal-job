@@ -1,0 +1,46 @@
+
+$padding-base:15px; 
+
+.opaljob-metabox-panel-wrap {
+	background:#FFF;
+}
+/** input group */
+.opaljob-repeatable-field-section {
+	table {
+		width:100%;
+	}
+	.opaljob-template {
+		display:none;
+	}
+
+	.button-action {
+		cursor:hand;
+		cursor:pointer;
+		padding-left:5px;
+		padding-right:5px;
+	}
+	.opal-row-body {
+		padding:$padding-base;
+		background-color:#fcfcfc
+	}
+	.button-action-group {
+	 	display:inline-block;
+	 	float:right;
+
+	}
+	.opal-row-head {
+		border-bottom:solid 3px $border-color;
+		position: relative;
+ 
+		padding:8px 0px;
+ 
+		.repeat-title {
+			font-size:14px;
+			margin:0;
+			display:inline-block;
+		}
+	}
+	.opaljob-add-repeater-field-section-row-wrap {
+		padding:$padding-base;
+	}
+}

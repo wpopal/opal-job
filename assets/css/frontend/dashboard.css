@@ -1,0 +1,63 @@
+.dashboard-menu {
+  font-family: "Poppins", sans-serif; }
+  .dashboard-menu li.nav-item-title {
+    padding: 12px 20px !important;
+    letter-spacing: 1px;
+    font-size: 10px;
+    font-weight: 500;
+    text-transform: uppercase;
+    color: #b9c1eb; }
+  .dashboard-menu li a {
+    color: #7e8cda;
+    display: block;
+    padding: 13px 20px;
+    font-size: 14px;
+    position: relative;
+    transition: all 0.5s; }
+    .dashboard-menu li a.active {
+      color: #ffffff !important;
+      background-color: #3345a5; }
+    .dashboard-menu li a span {
+      margin-left: 8px; }
+
+.opaljob-topbar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  z-index: 999; }
+  .opaljob-topbar .topbar-left {
+    background-color: #30419b;
+    float: left;
+    text-align: center;
+    height: 70px;
+    position: relative;
+    width: 240px;
+    z-index: 1; }
+  .opaljob-topbar .topbar-right {
+    background-color: #ffffff;
+    border-radius: 0;
+    margin-bottom: 0;
+    padding: 0 10px 0 0;
+    margin-left: 240px;
+    min-height: 70px;
+    -webkit-box-shadow: 1px 0 5px rgba(0, 0, 0, 0.05);
+    box-shadow: 1px 0 5px rgba(0, 0, 0, 0.05); }
+
+.opaljob-dashboard-sidebar {
+  width: 240px;
+  z-index: 10;
+  background: #30419b;
+  bottom: 0;
+  margin-top: 0;
+  padding-bottom: 30px;
+  position: fixed;
+  top: 70px; }
+
+.opaljob-dashboard-content {
+  margin-left: 240px;
+  overflow: hidden; }
+  .opaljob-dashboard-content .content-inner {
+    padding: 0 15px 10px 15px;
+    margin-top: 70px;
+    margin-bottom: 60px; }

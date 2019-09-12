@@ -1,0 +1,19 @@
+ .opaljob-tab-head{
+ 
+ }
+.tab-item {
+	border-bottom: 3px solid transparent;
+	transition: all .5s ease-in-out;
+		&.active,&:hover {
+			border-color: $primary;	 
+	}
+	padding: 14px 18px 15px;
+	font-weight: $headings-font-weight;
+}
+.opaljob-tab-content {
+	display: none;
+	&.active {
+		display: block;
+	}
+	clear:both;
+}
