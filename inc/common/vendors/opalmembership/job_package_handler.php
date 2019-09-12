@@ -469,6 +469,7 @@ class Job_Package_Handler {
 
 		$this->package = new Package_entity( $package_id , $user_id );
 		
+	
 
 		$current_listings           =  $this->package->get_user_package_listings();
 	    $curent_featured_listings   =  $this->package->get_user_package_featured_listings();
@@ -476,14 +477,14 @@ class Job_Package_Handler {
 	    ///
 	  
 	    $pack_unlimited_listings  = $this->package->get_package_unlimited_listings();
-	    $unlimited_listings       =  $pack_unlimited_listings == 'on' ? 0 : 1;
+	    $unlimited_listings       =  $pack_unlimited_listings == 'on' ? 1 : 0;
 	    ///
 
 	    $output = '';
 	    if( $unlimited_listings == 1 ){
 	    	$output .= '<li><span>'.__('(Package) Listings Included:','opaljob').'</span> '.__( 'Unlimited', 'opaljob' ).'</span></li>';
 	    	$output .= '<li><span>'.__('(Package) Featured Included:','opaljob').'</span> '.__( 'Unlimited', 'opaljob' ).'</li>';
-	    }else {
+	    }else { 
 	    	$output .= '<li><span>'.__('Listings Remaining:','opaljob').'</span> <span class="text-primary">'.$current_listings.'</span></li>';
 	    	$output .= '<li><span>'.__('Featured Remaining:','opaljob').'</span>  <span class="text-primary">'.$curent_featured_listings.'</span></li>';
 	    }

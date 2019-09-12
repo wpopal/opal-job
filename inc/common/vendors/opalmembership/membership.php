@@ -52,7 +52,7 @@ class Membership  implements Intergration{
  		if( get_current_user_id() ){
  			// show menu in dashboard 
  			add_filter( 'opaljob_dashboard_employer_menu' , array( $this, 'membership_menu' )  );
-
+ 			add_filter( "opalmembership_get_payment_history_page_uri", array($this,'get_history_page_uri') );
  			// show list of invoices in dashboard page.
  			add_action( "opaljob/dashboard/tab_content/invoices", array( $this, 'render_invoices_tab_content' ) );
 
@@ -65,6 +65,7 @@ class Membership  implements Intergration{
 			}else if( opaljob_has_role('candidate') ){
 				Job_Package_Handler::get_instance()->register_global_actions();  
 			}
+
 		}	
 	}	
 
@@ -84,6 +85,10 @@ class Membership  implements Intergration{
 		if( class_exists("Opalmembership_User") ){
 			return Opalmembership_User::show_membership_warning();
 		}
+	}
+
+	public function get_history_page_uri () {
+		return URI::get_dashboard_url( 'invoices' );
 	}
 
 	/**

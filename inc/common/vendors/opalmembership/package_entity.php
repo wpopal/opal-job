@@ -131,12 +131,13 @@ class Package_Entity {
 
 	public $employer = null ;
 
-	public function __construct ( $_id , $user_id ) {
+	public function __construct ( $_id , $user_id ) { 
 
 		$package = WP_Post::get_instance( $_id );
 		$this->ID = $_id;
-		return $this->setup( $package );
 		$this->user_id = $user_id;
+
+		return $this->setup( $package );
 	}
 
 	/**
@@ -182,7 +183,7 @@ class Package_Entity {
 		return get_post_meta( $this->ID, OPALMEMBERSHIP_USER_PREFIX_.$key, $single );
 	}
 
-	public function get_user_meta( $key, $single = true ) {
+	public function get_user_meta( $key, $single = true ) { 
 		return get_user_meta( $this->user_id, OPALMEMBERSHIP_USER_PREFIX_.$key, $single );
 	}
 

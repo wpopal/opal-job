@@ -93,6 +93,9 @@ class User_Metabox extends Core\Metabox {
 	 * @param string $plugin_text_domain The text domain of this plugin.
 	 */
 	public function get_settings() {
+		if( empty($this->object_id) || $this->object_id == 0 ){
+			return array();
+		}
 
  		if( $this->has_roles($this->object_id, 'opaljob_employer') ){
  			$object  = new \Opal_Job\Admin\Metabox\Fields\Employer_Fields();
