@@ -29,7 +29,6 @@ class Posttypes {
 		$this->register_post_status();
 	}
 
-
 	/**
 	 * Register the Employer Post Type
 	 *
