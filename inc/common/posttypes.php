@@ -27,8 +27,8 @@ class Posttypes {
 
 		$this->register_job(); 
 		$this->register_post_status();
- 
 	}
+
 
 	/**
 	 * Register the Employer Post Type
@@ -36,8 +36,26 @@ class Posttypes {
 	 * @since    1.0.0
 	 */
 	public function register_post_status(){
-		register_post_status( 'opal-expired', array(
+		register_post_status( 'unpublish', array(
+			'label'                     => _x( 'UnPublish', 'post' ),
+			'public'                    => true,
+			'exclude_from_search'       => false,
+			'show_in_admin_all_list'    => true,
+			'show_in_admin_status_list' => true,
+			'post_type'                 => array( 'opaljob_job'  ),
+			'label_count'               => _n_noop( 'Expired <span class="count">(%s)</span>', 'Expired <span class="count">(%s)</span>' ),
+		) );
+		register_post_status( 'expired', array(
 			'label'                     => _x( 'Expired', 'post' ),
+			'public'                    => true,
+			'exclude_from_search'       => false,
+			'show_in_admin_all_list'    => true,
+			'show_in_admin_status_list' => true,
+			'post_type'                 => array( 'opaljob_job'  ),
+			'label_count'               => _n_noop( 'Expired <span class="count">(%s)</span>', 'Expired <span class="count">(%s)</span>' ),
+		) );
+		register_post_status( 'pending-payment', array(
+			'label'                     => _x( 'Pending Payment', 'post' ),
 			'public'                    => true,
 			'exclude_from_search'       => false,
 			'show_in_admin_all_list'    => true,

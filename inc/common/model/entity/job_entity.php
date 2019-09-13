@@ -484,4 +484,8 @@ class Job_Entity {
 	public function has_user_applied() { 
 		
 	}
+
+	public function status_label() {
+		return get_post_status( $this->ID );
+	}
 }

@@ -27,7 +27,9 @@
 						</ul>
 					</td>
 					<td>
-						<span class="badge badge-success">Active</span>
+						<span class="badge badge-success badge-label-<?php echo $job->post_status;?>">
+							<?php echo $job->status_label();?>		
+						</span>
 					</td>
 					<td>
 						<a href="#">1 <?php esc_html_e( 'Applicant(s)', 'opaljob' ); ?></a>
