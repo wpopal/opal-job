@@ -61,3 +61,6 @@
     padding: 0 15px 10px 15px;
     margin-top: 70px;
     margin-bottom: 60px; }
+
+.card-body .opalmembership-box h3 {
+  display: none; }

@@ -91,16 +91,12 @@ class Employer extends Controller {
 	public function summary_middle_left() {
 		echo View::render_template( "dashboard/employer/widgets/middle-left" );
 	}
-	public function summary_middle_right () {
-		echo View::render_template( "dashboard/employer/widgets/middle-right" );
-	}
-
-
+	
 	public function tab_content_summary (){ 
 
 		add_action( 'opaljob_dashboard_employer_summary_top' , array( $this, 'summary_top' ) );
 		add_action( 'opaljob_dashboard_employer_summary_middle_left'  , array( $this, 'summary_middle_left' ) );
-		add_action( 'opaljob_dashboard_employer_summary_middle_right' , array( $this, 'summary_middle_right' ) );
+	 
 		echo View::render_template( "dashboard/employer/summary" );
 	}
 }
