@@ -116,8 +116,8 @@ class Dashboard extends Controller {
 		$model =  $this->get_model(); 
 		if( opaljob_has_role('employer') ) {
 			echo View::render_template( "dashboard/employer/extra-block" );
-		} else if( opaljob_has_role('candicate') ) {
-			echo View::render_template( "dashboard/candicate/extra-block");
+		} else if( opaljob_has_role('candidate') ) {
+			echo View::render_template( "dashboard/candidate/extra-block");
 		}
 	}
 

@@ -71,6 +71,7 @@ class Candidate extends Controller {
 
 		add_action( 'wp_footer', array( $this, 'apply_form_popup') );
 
+		add_action( 'opaljob/dashboard/tab_content/summary', [$this, 'tab_content_summary'] );
 		// add_action( "opaljob/dashboard/tab_content/profile", array( $this, 'render_dashboard_profile' ) );
 	}
 
@@ -146,7 +147,7 @@ class Candidate extends Controller {
 			$job 	 	 = opaljob_new_job_object( $job_id );
 
 
-			do_action( 'opaljob/user/candicate_apply/before', $employer_id, $member );
+			do_action( 'opaljob/user/candidate_apply/before', $employer_id, $member );
 
 			$status	 	 = $this->get_model()->applied_job( $job_id );
 			
@@ -182,7 +183,7 @@ class Candidate extends Controller {
 			'jobs' => $jobs
 		);
 
-		echo View::render_template( "dashboard/candicate/applied-jobs", $args );
+		echo View::render_template( "dashboard/candidate/applied-jobs", $args );
 	}
 
 	/**
@@ -202,7 +203,7 @@ class Candidate extends Controller {
 			'members' => $members
 		);
 
-		echo View::render_template( "dashboard/candicate/following-employers", $args );
+		echo View::render_template( "dashboard/candidate/following-employers", $args );
 	}
 
 	/**
@@ -308,5 +309,22 @@ class Candidate extends Controller {
 			'type'		=> $type 
 		); 
 		echo View::render_template( "dashboard/metabox-form", $args );
+	}
+
+	/**
+	 * Render Sidebar
+	 *
+	 *	Display Sidebar on left side and next is main content 
+	 *
+	 * @since 1.0
+	 *
+	 * @return string
+	 */
+	public function tab_content_summary (){   
+
+	//	add_action( 'opaljob_dashboard_candidate_summary_top' , array( $this, 'summary_top' ) );
+	//	add_action( 'opaljob_dashboard_candidate_summary_middle_left'  , array( $this, 'summary_middle_left' ) );
+	 
+		echo View::render_template( "dashboard/candidate/summary" );
 	}
 }

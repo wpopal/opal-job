@@ -201,7 +201,7 @@ class Favorite implements Intergration {
  
 		$loop = new WP_Query( $args );
 	
-		return opaljob_render_template( 'dashboard/candicate/favorite-jobs' ,  array('loop' => $loop) );
+		return opaljob_render_template( 'dashboard/candidate/favorite-jobs' ,  array('loop' => $loop) );
 	}
 }
 ?>
