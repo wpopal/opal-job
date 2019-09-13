@@ -12,6 +12,15 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
+
+function opaljob_get_job_statuses() {
+	return apply_filters( "opaljob_get_job_statuses", array(
+		'pending-payment' => esc_html__( 'Pending Payment', 'opaljob' ),
+		'unpublish'	 	  => esc_html__( 'Un-Publish', 'opaljob' ),
+		'expired'	 	  => esc_html__( 'Expired', 'opaljob' ),
+		'rejected'	 	  => esc_html__( 'Rejected', 'opaljob' )
+	) );
+}
 /**
  * Fired during plugin deactivation
  *
