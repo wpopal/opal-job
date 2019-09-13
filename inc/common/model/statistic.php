@@ -62,4 +62,12 @@ class Statistic {
 
 		return $query->get_count();
 	}
+
+	public function get_featured () {
+		return Job_Query::get_job_query( array(
+			'post_author' => $this->user_id, 
+			'post_status' => 'publish',
+			'showmode'    => 'featured'
+		) )->found_posts;
+	}
 }

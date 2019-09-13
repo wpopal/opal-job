@@ -22,9 +22,7 @@
             <div>
                 <h5 class="font-16"><?php esc_html_e( "Featured.", 'opaljob' ); ?></h5>
             </div>
-            <h3 class="mt-4">43,225</h3>
-           
-            
+           <h3 class="mt-4"><?php echo $statistic->get_featured(); ?></h3>
         </div>
     </div>
 </div>

@@ -200,6 +200,10 @@ abstract class Metabox {
 						if ( 'file' === $setting_field['type'] ) {
 							$update_options[ $form_meta_key . '_id' ] = $this->sanitizer( 'id', $_POST[ $form_meta_key . '_id' ] );
 						}
+
+						if ( 'date' === $setting_field['type'] ) {
+							$update_options[ $form_meta_key . '_id' ] = $this->sanitizer( 'date', $_POST[ $form_meta_key . '_id' ] );
+						}
 					}// End if().
 				}// End if().
 			}// End foreach().

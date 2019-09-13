@@ -134,7 +134,7 @@ class Job_Query extends Query_Base {
 
 		
 		$condition = array(
-			'post_type'         => 'opalestate_property',
+			'post_type'         => 'opaljob_job',
 			'posts_per_page'	=> isset($args['posts_per_page']) ? $args['posts_per_page'] : 5,
 			'paged'				=> isset($args['paged']) ? $args['paged'] : 1,
 			
@@ -197,13 +197,13 @@ class Job_Query extends Query_Base {
 	  	if ( !empty($args['showmode']) ) {
 	  		if( $args['showmode'] == 'featured' ) {
 	  			array_push( $condition['meta_query'], array(
-			    	'key'       => OPALESTATE_PROPERTY_PREFIX . 'featured',
+			    	'key'       => OPAL_JOB_METABOX_PREFIX . 'featured',
 					'value'     => 'on',
 					'compare'   => '=',
 				) );
 			} else if( $args['showmode'] == 'normal' ) {
 				array_push( $condition['meta_query'], array(
-			    	'key'       => OPALESTATE_PROPERTY_PREFIX . 'featured',
+			    	'key'       => OPAL_JOB_METABOX_PREFIX . 'featured',
 					'value'     => 'on',
 					'compare'   => '!=',
 				) );
