@@ -49,6 +49,25 @@ class Job_Query extends Query_Base {
 	 *
 	 * @return string
 	 */
+	public function get_query_object() {
+		/* @var WP_Query $query */	
+		$query = new WP_Query( $this->args );
+		return $query; 
+	}
+
+	public function get_count () {
+		return $this->get_query_object()->found_posts;
+	}
+
+	/**
+	 * Render Sidebar
+	 *
+	 *	Display Sidebar on left side and next is main content 
+	 *
+	 * @since 1.0
+	 *
+	 * @return string
+	 */
 	public function get_list() { 
 
 		global $post;
@@ -62,8 +81,8 @@ class Job_Query extends Query_Base {
 		if ( ! is_null( $this->collection ) ) {
 			return $this->collection;
 		}
-		/* @var WP_Query $query */	
-		$query = new WP_Query( $this->args );
+	
+		$query = $this->get_query_object();
 
 		$custom_output = array(
 			'collection',

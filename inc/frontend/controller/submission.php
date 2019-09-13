@@ -202,10 +202,10 @@ class Submission  extends Controller {
 
 				if( $post_id > 0 ) {
 					$allow = opaljob_user_can_edit_job( $post_id ); 
-					echo View::render_template( "submission/submission-form-edit", array( 'metabox' => $metabox, 'allow' => $allow ) );
+					echo View::render_template( "submission/form-edit", array( 'metabox' => $metabox, 'allow' => $allow ) );
 				} else {
 					$allow = opaljob_user_can_submit_job( $post_id ); 
-					echo View::render_template( "submission/submission-form", array( 'metabox' => $metabox, 'allow' => $allow ) );
+					echo View::render_template( "submission/form-new", array( 'metabox' => $metabox, 'allow' => $allow ) );
 				}
 			}
 		}

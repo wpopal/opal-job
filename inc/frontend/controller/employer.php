@@ -17,6 +17,8 @@ use Opal_Job\Core\Controller;
 use Opal_Job\Libraries\Form\Scripts;
  
 use Opal_Job\Common\Model\User; 
+use Opal_Job\Common\Model\Statistic; 
+
 
 /**
  * Class Dashboard Controller
@@ -31,6 +33,7 @@ use Opal_Job\Common\Model\User;
  */
 class Employer extends Controller {
 
+	public $statistic;
 	/**
 	 * Get/Set User Model 
 	 *
@@ -63,6 +66,7 @@ class Employer extends Controller {
 
 	public function register_hook_callbacks () { 
 		add_action( 'opaljob/dashboard/tab_content/my_listing', [ $this, 'tab_content_my_listing' ] );
+		add_action( 'opaljob/dashboard/tab_content/summary', [$this, 'tab_content_summary'] );
 	}
 	
 	/**
@@ -79,4 +83,24 @@ class Employer extends Controller {
 		echo View::render_template( "dashboard/employer/my-listing", array( 'jobs' => $jobs ) );
 	}
 
+	public function summary_top () {
+		echo View::render_template( "dashboard/employer/widgets/top" );
+	}
+
+
+	public function summary_middle_left() {
+		echo View::render_template( "dashboard/employer/widgets/middle-left" );
+	}
+	public function summary_middle_right () {
+		echo View::render_template( "dashboard/employer/widgets/middle-right" );
+	}
+
+
+	public function tab_content_summary (){ 
+
+		add_action( 'opaljob_dashboard_employer_summary_top' , array( $this, 'summary_top' ) );
+		add_action( 'opaljob_dashboard_employer_summary_middle_left'  , array( $this, 'summary_middle_left' ) );
+		add_action( 'opaljob_dashboard_employer_summary_middle_right' , array( $this, 'summary_middle_right' ) );
+		echo View::render_template( "dashboard/employer/summary" );
+	}
 }

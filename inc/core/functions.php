@@ -99,6 +99,20 @@ function opaljob_render_template( $template, $args=array() ){
  *
  * @return string
  */
+function opaljob_new_statistic_object() {
+	return \Opal_Job\Common\Model\Statistic::get_instance(); 
+}
+
+
+/**
+ * Render Sidebar
+ *
+ *	Display Sidebar on left side and next is main content 
+ *
+ * @since 1.0
+ *
+ * @return string
+ */
 function opaljob_new_employer_object( $id ) {
 	return new \Opal_Job\Common\Model\Entity\Employer_Entity(  $id ); 
 }

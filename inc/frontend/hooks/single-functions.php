@@ -12,7 +12,12 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
+// dashboard////
+// 
+// 
 
+
+///
 add_action( 'wp_footer', 'opaljob_login_register_form_popup', 9 );
 add_action( 'wp_footer', 'opaljob_apply_form_popup', 9 );
 /**

@@ -49,7 +49,7 @@ function opaljob_get_user_current_featured_listings( $user_id ){
         'author'        =>  $user_id,
         'meta_query'    =>  array(
             array(
-                'key'   => OPALJOB_MEMBERSHIP_PREFIX.'featured',
+                'key'   => OPALMEMBERSHIP_USER_PREFIX_.'featured',
                 'value' => 1,
                 'meta_compare '=>'='
             )
@@ -65,15 +65,15 @@ function opaljob_get_user_current_featured_listings( $user_id ){
  */
 function opaljob_check_package_downgrade_status( $user_id, $package_id ){
 
-	$pack_listings            =   get_post_meta( $package_id, OPALJOB_MEMBERSHIP_PREFIX.'package_listings', true );
-	$pack_featured_listings   =   get_post_meta( $package_id, OPALJOB_MEMBERSHIP_PREFIX.'package_featured_listings', true );
-	$is_unlimited             =   get_post_meta( $package_id, OPALJOB_MEMBERSHIP_PREFIX.'unlimited_listings', true );
+	$pack_listings            =   get_post_meta( $package_id, OPALMEMBERSHIP_USER_PREFIX_.'package_listings', true );
+	$pack_featured_listings   =   get_post_meta( $package_id, OPALMEMBERSHIP_USER_PREFIX_.'package_featured_listings', true );
+	$is_unlimited             =   get_post_meta( $package_id, OPALMEMBERSHIP_USER_PREFIX_.'unlimited_listings', true );
     $pack_unlimited_listings  =   $is_unlimited == 'on' ? 0 : 1;
 
     $user_current_listings          = opaljob_get_user_current_listings( $user_id );
     $user_current_featured_listings = opaljob_get_user_current_featured_listings( $user_id );
 
-    $current_listings               =  get_user_meta( $user_id, OPALJOB_MEMBERSHIP_PREFIX.'package_listings',true);
+    $current_listings               =  get_user_meta( $user_id, OPALMEMBERSHIP_USER_PREFIX_.'package_listings',true);
 
     if( $pack_unlimited_listings == 1 ) {
         return false;
@@ -93,11 +93,11 @@ function opaljob_check_package_downgrade_status( $user_id, $package_id ){
 function opaljob_check_has_add_listing( $user_id, $package_id=null ){
 
     if( !$package_id ){
-        $package_id = (int)get_user_meta( $user_id, OPALJOB_MEMBERSHIP_PREFIX.'package_id', true );
+        $package_id = (int)get_user_meta( $user_id, OPALMEMBERSHIP_USER_PREFIX_.'package_id', true );
     }
 
-    $package_listings            = (int) get_user_meta( $user_id, OPALJOB_MEMBERSHIP_PREFIX.'package_listings', true );
-    $unlimited_listings          = get_post_meta( $package_id, OPALJOB_MEMBERSHIP_PREFIX.'unlimited_listings', true );
+    $package_listings            = (int) get_user_meta( $user_id, OPALMEMBERSHIP_USER_PREFIX_.'package_listings', true );
+    $unlimited_listings          = get_post_meta( $package_id, OPALMEMBERSHIP_USER_PREFIX_.'unlimited_listings', true );
     $unlimited_listings          = !empty( $unlimited_listings ) && $unlimited_listings == 'on' ? 0 : 1;
 
     if( $package_id > 0 && $unlimited_listings ){ 
@@ -115,7 +115,7 @@ function opaljob_check_has_add_listing( $user_id, $package_id=null ){
  */
 function opaljob_get_user_featured_remaining_listing( $user_id ){
 
-    $count = get_the_author_meta( OPALJOB_MEMBERSHIP_PREFIX.'package_featured_listings' , $user_id );
+    $count = get_the_author_meta( OPALMEMBERSHIP_USER_PREFIX_.'package_featured_listings' , $user_id );
 
     return $count;
 }
@@ -126,12 +126,12 @@ function opaljob_get_user_featured_remaining_listing( $user_id ){
 function opalestate_reset_user_free_package( $user_id ){ 
  
     $duration = opalestate_options('free_expired_month', 12);
-    update_user_meta( $user_id, OPALJOB_MEMBERSHIP_PREFIX.'package_id', -1 );  
-    update_user_meta( $user_id, OPALJOB_MEMBERSHIP_PREFIX.'package_listings', opalestate_options('free_number_listing', 3) );
-    update_user_meta( $user_id, OPALJOB_MEMBERSHIP_PREFIX.'package_featured_listings', opalestate_options('free_number_featured', 3) );
+    update_user_meta( $user_id, OPALMEMBERSHIP_USER_PREFIX_.'package_id', -1 );  
+    update_user_meta( $user_id, OPALMEMBERSHIP_USER_PREFIX_.'package_listings', opalestate_options('free_number_listing', 3) );
+    update_user_meta( $user_id, OPALMEMBERSHIP_USER_PREFIX_.'package_featured_listings', opalestate_options('free_number_featured', 3) );
 
-    update_user_meta( $user_id, OPALJOB_MEMBERSHIP_PREFIX.'package_activation', time() );
-    update_user_meta( $user_id, OPALJOB_MEMBERSHIP_PREFIX.'package_expired', time() +  ($duration*60*60*24*30)  );
+    update_user_meta( $user_id, OPALMEMBERSHIP_USER_PREFIX_.'package_activation', time() );
+    update_user_meta( $user_id, OPALMEMBERSHIP_USER_PREFIX_.'package_expired', time() +  ($duration*60*60*24*30)  );
  
     return true; 
 }
@@ -141,12 +141,12 @@ function opalestate_reset_user_free_package( $user_id ){
  */
 function opaljob_update_package_number_featured_listings( $user_id ) {
 
-    $current = get_the_author_meta( OPALJOB_MEMBERSHIP_PREFIX.'package_featured_listings' , $user_id );
+    $current = get_the_author_meta( OPALMEMBERSHIP_USER_PREFIX_.'package_featured_listings' , $user_id );
 
     if( $current-1 >= 0 ) {
-        update_user_meta( $user_id, OPALJOB_MEMBERSHIP_PREFIX.'package_featured_listings', $current-1 ) ;
+        update_user_meta( $user_id, OPALMEMBERSHIP_USER_PREFIX_.'package_featured_listings', $current-1 ) ;
     } else {
-        update_user_meta( $user_id, OPALJOB_MEMBERSHIP_PREFIX.'package_featured_listings', 0 );
+        update_user_meta( $user_id, OPALMEMBERSHIP_USER_PREFIX_.'package_featured_listings', 0 );
     }
 }
 
@@ -155,12 +155,12 @@ function opaljob_update_package_number_featured_listings( $user_id ) {
  */
 function opaljob_update_package_number_listings( $user_id ) {
 
-    $current = get_the_author_meta( OPALJOB_MEMBERSHIP_PREFIX.'package_listings' , $user_id );
-
+    $current = get_user_meta(  $user_id, OPALMEMBERSHIP_USER_PREFIX_.'package_listings', true );
+   
     if( $current-1 >= 0 ) {
-        update_user_meta( $user_id, OPALJOB_MEMBERSHIP_PREFIX.'package_listings', $current-1 ) ;
+        update_user_meta( $user_id, OPALMEMBERSHIP_USER_PREFIX_.'package_listings', $current-1 ) ;
     } else {
-        update_user_meta( $user_id, OPALJOB_MEMBERSHIP_PREFIX.'package_listings', 0 );
+        update_user_meta( $user_id, OPALMEMBERSHIP_USER_PREFIX_.'package_listings', 0 );
     }
 }
 
@@ -175,7 +175,7 @@ function opaljob_update_package_number_listings( $user_id ) {
  * @return string
  */ 
 function opaljob_is_membership_valid( $user_id = null ){
-  //   $package_id = (int)get_user_meta( $user_id, OPALJOB_MEMBERSHIP_PREFIX.'package_id', true );
+  //   $package_id = (int)get_user_meta( $user_id, OPALMEMBERSHIP_USER_PREFIX_.'package_id', true );
    return Opalmembership_User::is_membership_valid( $user_id );
 }
  

@@ -93,12 +93,11 @@ class Job_Package_Handler {
 	 */	
 	public function register_global_actions () {
 
-		
 
 		$this->user_id = get_current_user_id(); 
 
 
-		if( $this->user_id && !is_admin() ){ 
+		if( $this->user_id ){ 
 
 			$package_id    =  $this->get_current_user_meta( 'package_id' );
 			$this->package = new Package_entity( $package_id, $this->user_id );
@@ -468,7 +467,7 @@ class Job_Package_Handler {
 	 *
 	 */
 	public function update_remainng_listing( $job_id , $isedit=true ){
-		 
+	 
 		opaljob_update_package_number_listings( $this->user_id );
 		// update showing expired time
 		$this->update_post_date_expired( $job_id );
