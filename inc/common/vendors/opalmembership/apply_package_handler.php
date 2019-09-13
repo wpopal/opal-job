@@ -76,7 +76,7 @@ class Apply_Package_Handler {
 	 	/**
 		 *  Call Hook after updated membership information in user data.
 		 */
-		add_action( 'opalmembership_after_ mbership' , array( $this,'on_set_user_update_membership') , 10, 3 );
+		add_action( 'opalmembership_after_mbership' , array( $this,'on_set_user_update_membership') , 10, 3 );
 	}
 
 	/**

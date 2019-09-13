@@ -129,6 +129,7 @@ class Job_Package_Handler {
 			// show in membership dashboard
 		//	add_action( 'opalmembership_dashboard_container_before'		, array( $this, 'check_membership_validation_message' ) );
 			// included logic functions
+			add_action( 'opaljob_dashboard_employer_summary_middle_right' , array( $this, 'summary_middle_right' ) );
 		}
 
 		/**
@@ -140,8 +141,6 @@ class Job_Package_Handler {
 
 	function update_pending_to_publish( $new, $old, $post ) {
 
-		
-	 
 	    if ( ( $new == 'publish' ) && ( $old != 'publish' ) && ( $post->post_type == 'opaljob_job' ) ) {
 	        $this->update_user_post_date_expired( $post );
 	    } else {
@@ -630,5 +629,9 @@ class Job_Package_Handler {
 	 */ 
 	public function render_membership_pricing_box(){
 		echo opaljob_render_template( 'membership/pricing-info', array() );
+	}
+
+	public function summary_middle_right(){
+		echo opaljob_render_template( 'membership/summary', array() );
 	}
 }
