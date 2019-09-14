@@ -13,6 +13,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+function opaljob_get_dashboard_uri( $key ) {
+	return Opal_Job\Core\URI::get_dashboard_url( $key );
+}
 /**
  * Render Sidebar
  *
