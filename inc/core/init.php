@@ -374,6 +374,7 @@ class Init {
 		// load shortcodes
 		$shortcodes = array(
 			'user' 	   => Shortcodes\User::class,
+			'user' 	   => Shortcodes\Job::class,
 		);
 
 		foreach ( $shortcodes as $tag => $class ) {
