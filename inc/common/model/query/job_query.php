@@ -27,7 +27,9 @@ use Opal_Job\Common\Model\Entity\Job_Entity;
  **/
 class Job_Query extends Query_Base { 
 	
+	public $count = 0;
 	/**
+	 * 
 	 * Render Sidebar
 	 *
 	 *	Display Sidebar on left side and next is main content 
@@ -55,10 +57,11 @@ class Job_Query extends Query_Base {
 		return $query; 
 	}
 
-	public function get_count () {
-		return $this->get_query_object()->found_posts;
-	}
+ 
 
+	public function get_count() {
+		return $this->count;
+	}
 	/**
 	 * Render Sidebar
 	 *
@@ -83,7 +86,7 @@ class Job_Query extends Query_Base {
 		}
 	
 		$query = $this->get_query_object();
-
+		$this->count = $query->found_posts(); 
 		$custom_output = array(
 			'collection',
 			'opaljob_collection',

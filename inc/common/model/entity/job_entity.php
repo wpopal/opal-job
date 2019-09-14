@@ -222,6 +222,7 @@ class Job_Entity {
 			$this->$key = $value;
 		}
 
+		$this->post_excerpt = get_the_excerpt(); 
 		$this->related_id = get_post_meta( $this->ID, 'related_id' , true );
 		return true;
 	}
@@ -487,5 +488,29 @@ class Job_Entity {
 
 	public function status_label() {
 		return get_post_status( $this->ID );
+	}
+
+	public function get_post_excerpt () {
+		return $this->post_excerpt;
+	}
+
+	public function get_tags() {
+
+	}
+
+	public function get_employer_link() {
+		return get_author_posts_url( $this->post_author );
+	}
+	
+	public function get_employer_avatar() {
+		$id  = $this->get_user_meta( 'avatar_id' );
+		$url = wp_get_attachment_url( $id );
+		if( !empty($url) ){
+			return $url;
+		}
+	}
+
+	public function get_user_meta ( $key ) {
+		return get_user_meta( $this->post_author, OPAL_JOB_METABOX_PREFIX.$key, true );
 	}
 }

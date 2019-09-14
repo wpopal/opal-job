@@ -1,6 +1,7 @@
 <?php
 
 namespace Opal_Job\Common\Shortcodes;
+use Opal_Job\Common\Model\Query\Job_Query; 
 
 use Opal_Job\Core\View;
 /**
@@ -46,7 +47,7 @@ class Job {
 		);
 
 		foreach ( $shortcodes as $tag => $shortcode ){  
- 			add_shortcode( 'opaljob_' .$tag , $shortcode );
+ 			add_shortcode( 'opaljob_' .$tag , $shortcode, 1 );
 		}
 	}
 
@@ -57,7 +58,7 @@ class Job {
 	 *
 	 * @since    1.0.0
 	 */
-	public function job_listing ( $atts ) {
+	public function job_listing ( $atts=array() ) {
 
 		$default = array(
 			'show_pagination' => '',
@@ -66,8 +67,16 @@ class Job {
 			'show_featured'   => '',
 			'layout'		  => '',
 		);   
-
+		
+		$atts  = is_array( $atts ) ? $atts  : array();
 		$atts = array_merge( $default, $atts ); 
+
+		$query = new Job_Query(); 
+
+		$atts['jobs']  = $query->get_list();
+		$atts['count'] =  1; //count( $atts['jobs'] ); //$query->get_count(); 
+
+		// echo '<Pre>' . print_r( $atts['jobs'] ,1 ) ;die;
 
 		return View::render_template( 'shortcodes/job-listing', $atts );
 	}
