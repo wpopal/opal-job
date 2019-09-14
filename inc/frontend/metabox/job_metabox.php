@@ -176,6 +176,14 @@ class Job_Metabox extends Core\Metabox {
 				'description' => esc_html__( 'Please Enter Your Job SKU', 'opaljob' ),
 			],
 			[
+				'name'     => esc_html__( 'Specialism', 'opaljob' ),
+				'desc'     => esc_html__( 'Select specialisms', 'opaljob' ),
+				'id'       => $prefix . 'specialism',
+				'taxonomy' => 'opaljob_specialism', //Enter Taxonomy Slug
+				'multiple' => true,
+				'type'     => 'taxonomy_select',
+			],
+			[
 				'name'        => esc_html__( 'Expired Date', 'opaljob' ),
 				'id'          => $prefix . 'expired_date',
 				'type'        => 'date',
