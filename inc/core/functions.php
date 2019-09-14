@@ -13,14 +13,25 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+/**
+ * Render Sidebar
+ *
+ *	Display Sidebar on left side and next is main content 
+ *
+ * @since 1.0
+ *
+ * @return string
+ */
 function opaljob_get_job_statuses() {
 	return apply_filters( "opaljob_get_job_statuses", array(
-		'pending-payment' => esc_html__( 'Pending Payment', 'opaljob' ),
+		'publish' 		  => esc_html__( 'Publish', 'opaljob' ),
 		'unpublish'	 	  => esc_html__( 'Un-Publish', 'opaljob' ),
+		'pending-payment' => esc_html__( 'Pending Payment', 'opaljob' ),
 		'expired'	 	  => esc_html__( 'Expired', 'opaljob' ),
 		'rejected'	 	  => esc_html__( 'Rejected', 'opaljob' )
 	) );
 }
+
 /**
  * Fired during plugin deactivation
  *
@@ -31,7 +42,6 @@ function opaljob_get_job_statuses() {
  *
  * @author     WpOpal
  **/
-
 function opaljob_output_msg_json( $result = false, $message = '', $args = array(), $return = false ){
 	
 	$out = new stdClass();

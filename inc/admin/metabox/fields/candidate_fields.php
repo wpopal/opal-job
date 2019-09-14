@@ -78,7 +78,7 @@ class Candidate_Fields extends User_Fields {
 				'desc'     => esc_html__( 'Select one, to add new you create in location of estate panel', 'opaljob' ),
 				'id'       => $prefix . "specialism",
 				'taxonomy' => 'opaljob_specialism', //Enter Taxonomy Slug
-							"multiple" => true,
+				"multiple" => true,
 				'type'     => 'taxonomy_select',
 			],
 

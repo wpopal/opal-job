@@ -176,11 +176,23 @@ class Job_Metabox extends Core\Metabox {
 				'description' => esc_html__( 'Please Enter Your Job SKU', 'opaljob' ),
 			],
 			[
-				'name'        => esc_html__( 'Expired Date', 'opaljob' ),
-				'id'          => $prefix . 'expired_date',
-				'type'        => 'date',
-				'description' => esc_html__( 'Please Enter Your Job SKU', 'opaljob' ),
+				'name'     => esc_html__( 'Specialism', 'opaljob' ),
+				'desc'     => esc_html__( 'Select one, to add new you create in location of estate panel', 'opaljob' ),
+				'id'       => $prefix . "specialism",
+				'taxonomy' => 'opaljob_specialism', //Enter Taxonomy Slug
+				"multiple" => true,
+				'type'     => 'taxonomy_select',
 			],
+			[
+				'name'     => esc_html__( 'Categories', 'opaljob' ),
+				'desc'     => esc_html__( 'Select one, to add new you create in location of estate panel', 'opaljob' ),
+				'id'       => $prefix . "category",
+				'taxonomy' => 'opaljob_category', //Enter Taxonomy Slug
+				"multiple" => true,
+				'type'     => 'taxonomy_select',
+			],
+
+			 
 			[
 				'name'        => esc_html__( 'Application Deadline Date', 'opaljob' ),
 				'id'          => $prefix . 'deadline_date',
@@ -194,34 +206,42 @@ class Job_Metabox extends Core\Metabox {
 				'description' => esc_html__( 'Please Enter Your Job SKU', 'opaljob' ),
 			],
 			[
-				'id'              => $prefix . 'map',
-				'name'            => esc_html__( 'Location', 'opaljob' ),
-				'type'            => 'opal_map',
-				'sanitization_cb' => 'opal_map_sanitise',
-				'split_values'    => true,
-			],
-
-			[
-				'name' => esc_html__( 'Postal Code / Zip', 'opaljob' ),
-				'id'   => $prefix . 'zipcode',
-				'type' => 'text',
-
-			],
-			
-			[
-				'name'       => esc_html__( 'Address', 'opaljob' ),
-				'id'         => $prefix . 'address',
-				'type'       => 'textarea_small',
-				'attributes' => [
-					'required' => 'required',
-				],
-			],
-			[
 				'id'          => "{$prefix}video",
 				'name'        => esc_html__( 'Video', 'opaljob' ),
 				'type'        => 'text_url',
 				'description' => esc_html__( 'Input for videos, audios from Youtube, Vimeo and all supported sites by WordPress. It has preview feature.', 'opaljob' ),
 			],
+			[
+				'name'       => esc_html__( 'Address', 'opaljob' ),
+				'id'         => $prefix . 'address',
+				'type'       => 'text',
+				'attributes' => [
+					'required' => 'required',
+				],
+			],
+			[
+				'name'     => esc_html__( 'Location', 'opaljob' ),
+				'desc'     => esc_html__( 'Select one, to add new you create in location of estate panel', 'opaljob' ),
+				'id'       => $prefix . "location",
+				'taxonomy' => 'opaljob_location', //Enter Taxonomy Slug
+				"multiple" => true,
+				'type'     => 'taxonomy_select',
+			],
+			[
+				'name'       => esc_html__( 'Post Code', 'opaljob' ),
+				'id'         => $prefix . 'postcode',
+				'type'       => 'text',
+				'attributes' => [
+					'required' => 'required',
+				],
+			],
+			[
+				'id'              => $prefix . 'map',
+				'name'            => esc_html__( 'Location', 'opaljob' ),
+				'type'            => 'map',
+				'sanitization_cb' => 'opal_map_sanitise',
+				'split_values'    => true,
+			]
 		];
 
 		return apply_filters( 'opaljob_postype_job_information_metaboxes_fields', $fields );

@@ -27,7 +27,38 @@ class Posttypes {
 
 		$this->register_job(); 
 		$this->register_post_status();
+
+		foreach ( array( 'post', 'post-new' ) as $hook ) {
+			add_action( "admin_footer-{$hook}.php", [$this, 'register_post_status_script'] );
+		}
 	}
+
+	public function register_post_status_script() {  
+		global $post, $post_type;
+		if ( $post_type === 'opaljob_job' ) {
+			$html = $selected_label = '';
+			foreach (  opaljob_get_job_statuses() as $status => $label ) {
+				$seleced = selected( $post->post_status, esc_attr( $status ), false );
+				if ( $seleced ) {
+					$selected_label = $label;
+				}
+				$html .= "<option " . $seleced . " value='" . esc_attr( $status ) . "'>" . $label . "</option>";
+			}
+			?>
+            <script type="text/javascript">
+                jQuery(document).ready(function ($) {
+					<?php if ( ! empty( $selected_label ) ) : ?>
+                    jQuery('#post-status-display').html('<?php echo esc_js( $selected_label ); ?>');
+					<?php endif; ?>
+                    var select = jQuery('#post-status-select').find('select');
+                    jQuery(select).html("<?php echo( $html ); ?>");
+                });
+            </script>
+			<?php
+		}
+ 
+	}	
+	
 
 	/**
 	 * Register the Employer Post Type

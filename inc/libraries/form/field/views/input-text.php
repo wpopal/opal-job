@@ -23,6 +23,8 @@ if ( null == $valued ) {
 	$value = $valued;
 }
 
+ 
+
 $data = '';
 
 if ( $args['placeholder'] ) {
@@ -33,9 +35,9 @@ if ( 'on' === $args['autocomplete'] ) {
 	$data .= ' autocomplete="' . esc_attr( $args['autocomplete'] ) . '"';
 }
 
-if ( ! empty( $args['attributes'] ) && empty($value)) {
-	foreach ( $args['attributes'] as $key => $value ) {
-		$data .= $key . '="' . esc_attr( $value ) . '" ';
+if ( ! empty( $args['attributes'] )  ) {
+	foreach ( $args['attributes'] as $key => $_value ) {
+		$data .= $key . '="' . esc_attr( $_value ) . '" ';
 	}
 }
 
