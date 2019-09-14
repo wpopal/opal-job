@@ -59,7 +59,7 @@ class Submission  extends Controller {
 		add_filter( "opaljob_job_edit_link", array( $this, 'get_edit_link' ) , 1 );
 		
 
-		add_action( "init", array( $this, 'save' ) );
+		// add_action( "init", array( $this, 'save' ) );
 	}	
 
 	/**
@@ -90,7 +90,7 @@ class Submission  extends Controller {
 	public function save () {
 
 		if( isset( $_POST['submission_action'] ) ){ 
-			
+	 
 			$status = false;
 			$edit 	= false;
 			if ( wp_verify_nonce( $_POST['submission_action'], 'save-submission-data' ) ) {
@@ -202,10 +202,10 @@ class Submission  extends Controller {
 
 				if( $post_id > 0 ) {
 					$allow = opaljob_user_can_edit_job( $post_id ); 
-					echo View::render_template( "submission/form-edit", array( 'metabox' => $metabox, 'allow' => $allow ) );
+					echo View::render_template( "submission/form-edit", array( 'metabox' => $metabox, 'allow' => $allow , 'form_id' => 'metabox-submission-form') );
 				} else {
 					$allow = opaljob_user_can_submit_job( $post_id ); 
-					echo View::render_template( "submission/form-new", array( 'metabox' => $metabox, 'allow' => $allow ) );
+					echo View::render_template( "submission/form-new", array( 'metabox' => $metabox, 'allow' => $allow, 'form_id' => 'metabox-submission-form' ) );
 				}
 			}
 		}
