@@ -177,6 +177,7 @@ class Job_Metabox extends Core\Metabox {
 			],
 			[
 				'name'     => esc_html__( 'Specialism', 'opaljob' ),
+<<<<<<< HEAD
 				'desc'     => esc_html__( 'Select one, to add new you create in location of estate panel', 'opaljob' ),
 				'id'       => $prefix . "specialism",
 				'taxonomy' => 'opaljob_specialism', //Enter Taxonomy Slug
@@ -190,6 +191,19 @@ class Job_Metabox extends Core\Metabox {
 				'taxonomy' => 'opaljob_category', //Enter Taxonomy Slug
 				"multiple" => true,
 				'type'     => 'taxonomy_select',
+=======
+				'desc'     => esc_html__( 'Select specialisms', 'opaljob' ),
+				'id'       => $prefix . 'specialism',
+				'taxonomy' => 'opaljob_specialism', //Enter Taxonomy Slug
+				'multiple' => true,
+				'type'     => 'taxonomy_select',
+			],
+			[
+				'name'        => esc_html__( 'Expired Date', 'opaljob' ),
+				'id'          => $prefix . 'expired_date',
+				'type'        => 'date',
+				'description' => esc_html__( 'Please Enter Your Job SKU', 'opaljob' ),
+>>>>>>> e855149e7b00dd21fdface9f6fd7bb9cb45865d1
 			],
 
 			 

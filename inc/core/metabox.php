@@ -1,6 +1,6 @@
 <?php
 /**
- * Define 
+ * Define
  * Note: only use for internal purpose.
  *
  * @package     OpalJob
@@ -9,6 +9,7 @@
  * @since       1.0
  */
 namespace Opal_Job\Core;
+
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -125,7 +126,7 @@ abstract class Metabox {
 	 */
 	public function save_fields_data( $type, $post_id ) {
 		$update_options = $this->get_needed_update_options();
-		
+
 		if ( $update_options ) {
 			foreach ( $update_options as $key => $value ) {
 				$this->update_meta( $post_id, $key, $value );
@@ -150,9 +151,9 @@ abstract class Metabox {
 
 				$setting_field = $this->get_setting_field( $form_meta_key );
 
-				if ( isset( $_POST[ $form_meta_key ] ) ) { 
+				if ( isset( $_POST[ $form_meta_key ] ) ) {
 					$setting_field = $this->get_setting_field( $form_meta_key );
-					
+
 					if ( ! empty( $setting_field['type'] ) ) {
 
 						switch ( $setting_field['type'] ) {
@@ -203,6 +204,10 @@ abstract class Metabox {
 
 						if ( 'date' === $setting_field['type'] ) {
 							$update_options[ $form_meta_key . '_id' ] = $this->sanitizer( 'date', $_POST[ $form_meta_key . '_id' ] );
+						}
+
+						if ( 'taxonomy_select' === $setting_field['type'] && isset( $_POST['post_id'] ) && $_POST['post_id'] ) {
+							wp_set_object_terms( absint( $_POST['post_id'] ), (array) $_POST[ $form_meta_key ], sanitize_text_field( $setting_field['taxonomy'] ) );
 						}
 					}// End if().
 				}// End if().
@@ -527,7 +532,7 @@ abstract class Metabox {
 	 * @return string
 	 */
 	public function output() {
-		 
+
 		$this->get_before_render();
 
 		$form = Libraries\Form\Form::get_instance();
