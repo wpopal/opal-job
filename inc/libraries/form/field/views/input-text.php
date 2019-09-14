@@ -38,6 +38,9 @@ if ( 'on' === $args['autocomplete'] ) {
 if ( ! empty( $args['attributes'] )  ) {
 	foreach ( $args['attributes'] as $key => $_value ) {
 		$data .= $key . '="' . esc_attr( $_value ) . '" ';
+		if( $key == "required" ) {
+			$args['required'] = true;
+		}
 	}
 }
 

@@ -197,8 +197,6 @@ class Job_Metabox extends Core\Metabox {
 				'type'        => 'date',
 				'description' => esc_html__( 'Please Enter Your Job SKU', 'opaljob' ),
 			],
-
-			 
 			[
 				'name'        => esc_html__( 'Application Deadline Date', 'opaljob' ),
 				'id'          => $prefix . 'deadline_date',
