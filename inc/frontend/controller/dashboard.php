@@ -49,8 +49,8 @@ class Dashboard extends Controller {
 		add_action( "opaljob_dashboard_sidebar" , [$this,'render_extra_block'] , 2 );
 		add_action( "opaljob_dashboard_sidebar" , [$this,'render_sidebar'] , 3 );
 		add_action( "opaljob_dashboard_content" , [$this,'render_content'] , 3 );
-		add_action("wp_enqueue_scripts", [$this,'enqueue_scripts'] );
-		add_action("wp_enqueue_scripts", [$this,'enqueue_styles'] );
+		add_action( "wp_enqueue_scripts", [$this,'enqueue_scripts'] );
+		add_action( "wp_enqueue_scripts", [$this,'enqueue_styles'] );
 
 		do_action( "opaljob_dashboard_int" );
 	}	
