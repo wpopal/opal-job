@@ -41,6 +41,15 @@ class Posttypes {
 		}
 	}
 
+	/**
+	 * Category Taxonomy
+	 *
+	 *	Register Category Taxonomy related to Job post type.
+	 *
+	 * @since 1.0
+	 *
+	 * @return avoid
+	 */
 	public function register_post_status_script() {  
 		global $post, $post_type;
 		if ( $post_type === 'opaljob_job' ) {

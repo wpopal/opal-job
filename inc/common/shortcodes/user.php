@@ -25,7 +25,7 @@ use Opal_Job\Core\View;
  **/
 class User { 
 
-	 public static $instance;
+	public static $instance;
 
 	/**
 	 * Allows for accessing single instance of class. Class should only be constructed once per call.

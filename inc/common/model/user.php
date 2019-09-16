@@ -53,8 +53,12 @@ class User {
 	 */
 	public $data; 
 
- 
-
+	/**
+	 * Initiator
+	 *
+	 * @since 1.0
+	 * @return object initialized object of class.
+	 */
 	public static function get_instance(){
 		static $_instance;
 		if( !$_instance ){
