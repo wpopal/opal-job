@@ -121,6 +121,14 @@ class Job_Metabox extends Core\Metabox {
 		return apply_filters( "opaljob_job_fields_options", $settings );
 	}
 
+	/**
+	 * Callback function save
+	 *
+	 * All data of post parameters will be updated for each metadat of the post and stored in post_meta table
+	 *
+	 * @since    1.0.0
+	 * @param string $plugin_text_domain The text domain of this plugin.
+	 */
 	public function metaboxes_owner_fields () {
 		$prefix = OPAL_JOB_METABOX_PREFIX;
 		$fields = [
@@ -141,6 +149,14 @@ class Job_Metabox extends Core\Metabox {
 		return apply_filters( 'opaljob_postype_job_salary_metaboxes_fields', $fields );
 	}
 
+	/**
+	 * Callback function save
+	 *
+	 * All data of post parameters will be updated for each metadat of the post and stored in post_meta table
+	 *
+	 * @since    1.0.0
+	 * @param string $plugin_text_domain The text domain of this plugin.
+	 */
 	public function metaboxes_salary_fields () {
 		$prefix = OPAL_JOB_METABOX_PREFIX;
 		$fields = [
@@ -191,7 +207,12 @@ class Job_Metabox extends Core\Metabox {
 	}
 
 	/**
+	 * Callback function save
 	 *
+	 * All data of post parameters will be updated for each metadat of the post and stored in post_meta table
+	 *
+	 * @since    1.0.0
+	 * @param string $plugin_text_domain The text domain of this plugin.
 	 */
 	public function metaboxes_management_fields() {
 		$prefix = OPAL_JOB_METABOX_PREFIX;

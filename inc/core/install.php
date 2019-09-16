@@ -14,6 +14,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+/**
+ * Define the internationalization functionality.
+ *
+ * Loads and defines the internationalization files for this plugin
+ * so that it is ready for translation.
+ *
+ * @link       http://wpopal.com
+ * @since      1.0.0
+ *
+ * @author     WpOpal
+ */
 class Install {
 	/**
 	 * Install Opalestate.
