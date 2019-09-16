@@ -27,6 +27,15 @@ use Opal_Job\Common\Model\Query\Job_Query;
 class Statistic {
 	public $user_id; 
 
+	/**
+	 * Render Sidebar
+	 *
+	 *	Display Sidebar on left side and next is main content 
+	 *
+	 * @since 1.0
+	 *
+	 * @return string
+	 */
 	public static function get_instance(){
 		static $_instance;
 		if( !$_instance ){
@@ -35,10 +44,28 @@ class Statistic {
 		return $_instance;
 	}
 
+	/**
+	 * Render Sidebar
+	 *
+	 *	Display Sidebar on left side and next is main content 
+	 *
+	 * @since 1.0
+	 *
+	 * @return string
+	 */
 	public function __construct () {
 		$this->user_id = get_current_user_id();
 	}
 
+	/**
+	 * Render Sidebar
+	 *
+	 *	Display Sidebar on left side and next is main content 
+	 *
+	 * @since 1.0
+	 *
+	 * @return string
+	 */
 	public function count_publish_jobs () {
 		$query = new Job_Query();
 		$query->post_author = $this->user_id;
@@ -47,6 +74,15 @@ class Statistic {
 		return $query->get_count();
 	}
 
+	/**
+	 * Render Sidebar
+	 *
+	 *	Display Sidebar on left side and next is main content 
+	 *
+	 * @since 1.0
+	 *
+	 * @return string
+	 */
 	public function count_pending_jobs () {
 		$query = new Job_Query();
 		$query->post_author = $this->user_id;
@@ -55,6 +91,15 @@ class Statistic {
 		return $query->get_count();
 	}
 
+	/**
+	 * Render Sidebar
+	 *
+	 *	Display Sidebar on left side and next is main content 
+	 *
+	 * @since 1.0
+	 *
+	 * @return string
+	 */
 	public function count_expired_jobs () {
 		$query = new Job_Query();
 		$query->post_author = $this->user_id;
@@ -63,6 +108,15 @@ class Statistic {
 		return $query->get_count();
 	}
 
+	/**
+	 * Render Sidebar
+	 *
+	 *	Display Sidebar on left side and next is main content 
+	 *
+	 * @since 1.0
+	 *
+	 * @return string
+	 */
 	public function get_featured () {
 		return Job_Query::get_job_query( array(
 			'post_author' => $this->user_id, 
