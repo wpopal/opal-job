@@ -51,6 +51,7 @@ class Form_Builder implements Intergration {
 	public function register_admin_actions() {
 		new Ajax();
 		add_action( 'admin_init', [ $this, 'save_options' ] );
+		add_action( "opaljob_admin_candidate_fields_options", [ $this, 'add_meta_employer_fields'] , 9 ,1 );
 	}
 
 	/**
@@ -74,8 +75,8 @@ class Form_Builder implements Intergration {
 	public function admin_menu() {
 		add_submenu_page(
 			'edit.php?post_type=opaljob_job',
-			apply_filters( $this->id . '-settings-page-title', esc_html__( 'Property Builder', 'opaljob' ) ),
-			apply_filters( $this->id . '-settings-menu-title', esc_html__( 'Property Builder', 'opaljob' ) ),
+			apply_filters( $this->id . '-settings-page-title', esc_html__( 'Meta Builder', 'opaljob' ) ),
+			apply_filters( $this->id . '-settings-menu-title', esc_html__( 'Meta Builder', 'opaljob' ) ),
 			'manage_options',
 			$this->id . '-settings',
 			[ $this, 'render_page' ]
@@ -87,11 +88,30 @@ class Form_Builder implements Intergration {
 	 *
 	 * @return array
 	 */
+	public function add_meta_employer_fields ( $settings ) {
+		$option_key = 'opaljob_builder_employer';
+		$options = get_option( $option_key );
+
+		if( !empty($options) ) {
+			$settings['candidate_meta_builder_fields'] = [
+				'id'        => 'candidate_meta_builder_fields',
+				'title'     => esc_html__( 'Meta Builder', 'opaljob' ),
+				'icon-html' => '<span class="fa fa-user-tag"></span>',
+				'fields'    => $options
+			];
+		}
+		return $settings;
+	}
+	/**
+	 * Register property types.
+	 *
+	 * @return array
+	 */
 	public function get_property_types() {
 		return apply_filters( 'opaljob_get_form_builder_types', [
-			'job'       => esc_html__( 'Job Property', 'opaljob' ),
-			'employer'  => esc_html__( 'Employer Property', 'opaljob' ),
-			'candidate' => esc_html__( 'Candidate Property', 'opaljob' ),
+			'job'       => esc_html__( 'Job Meta Property', 'opaljob' ),
+			'employer'  => esc_html__( 'Employer Meta Property', 'opaljob' ),
+			'candidate' => esc_html__( 'Candidate Meta Property', 'opaljob' ),
 		] );
 	}
 
