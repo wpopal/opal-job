@@ -39,9 +39,11 @@ function opaljob_get_job_statuses() {
 	return apply_filters( "opaljob_get_job_statuses", array(
 		'publish' 		  => esc_html__( 'Publish', 'opaljob' ),
 		'unpublish'	 	  => esc_html__( 'Un-Publish', 'opaljob' ),
+		'pending'		  => esc_html__( 'Pending', 'opaljob' ),
 		'pending-payment' => esc_html__( 'Pending Payment', 'opaljob' ),
 		'expired'	 	  => esc_html__( 'Expired', 'opaljob' ),
-		'rejected'	 	  => esc_html__( 'Rejected', 'opaljob' )
+		'rejected'	 	  => esc_html__( 'Rejected', 'opaljob' ),
+		'draft'			  => esc_html__( 'Draft', 'opaljob' ),
 	) );
 }
 

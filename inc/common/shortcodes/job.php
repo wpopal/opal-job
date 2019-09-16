@@ -75,7 +75,7 @@ class Job {
 
 		$query = new Job_Query(
 			array(
-				'posts_per_page'      => 1,
+				'posts_per_page'      => 4,
 				'post_status' 	      => 'publish',
 				'paged'			      => 2
 			)
