@@ -73,11 +73,11 @@ class Job  extends Controller {
 	 */
 	public function render_listing_by_employer( $id ){
 
-		if( opaljob_has_role('employer') ) {
+		//if( opaljob_has_role('employer') ) {
 			$jobs = $this->get_model()->get_list_by_employer( $id ); 
 			echo View::render_template( "common/job/by-employer", array( 'jobs' =>  $jobs, 'founds' => 12 ) );
-		} else {
-			echo View::render_template( "dashboard/has-not-permission" );
-		}
+	//	} else {
+//			echo View::render_template( "dashboard/has-not-permission" );
+	//	}
 	}
 }

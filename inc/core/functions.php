@@ -13,9 +13,19 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+/**
+ * Render Sidebar
+ *
+ *	Display Sidebar on left side and next is main content 
+ *
+ * @since 1.0
+ *
+ * @return string
+ */
 function opaljob_get_dashboard_uri( $key ) {
 	return Opal_Job\Core\URI::get_dashboard_url( $key );
 }
+
 /**
  * Render Sidebar
  *

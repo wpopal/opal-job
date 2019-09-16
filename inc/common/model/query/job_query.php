@@ -28,6 +28,34 @@ use Opal_Job\Common\Model\Entity\Job_Entity;
 class Job_Query extends Query_Base { 
 	
 	public $count = 0;
+
+	/**
+	 * Default query arguments.
+	 *
+	 * Not all of these are valid arguments that can be passed to WP_Query. The ones that are not, are modified before
+	 * the query is run to convert them to the proper syntax.
+	 *
+	 * @since  2.5.0
+	 * @access public
+	 *
+	 * @param  $args array The array of arguments that can be passed in and used for setting up this form query.
+	 */
+	public function __construct( $args = array() ) {
+		$defaults = array(
+			'output'    => 'collection',
+			'post_type' => array( 'opaljob_job' ),
+			'number'          => 20,
+			'offset'          => 0,
+			'paged'           => 1,
+			'orderby'         => 'id',
+			'order'           => 'DESC'
+		);
+
+		$args['update_post_meta_cache'] = false;
+
+		$this->args = $this->_args = wp_parse_args( $args, $defaults );
+	}
+
 	/**
 	 * 
 	 * Render Sidebar
@@ -87,6 +115,7 @@ class Job_Query extends Query_Base {
 	
 		$query = $this->get_query_object();
 		$this->count = $query->found_posts(); 
+		
 		$custom_output = array(
 			'collection',
 			'opaljob_collection',

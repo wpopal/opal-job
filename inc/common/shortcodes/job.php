@@ -62,16 +62,24 @@ class Job {
 
 		$default = array(
 			'show_pagination' => '',
-			'show_more' 	 => '',
+			'show_more' 	  => '',
 			'show_categories' => '',
 			'show_featured'   => '',
-			'layout'		  => '',
+			'layout'		  => 'content-job-grid',
+			'items_per_grid'  => 1,
+			'grid_class'	  => '',
 		);   
 		
 		$atts  = is_array( $atts ) ? $atts  : array();
 		$atts = array_merge( $default, $atts ); 
 
-		$query = new Job_Query(); 
+		$query = new Job_Query(
+			array(
+				'posts_per_page'      => 1,
+				'post_status' 	      => 'publish',
+				'paged'			      => 2
+			)
+		); 
 
 		$atts['jobs']  = $query->get_list();
 		$atts['count'] =  1; //count( $atts['jobs'] ); //$query->get_count(); 
