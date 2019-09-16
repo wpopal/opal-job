@@ -374,10 +374,10 @@ class Init {
 		// load shortcodes
 		$shortcodes = array(
 			'user' 	   => Shortcodes\User::class,
-			'user' 	   => Shortcodes\Job::class,
+			'job' 	   => Shortcodes\Job::class,
 		);
 
-		foreach ( $shortcodes as $tag => $class ) {
+		foreach ( $shortcodes as $tag => $class ) {  
 			$object =  ( new ReflectionClass( $class ) )->newInstance();
 			$object->register( ); 
 		}

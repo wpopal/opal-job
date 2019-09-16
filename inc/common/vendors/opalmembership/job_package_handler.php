@@ -82,6 +82,7 @@ class Job_Package_Handler {
 		// Check to see if user posted first time.
 		add_action( 'transition_post_status', array( $this, 'update_pending_to_publish' ) , 99, 3 );
 	}
+	
 	/**
 	 * Render Sidebar
 	 *

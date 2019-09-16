@@ -24,5 +24,5 @@ use Opal_Job\Common\Model\Entity\User_Entity;
  *
  * @author     WpOpal
  **/
-class Candicate_Entity extends User_Entity {
+class Candidate_Entity extends User_Entity {
 }

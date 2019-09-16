@@ -40,4 +40,4 @@
 	 	</div>	
 	 </div>	
 </div>
-<?php // opaljob_render_template( 'messages/enquiry-form' ); ?>
+

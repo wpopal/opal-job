@@ -1,6 +1,5 @@
 <?php 
 global $job;
-$member = $job->get_employer();
 ?>
 <article  class="job-grid-style" data-id="job-<?php echo $job->ID; ?>">
 
