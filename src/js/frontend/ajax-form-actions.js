@@ -6,10 +6,8 @@ var Opaljob_Features =  {
         Opaljob_Features.followEmployer();
         Opaljob_Features.applyJob();
         Opaljob_Features.sendMessage();
-
         Opaljob_Features.submitJob();
 	},
-
  	makeAjax:function( formData, $submit_btn, _callback, isform ) {
        
         var ajax = {
@@ -51,7 +49,6 @@ var Opaljob_Features =  {
             }
         };
 
- 
         if( isform == true ) {
             ajax.processData  = false;
              ajax.contentType = false;

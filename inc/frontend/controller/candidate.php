@@ -68,9 +68,6 @@ class Candidate extends Controller {
 		add_action( "opaljob/dashboard/tab_content/resumecv", array( $this, 'render_dashboard_resumecv' ) );
 		add_action( "opaljob/dashboard/tab_content/following_employers", array( $this, 'render_following_employers' ) );
 		add_action( "opaljob/dashboard/tab_content/myapplied", array( $this, 'render_myapplied' ) );
-
-		add_action( 'wp_footer', array( $this, 'apply_form_popup') );
-
 		add_action( 'opaljob/dashboard/tab_content/summary', [$this, 'tab_content_summary'] );
 		// add_action( "opaljob/dashboard/tab_content/profile", array( $this, 'render_dashboard_profile' ) );
 	}
@@ -91,40 +88,6 @@ class Candidate extends Controller {
 		return $this->model; 
 	}
 	
-	/**
-	 * Process Save Data Post Profile
-	 *
-	 *	Display Sidebar on left side and next is main content 
-	 *
-	 * @since 1.0
-	 *
-	 * @return string
-	 */
-	public function apply_form_popup () {
-
-		if( is_single_job() ){
-
-			global $job; 
-
-			$member = $job->get_employer();
-			$fields = array();  
-
-			$fields = $this->get_model()->get_apply_form_fields( get_the_ID(), $member->ID );
-
-
-			$form = Form::get_instance();
-			$form->set_type( 'custom' );
-			$args = [];
-			
-			$args = array(
-				'form' 	 => $form ,
-				'fields' => $fields
-			);
-
-	        echo View::render_template( 'user/apply-job-popup', $args );
-	    }
-	}
-
 	/**
 	 * Process Save Data Post Profile
 	 *

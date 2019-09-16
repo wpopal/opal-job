@@ -32,6 +32,7 @@ class Taxonomies {
 	 * @return avoid
 	 */
 	public function definition() {
+		
 		$this->location_taxonomy();
 		$this->category_taxonomy();
 		$this->types_taxonomy();
