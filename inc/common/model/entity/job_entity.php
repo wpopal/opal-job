@@ -139,7 +139,7 @@ class Job_Entity {
 	}
 
 	/**
-	 * Magic __get function to dispatch a call to retrieve a private property
+	 * Magic __get function to dispatch a call to retrieve a private job
 	 *
 	 * @since 1.0
 	 */
@@ -148,7 +148,7 @@ class Job_Entity {
 		if( method_exists( $this, 'get_' . $key ) ) {
 			return call_user_func( array( $this, 'get_' . $key ) );
 		} else {
-			return new WP_Error( 'opaljob-invalid-property', sprintf( esc_html__( 'Can\'t get property %s', 'opaljob' ), $key ) );
+			return new WP_Error( 'opaljob-invalid-job', sprintf( esc_html__( 'Can\'t get job %s', 'opaljob' ), $key ) );
 		}
 
 	}
@@ -407,7 +407,7 @@ class Job_Entity {
 	 * @return string
 	 */
 	public function get_category_tax() {
-		$terms = wp_get_post_terms( $this->post_id, 'property_category' );
+		$terms = wp_get_post_terms( $this->post_id, 'job_category' );
 
 		return $terms;
 	}

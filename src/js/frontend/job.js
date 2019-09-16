@@ -77,7 +77,7 @@ var Opaljob_Job =  {
 	trigger:function () {
 
 		$( ".job-preview-map").each( function(){
-             new GooglemapSingle(   $(this).data() , $(this).attr('id') );
+            new GooglemapSingle( $(this).data() , $(this).attr('id') );
         } );
 	}
 	 

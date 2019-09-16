@@ -1,10 +1,9 @@
 <?php 
 	global $member;	
-	$map    = $member->get_map();
-	
-	$id = time();
+	$maps    = $member->get_map();
+	$id 	 = time();
 ?>
-<?php  if ( $map ): ?>
+<?php  if ( $maps ): ?>
 <div class="opaljob-panel panel-section-map"  id="employer-map">
 	<div class="panel-heading"><h4><?php esc_html_e( 'Address', 'opaljob' ); ?></h4></div>
 	<div class="panel-body">
