@@ -25,6 +25,14 @@ use Opal_Job\Common\Model\Query\Job_Query;
  * @author    WpOpal
  */
 class Statistic {
+
+	/**
+	 * The current version of the plugin.
+	 *
+	 * @since    1.0.0
+	 * @access   protected
+	 * @var      string    $version    The current version of the plugin.
+	 */
 	public $user_id; 
 
 	/**

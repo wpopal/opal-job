@@ -11,17 +11,11 @@ var Opaljob_Features =  {
 	},
 
  	makeAjax:function( formData, $submit_btn, _callback, isform ) {
-        var _isform = true;
-        if( isform == true ){
-            _isform = false;
-        }
- 		Opaljob_Dashboard.toggleSubmit( $submit_btn );
-        $.ajax({
+       
+        var ajax = {
             url : opaljobJS.ajaxurl,
             data : formData,
             type : 'POST',
-            processData: _isform,
-            contentType: _isform,
             dataType: "json",
             success : function( response ){
                 if( response.status == true ){
@@ -55,7 +49,16 @@ var Opaljob_Features =  {
                     });
                 }
             }
-        }); 
+        };
+
+ 
+        if( isform == true ) {
+            ajax.processData  = false;
+             ajax.contentType = false;
+        }
+
+ 		Opaljob_Dashboard.toggleSubmit( $submit_btn );
+        $.ajax( ajax ); 
     },
     ///// ////// 
     submitJob:function() {
@@ -209,12 +212,14 @@ var Opaljob_Features =  {
     },
     // remove or add job in favorite
     favorite:function () { 
-        $( 'body' ).delegate( '.job-toggle-favorite', 'click', function () {
+        $( 'body' ).delegate( '.job-toggle-favorite', 'click', function () { 
+
             var $this = $( this );
             if ( $( this ).hasClass( 'opaljob-need-login' ) ) {
                 return;
             }
             var ps = 'job_id=' + $( this ).data( 'job-id' ) + '&action=opaljob_toggle_status' ; 
+
             Opaljob_Features.makeAjax( ps, $(this), function ( response ) {
                 if( response.html ){ 
                     $this.replaceWith( $( response.html ) );

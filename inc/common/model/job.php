@@ -23,6 +23,13 @@ use Opal_Job\Common\Model\Query\Job_Query;
  **/
 class Job { 
 	
+	/**
+	 * The current version of the plugin.
+	 *
+	 * @since    1.0.0
+	 * @access   protected
+	 * @var      string    $version    The current version of the plugin.
+	 */
 	public $data ; 
 
 	/**
