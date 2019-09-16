@@ -46,6 +46,25 @@ class Third_Party extends Core\Metabox {
 		$prefix = '';
 		$post_id = 0;
 		$settings = apply_filters( "opaljob/settings/third_party/page_options", [] , 3 );
+
+		$fields  = array(
+			array(
+				'name'    => esc_html__( 'Google Map API', 'opalestate-pro' ),
+				'desc'    => __( 'You need to register <a href="https://developers.google.com/maps/documentation/javascript/get-api-key" target="_blank">Google API Key</a>, then put the key in this setting.',
+					'opalestate-pro' ),
+				'id'      => 'google_map_api_keys',
+				'type'    => 'text',
+				'default' => 'AIzaSyCfMVNIa7khIqYHCw6VBn8ShUWWm4tjbG8',
+			)
+		);	
+
+		$settings['form_gmap_field_options'] =  apply_filters( 'form_gmap_field_options', array(
+			'id'        => 'form_gmap_field_options',
+			'title'     => esc_html__( 'Google Map Options', 'opaljob' ),
+			'icon-html' => '<span class="opaljob-icon opaljob-icon-heart"></span>',
+			'fields'    => $fields 
+		));
+
 		return $settings;
 	}
 
