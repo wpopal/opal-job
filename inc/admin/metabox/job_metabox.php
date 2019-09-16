@@ -93,7 +93,7 @@ class Job_Metabox extends Core\Metabox {
 			'info_field_options'    => apply_filters( 'opaljob_job_info_field_options', [
 				'id'        => 'info_field_options',
 				'title'     => esc_html__( 'Information', 'opaljob' ),
-				'icon-html' => '<span class="fa fa-heart"></span>',
+				'icon-html' => '<span class="fa fa-info-circle"></span>',
 				'fields'    => $this->metaboxes_management_fields(),
 			] ),
 
@@ -103,7 +103,7 @@ class Job_Metabox extends Core\Metabox {
 			'salary_field_options'    => apply_filters( 'opaljob_job_salary_field_options', [
 				'id'        => 'salary_field_options',
 				'title'     => esc_html__( 'Salary', 'opaljob' ),
-				'icon-html' => '<span class="fa fa-heart"></span>',
+				'icon-html' => '<span class="fa fa-money-check-alt"></span>',
 				'fields'    =>  $this->metaboxes_salary_fields(),
 			] ),
 
@@ -113,7 +113,7 @@ class Job_Metabox extends Core\Metabox {
 			'author_field_options'    => apply_filters( 'opaljob_job_author_field_options', [
 				'id'        => 'author_field_options',
 				'title'     => esc_html__( 'Author', 'opaljob' ),
-				'icon-html' => '<span class="fa fa-heart"></span>',
+				'icon-html' => '<span class="fa fa-user"></span>',
 				'fields'    =>  $this->metaboxes_owner_fields(),
 			] ),	
 		];
