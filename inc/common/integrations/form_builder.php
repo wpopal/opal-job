@@ -51,7 +51,9 @@ class Form_Builder implements Intergration {
 	public function register_admin_actions() {
 		new Ajax();
 		add_action( 'admin_init', [ $this, 'save_options' ] );
-		add_action( "opaljob_admin_candidate_fields_options", [ $this, 'add_meta_employer_fields'] , 9 ,1 );
+		add_action( "opaljob_admin_candidate_fields_options", [ $this, 'add_meta_candidate_fields'] , 9 ,1 );
+		add_action( "opaljob_admin_employer_fields_options",  [ $this, 'add_meta_employer_fields'] , 9 ,1 );
+		add_action( "opaljob_job_fields_options",  			  [ $this, 'add_job_fields'] , 9 ,1 );
 	}
 
 	/**
@@ -88,20 +90,61 @@ class Form_Builder implements Intergration {
 	 *
 	 * @return array
 	 */
-	public function add_meta_employer_fields ( $settings ) {
-		$option_key = 'opaljob_builder_employer';
+	public function add_job_fields ( $settings ) {
+		$option_key = 'opaljob_builder_job';
 		$options = get_option( $option_key );
 
 		if( !empty($options) ) {
-			$settings['candidate_meta_builder_fields'] = [
-				'id'        => 'candidate_meta_builder_fields',
-				'title'     => esc_html__( 'Meta Builder', 'opaljob' ),
-				'icon-html' => '<span class="fa fa-user-tag"></span>',
+			$settings['meta_builder_job'] = [
+				'id'        => 'meta_builder_job',
+				'title'     => esc_html__( 'Meta data', 'opaljob' ),
+				'icon-html' => '<span class="fa fa-server"></span>',
 				'fields'    => $options
 			];
 		}
 		return $settings;
 	}
+
+	/**
+	 * Register property types.
+	 *
+	 * @return array
+	 */
+	public function add_meta_candidate_fields ( $settings ) {
+		$option_key = 'opaljob_builder_candidate';
+		$options = get_option( $option_key );
+
+		if( !empty($options) ) {
+			$settings['candidate_meta_builder_fields'] = [
+				'id'        => 'candidate_meta_builder_fields',
+				'title'     => esc_html__( 'Meta data', 'opaljob' ),
+				'icon-html' => '<span class="fa fa-server"></span>',
+				'fields'    => $options
+			];
+		}
+		return $settings;
+	}
+
+	/**
+	 * Register property types.
+	 *
+	 * @return array
+	 */
+	public function add_meta_employer_fields ( $settings ) {
+		$option_key = 'opaljob_builder_employer';
+		$options = get_option( $option_key );
+
+		if( !empty($options) ) {
+			$settings['employer_meta_builder_fields'] = [
+				'id'        => 'employer_meta_builder_fields',
+				'title'     => esc_html__( 'Meta data', 'opaljob' ),
+				'icon-html' => '<span class="fa fa-server"></span>',
+				'fields'    => $options
+			];
+		}
+		return $settings;
+	}
+	
 	/**
 	 * Register property types.
 	 *

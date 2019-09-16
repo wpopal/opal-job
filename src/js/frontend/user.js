@@ -1,11 +1,10 @@
 var Opaljob_User =  { 
 	
-	init:function () {
+	init:function () {  
 		Opaljob_User.trigger();
 		Opaljob_User.tabs();
 	},
 	tabs:function(){
-
 		$( '.opaljob-tab .tab-item' ).click( function ( event ) {
 	        event.preventDefault();
 	        $( this ).parent().find( ' .tab-item' ).removeClass( 'active' );

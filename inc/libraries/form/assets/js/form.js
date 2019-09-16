@@ -99,6 +99,12 @@ window.OPAL = window.OPAL || {};
             } );
             $( 'a:first', $tab ).click();
         } );
+
+        var url = window.location.href;
+        if( url.indexOf("#") != -1 ) {
+            var activeTab = url.substring( url.indexOf("#") + 1);
+            $('a[href="#'+ activeTab +'"]').click();
+        }
     };
 
     opal.makeListSortable = function() {
