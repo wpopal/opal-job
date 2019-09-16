@@ -71,7 +71,7 @@ class User_Query extends Query_Base {
  	public function get_list_candidates () {
 
 	    $args = array(
-        	'role' => 'opaljob_employer' 
+        	'role' => 'opaljob_candidate' 
         );
        
         $query = new WP_User_Query( $args );
@@ -94,7 +94,18 @@ class User_Query extends Query_Base {
 	 *
 	 * @return string
 	 */
- 	public function get_list_employer () {
+ 	public function get_list_employers () {
+ 		 $args = array(
+        	'role' => 'opaljob_employer' 
+        );
+       
+        $query = new WP_User_Query( $args );
 
+        $collection = array();
+        foreach ( $query->results as $user ) {
+       		$collection[] = new Candidate_Entity( $user->ID );  
+        }
+
+        return $collection;
  	}
 }

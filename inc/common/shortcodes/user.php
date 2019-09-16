@@ -114,6 +114,7 @@ class User {
 		$members = $query->get_list_candidates(); 
 		$atts['members'] = $members; 
 		$atts['count']	 = 10;
+
 		return View::render_template( 'shortcodes/candidate-listing', $atts );
 	}
 
@@ -124,7 +125,27 @@ class User {
 	 *
 	 * @since    1.0.0
 	 */
-	public function render_employers () {
+	public function render_employers ( $atts ) {
+		$default = array(
+			'show_pagination' => '',
+			'show_more' 	  => '',
+			'show_categories' => '',
+			'show_featured'   => '',
+			'layout'		  => 'content-employer-list',
+			'items_per_grid'  => 1,
+			'grid_class'	  => '',
+		);   
 
+		$query = new User_Query(); 
+
+		$atts  = is_array( $atts ) ? $atts  : array();
+		$atts = array_merge( $default, $atts ); 
+
+
+		$members = $query->get_list_employers(); 
+		$atts['members'] = $members; 
+		$atts['count']	 = 10;
+
+		return View::render_template( 'shortcodes/employer-listing', $atts );
 	}
 }
