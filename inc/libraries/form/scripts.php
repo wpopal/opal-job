@@ -133,7 +133,9 @@ class Scripts {
 		static::localize( $debug );
 
 		do_action( 'opaljob_footer_enqueue' );
-		add_action( 'wp_footer', array( __CLASS__, 'load_template_script' ) );
+		// add_action( 'wp_footer', array( __CLASS__, 'load_template_script' ) );
+
+		static::load_template_script();
 	}
 
 
