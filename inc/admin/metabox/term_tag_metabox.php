@@ -20,7 +20,7 @@ use Opal_Job\Core as Core;
  *
  * @author     WpOpal
  */
-class Term_Category_Metabox extends Core\Metabox {
+class Term_Tag_Metabox extends Core\Metabox {
 
 	/**
 	 * Initialize the class and set its properties.
@@ -29,7 +29,7 @@ class Term_Category_Metabox extends Core\Metabox {
 
 		$this->set_types(
 			[
-				'opaljob_category',
+				'opaljob_tag',
 			]
 		);
 		$this->mode = 'taxonomy';
@@ -48,7 +48,7 @@ class Term_Category_Metabox extends Core\Metabox {
 	 */
 	public function get_settings() {
 		$prefix   = OPAL_JOB_METABOX_PREFIX;
-		$settings = apply_filters( 'opaljob_term_category_metabox_fields', [
+		$settings = apply_filters( 'opaljob_term_tag_metabox_fields', [
 			[
 				'name'         => esc_html__( 'Image', 'opaljob' ),
 				'description'  => esc_html__( 'Set an image.', 'opaljob' ),
