@@ -42,6 +42,7 @@ class Create_Fields {
 									'name'        => sanitize_text_field( $_POST['name'][ $key ] ),
 									'description' => sanitize_text_field( $_POST['description'][ $key ] ),
 									'required'    => isset( $_POST['required'][ $key ] ) ? sanitize_text_field( $_POST['required'][ $key ] ) : '',
+									'icon'        => isset( $_POST['icon'][ $key ] ) ? sanitize_text_field( $_POST['icon'][ $key ] ) : '',
 								];
 
 								if ( isset( $_POST['default'][ $case_common ] ) ) {
@@ -92,6 +93,7 @@ class Create_Fields {
 									'default_value_index' => $def_value_index,
 									'multiple'            => isset( $_POST['multiple'][ $case_select ] ) ? $_POST['multiple'][ $case_select ] : 0,
 									'required'            => isset( $_POST['required'][ $key ] ) ? sanitize_text_field( $_POST['required'][ $key ] ) : '',
+									'icon'                => isset( $_POST['icon'][ $key ] ) ? sanitize_text_field( $_POST['icon'][ $key ] ) : '',
 								];
 
 								if ( ! empty( $option_values ) ) {
