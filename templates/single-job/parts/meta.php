@@ -5,8 +5,8 @@
 				<i class="<?php echo $meta['icon'];?>"></i>
 			</div>	
 			<div class="meta-content ml-3">
-				<span class="meta-label"><?php echo $meta['label']; ?></span>
-				<span class="meta-text"><?php echo $meta['content']; ?></span>
+				<h6 class="meta-label"><?php echo $meta['label']; ?></h6>
+				<p class="meta-text"><?php echo $meta['content']; ?></p>
 			</div>
 		</li>
 	<?php endforeach; ?>	
