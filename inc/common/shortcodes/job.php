@@ -50,8 +50,8 @@ class Job {
 	public function register( ) {
 
 		$shortcodes =  array(
-			'job_listing' 		=> array( $this, 'job_listing'),
-			'dashboard' 	=> array( $this, 'render_dashboard')
+			'job_listing' 		=> array( $this, 'job_listing' ),
+			'search_map'		=> array( $this, 'render_search_map' )
 		);
 
 		foreach ( $shortcodes as $tag => $shortcode ){  
@@ -95,6 +95,18 @@ class Job {
 		// echo '<Pre>' . print_r( $atts['jobs'] ,1 ) ;die;
 
 		return View::render_template( 'shortcodes/job-listing', $atts );
+	}
+
+	/**
+	 * Render Login Shortcode
+	 *
+	 * show login form and register form, forgotpass form in same box.
+	 *
+	 * @since    1.0.0
+	 */
+	public function render_search_map ( $atts ) {
+		
+		return View::render_template( 'shortcodes/search-map', $atts );
 	}
 
 }
