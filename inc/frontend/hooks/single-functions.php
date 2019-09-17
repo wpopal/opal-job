@@ -36,13 +36,14 @@ add_action( 'wp_footer', 'opaljob_apply_form_popup', 9 );
  */
 
 add_action( "opaljob_single_job_content_before" , "opaljob_display_employer_summary" );
-
 add_action( "opaljob_single_job_content_after", "opaljob_render_related_job" );
 // content sections 
 add_action( "opaljob_single_job_content_sections" , "opaljob_single_job_content_sections_content" );
 //content sidebar
-add_action( "opaljob_single_job_content_sidebar" , "opaljob_single_job_content_sections_map" );
-add_action( "opaljob_single_job_content_sidebar" , "opaljob_single_job_content_sections_job_summary" );
+add_action( "opaljob_single_job_content_sidebar" , "opaljob_single_job_content_sections_map" , 3  );
+add_action( "opaljob_single_job_content_sidebar" , "opaljob_single_job_content_sections_job_summary", 6 );
+
+add_action( "opaljob_single_job_content_sidebar" , "opaljob_single_job_meta_list", 9 );
 
 /**
  * Single Candicate Hooks to Templates
