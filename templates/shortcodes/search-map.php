@@ -6,8 +6,8 @@
 	}
 ?>
 <div id="opaljob-job-search-map">
-	<div class="job-search-map-wrapper">
-		<div class="job-search-sidebar">
+	<div class="job-search-map-wrapper opal-row">
+		<div class="job-search-sidebar col-md-4">
 			<div class="opaljob-tab">
 				<div class="job-tab-head">
 					<a href="#"><?php esc_html_e( 'Filters', 'opalestate-pro' ); ?></a>
@@ -46,16 +46,18 @@
 
 			</div>	
 		</div>	
- 	    <div class="job-search-map-preview" id="opaljob-search-map-preview" style="height:800px;">
-                <div class="mapPlaceholder">
-                	<span class="fa fa-spin fa-spinner"></span> <?php esc_html_e( 'Loading map...', 'opaljob-pro' ); ?>
-                    <div class="sk-folding-cube">
-                        <div class="sk-cube1 sk-cube"></div>
-                        <div class="sk-cube2 sk-cube"></div>
-                        <div class="sk-cube4 sk-cube"></div>
-                        <div class="sk-cube3 sk-cube"></div>
-                    </div>
-                </div>
-        </div> 
+		<div class="col-md-8">
+	 	    <div class="job-search-map-preview" id="opaljob-search-map-preview" style="height:800px;">
+	                <div class="mapPlaceholder">
+	                	<span class="fa fa-spin fa-spinner"></span> <?php esc_html_e( 'Loading map...', 'opaljob' ); ?>
+	                    <div class="sk-folding-cube">
+	                        <div class="sk-cube1 sk-cube"></div>
+	                        <div class="sk-cube2 sk-cube"></div>
+	                        <div class="sk-cube4 sk-cube"></div>
+	                        <div class="sk-cube3 sk-cube"></div>
+	                    </div>
+	                </div>
+	        </div> 
+	    </div>    
 	</div>
 </div>	

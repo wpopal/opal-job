@@ -13,6 +13,93 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+function opaljob_select_specialisms_field ( $selected='' ) {
+    $id   = 'opaljob_specialism' . rand();
+
+    $args = [
+        'show_option_none' => esc_html__( 'Specialisms', 'opaljob' ),
+        'id'               => $id,
+        'class'            => 'form-control',
+        'name'             => 'specialisms',
+        'show_count'       => 0,
+        'hierarchical'     => '',
+        'selected'         => $selected,
+        'value_field'      => 'slug',
+        'taxonomy'         => 'opaljob_specialism',
+        'orderby'          => 'name',
+        'order'            => 'ASC',
+        'echo'             => 0,
+    ];
+
+    $label = '<label class="opaljob-label opaljob-label--types" for="' . esc_attr( $id ) . '">' 
+        . esc_html__( 'Specialisms', 'opalestate-pro' ) . '</label>';
+
+    echo $label . wp_dropdown_categories( $args );
+}
+/**
+ * The args to pass to the give_get_collection() query
+ *
+ * @since  1.0
+ * @access public
+ *
+ * @var    array
+ */
+function opaljob_select_types_field ( $selected='' ) {
+
+    $id   = 'opaljob_types' . rand();
+
+    $args = [
+        'show_option_none' => esc_html__( 'Categories', 'opaljob' ),
+        'id'               => $id,
+        'class'            => 'form-control',
+        'name'             => 'types',
+        'show_count'       => 0,
+        'hierarchical'     => '',
+        'selected'         => $selected,
+        'value_field'      => 'slug',
+        'taxonomy'         => 'opaljob_types',
+        'orderby'          => 'name',
+        'order'            => 'ASC',
+        'echo'             => 0,
+    ];
+
+    $label = '<label class="opaljob-label opaljob-label--types" for="' 
+        . esc_attr( $id ) . '">' . esc_html__( 'Types', 'opalestate-pro' ) . '</label>';
+
+    echo $label . wp_dropdown_categories( $args );
+}
+/**
+ * The args to pass to the give_get_collection() query
+ *
+ * @since  1.0
+ * @access public
+ *
+ * @var    array
+ */
+function opaljob_select_category_field ( $selected='' ) {
+
+    $id   = 'opaljob_location' . rand();
+
+    $args = [
+        'show_option_none' => esc_html__( 'Categories', 'opaljob' ),
+        'id'               => $id,
+        'class'            => 'form-control',
+        'name'             => 'categories',
+        'show_count'       => 0,
+        'hierarchical'     => '',
+        'selected'         => $selected,
+        'value_field'      => 'slug',
+        'taxonomy'         => 'opaljob_category',
+        'orderby'          => 'name',
+        'order'            => 'ASC',
+        'echo'             => 0,
+    ];
+
+    $label = '<label class="opaljob-label opaljob-label--location" for="' . esc_attr( $id ) . '">' . esc_html__( 'Categories', 'opalestate-pro' ) . '</label>';
+
+    echo $label . wp_dropdown_categories( $args );
+}
+
 /**
  * The args to pass to the give_get_collection() query
  *
@@ -26,7 +113,7 @@ function opaljob_select_location_field ( $selected='' ) {
     $id   = 'opaljob_location' . rand();
 
     $args = [
-        'show_option_none' => esc_html__( 'Location', 'opaljob-pro' ),
+        'show_option_none' => esc_html__( 'Location', 'opaljob' ),
         'id'               => $id,
         'class'            => 'form-control',
         'name'             => 'location',
