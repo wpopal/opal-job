@@ -27,11 +27,11 @@ use Opal_Job\Common\Model\Query\Job_Query;
 class User {
 
 	/**
-	 * The current version of the plugin.
+	 * The get current user id.
 	 *
 	 * @since    1.0.0
-	 * @access   protected
-	 * @var      string    $version    The current version of the plugin.
+	 * @access   public
+	 * @var      string    $user_id   The user id is stored id of current id.
 	 */
 	public $user_id; 
 
@@ -53,8 +53,12 @@ class User {
 	 */
 	public $data; 
 
- 
-
+	/**
+	 * Initiator
+	 *
+	 * @since 1.0
+	 * @return object initialized object of class.
+	 */
 	public static function get_instance(){
 		static $_instance;
 		if( !$_instance ){

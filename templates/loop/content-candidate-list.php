@@ -1,6 +1,5 @@
 <?php 
 global $member;
-  //  echo '<pre>' . print_r( $member ,1 );die;
 ?>
 <article  class="candidate-list-style" data-id="job-<?php echo $job->ID; ?>">
 

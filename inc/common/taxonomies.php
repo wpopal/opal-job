@@ -1,5 +1,13 @@
 <?php
-
+/**
+ * Define 
+ * Note: only use for internal purpose.
+ *
+ * @package     OpalJob
+ * @copyright   Copyright (c) 2019, WpOpal <https://www.wpopal.com>
+ * @license     https://opensource.org/licenses/gpl-license GNU Public License
+ * @since       1.0
+ */
 namespace Opal_Job\Common;
 
 /**
@@ -24,6 +32,7 @@ class Taxonomies {
 	 * @return avoid
 	 */
 	public function definition() {
+		
 		$this->location_taxonomy();
 		$this->category_taxonomy();
 		$this->types_taxonomy();

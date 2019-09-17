@@ -3,7 +3,6 @@
 	$map    = $member->get_map();
 	
 ?>
- 
 <div class="opaljob-panel panel-section-gallery">
 	<div class="panel-heading"><h4><?php echo sprintf( esc_html__( '%s Jobs are opening', 'opaljob' ), $founds ); ?></h4></div>
 	<div class="panel-body">

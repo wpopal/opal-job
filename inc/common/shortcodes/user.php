@@ -1,4 +1,13 @@
 <?php
+/**
+ * Define 
+ * Note: only use for internal purpose.
+ *
+ * @package     OpalJob
+ * @copyright   Copyright (c) 2019, WpOpal <https://www.wpopal.com>
+ * @license     https://opensource.org/licenses/gpl-license GNU Public License
+ * @since       1.0
+ */
 
 namespace Opal_Job\Common\Shortcodes;
 
@@ -16,7 +25,7 @@ use Opal_Job\Core\View;
  **/
 class User { 
 
-	 public static $instance;
+	public static $instance;
 
 	/**
 	 * Allows for accessing single instance of class. Class should only be constructed once per call.

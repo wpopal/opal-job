@@ -201,7 +201,7 @@ class User_Entity {
 	 * @return string
 	 */
 	public function get_map() {
-		return "haa";
+		return $this->get_meta( 'map' );
 	}
 
 	/**

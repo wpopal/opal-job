@@ -148,6 +148,24 @@ function opaljob_single_job_content_sections_content() {
      opaljob_render_template( 'single-job/parts/job-content' );
 }
 
+
+
+function opaljob_single_job_meta_list () {
+    global $job; 
+    
+    $metas = array();
+
+    $metas[]  = array(
+        'icon'    => 'fa fa-gear',
+        'label'   => esc_html__( 'Offerd Salary', 'opaljob' ),
+        'content' => '400$ - 990$'
+    );
+
+    $metas =  apply_filters( 'opaljob_single_meta_list', $metas )  ; 
+
+    opaljob_render_template( 'single-job/parts/meta', array( 'metas' => $metas ) );
+}
+
 /**
  * The args to pass to the give_get_collection() query
  *
@@ -157,7 +175,7 @@ function opaljob_single_job_content_sections_content() {
  * @var    array
  */
 function opaljob_single_job_content_sections_map() {
-     opaljob_render_template( 'single-job/parts/map' );
+    opaljob_render_template( 'single-job/parts/map' );
 }
 
 /**
@@ -170,31 +188,8 @@ function opaljob_single_job_content_sections_map() {
  */
 function opaljob_single_job_content_sections_job_summary() {
     
-    $summaries = array();
-    $summaries[] =  array(
-                'icon'   => 'fa fa-gear',
-                'label'  => esc_html__( "Date Posted", "opaljob" ),
-                'value'  => '17/12/8888'
-    );
 
-    $summaries[] = array(
-                'icon'   => 'fa fa-gear',
-                'label'  => esc_html__( "Date Posted", "opaljob" ),
-                'value'  => '17/12/8888'
-    );
-
-    $summaries[] = array(
-                'icon'   => 'fa fa-gear',
-                'label'  => esc_html__( "Date Posted", "opaljob" ),
-                'value'  => '17/12/8888'
-    );
-
-    $summaries[] = array(
-                'icon'   => 'fa fa-gear',
-                'label'  => esc_html__( "Date Posted", "opaljob" ),
-                'value'  => '17/12/8888'
-    );
-    opaljob_render_template( 'single-job/parts/job-summary' , array('summaries'=> $summaries ) );
+    opaljob_render_template( 'single-job/parts/job-summary' );
 }
 
 /**

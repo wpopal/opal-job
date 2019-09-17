@@ -13,14 +13,14 @@
  *
  * @wordpress-plugin
  * Plugin Name:       Opal Job
- * Plugin URI:        http://wpopal.com/wp-plugin-name-uri/
+ * Plugin URI:        http://wpopal.com/opal-job-uri/
  * Description:       This is a short description of what the plugin does. It's displayed in the WordPress admin area.
  * Version:           1.0.0
  * Author:            WpOpal
  * Author URI:        http://wpopal.com/
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
- * Text Domain:       wp-plugin-name
+ * Text Domain:       opal-job
  * Domain Path:       /languages
  */
 
@@ -35,12 +35,12 @@ if ( ! defined( 'WPINC' ) ) {
  * Define Constants
  */
 
-define( 'OPAL_JOB', 'wp-plugin-name' );
+define( 'OPAL_JOB', 'opal-job' );
 define( 'OPAL_JOB_VERSION', '1.0.0' );
 define( 'OPAL_JOB_DIR', plugin_dir_path( __FILE__ ) );
 define( 'OPAL_JOB_URL', plugin_dir_url( __FILE__ ) );
 define( 'OPAL_JOB_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
-define( 'OPAL_JOB_PLUGIN_TEXT_DOMAIN', 'wp-plugin-name' );
+define( 'OPAL_JOB_PLUGIN_TEXT_DOMAIN', 'opal-job' );
 
 define( 'OPAL_JOB_METABOX_PREFIX', '_' );
 
@@ -67,6 +67,10 @@ register_activation_hook( __FILE__, array( 'Opal_Job\Core\Activator', 'activate'
 
 register_deactivation_hook( __FILE__, array( 'Opal_Job\Core\Deactivator', 'deactivate' ) );
 
+if ( ! defined( "OPALJOB_CLUSTER_ICON_URL" ) ) {
+	define( 'OPALJOB_CLUSTER_ICON_URL', apply_filters( 'opalestate_cluster_icon_url',
+				OPAL_JOB_URL . 'assets/images/cluster-icon.png' ) );
+}
 
 /**
  * Plugin Singleton Container

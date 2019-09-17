@@ -65,6 +65,8 @@ class Form_Builder implements Intergration {
 	public function register_frontend_actions() {
 		if ( is_admin() ) {
 			add_action( 'admin_menu', [ $this, 'admin_menu' ], 8 );
+		} else {
+			add_filter( 'opaljob_single_meta_list', [$this, 'render_meta_list'] );
 		}
 	}
 
@@ -131,6 +133,7 @@ class Form_Builder implements Intergration {
 	 * @return array
 	 */
 	public function add_meta_employer_fields ( $settings ) {
+
 		$option_key = 'opaljob_builder_employer';
 		$options = get_option( $option_key );
 
@@ -179,6 +182,26 @@ class Form_Builder implements Intergration {
 
 		$form = new Create_Fields( $option_key );
 		$form->save();
+	}
+
+
+	public function render_meta_list( $metas ) {
+		global $job; 
+
+		$option_key = 'opaljob_builder_job';
+		$options = get_option( $option_key );
+ 
+ 		if ( $options ) {
+ 			foreach ( $options as $key => $value ) {
+ 				$metas[] = array(
+ 					'icon'    => isset( $value['icon'] ) ? $value['icon'] : "fa fa-gear",
+ 					'label'   => $value['name'],
+ 					'content' => get_post_meta( $job->ID, $value['id'] , true )
+ 				);
+ 			}
+ 		}
+
+ 		return $metas; 
 	}
 
 	/**

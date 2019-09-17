@@ -81,7 +81,7 @@ class User extends Controller {
 		// 
 		add_action( "opaljob/dashboard/tab_content/changepassword", array( $this, 'render_dashboard_changepassword' ) );
 		/////// 
-
+		add_action( 'wp_footer', array( $this, 'apply_form_popup') );
 		// process login and register 
 		add_action( 'init', array( $this, 'process_login' ) );
 		add_action( 'init', array( $this, 'process_register' ) );
@@ -97,6 +97,49 @@ class User extends Controller {
 
 	}	
 
+	/**
+	 * Process Save Data Post Profile
+	 *
+	 *	Display Sidebar on left side and next is main content 
+	 *
+	 * @since 1.0
+	 *
+	 * @return string
+	 */
+	public function apply_form_popup () {
+
+		if( is_single_job() ){
+
+			global $job; 
+
+			$member = $job->get_employer();
+			$fields = array();  
+
+			$fields = $this->get_model()->get_apply_form_fields( get_the_ID(), $member->ID );
+
+
+			$form = Form::get_instance();
+			$form->set_type( 'custom' );
+			$args = [];
+			
+			$args = array(
+				'form' 	 => $form ,
+				'fields' => $fields
+			);
+
+	        echo View::render_template( 'user/apply-job-popup', $args );
+	    }
+	}
+
+	/**
+	 * Process Save Data Post Profile
+	 *
+	 *	Display Sidebar on left side and next is main content 
+	 *
+	 * @since 1.0
+	 *
+	 * @return string
+	 */
 	public function load_role_control () {
 		if( $this->get_control() ) {
 			$this->control->register_hook_callbacks();
