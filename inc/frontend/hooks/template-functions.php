@@ -188,32 +188,8 @@ function opaljob_single_job_content_sections_map() {
  */
 function opaljob_single_job_content_sections_job_summary() {
     
-    $summaries = array();
-    $summaries[] =  array(
-                'icon'   => 'fa fa-gear',
-                'label'  => esc_html__( "Date Posted", "opaljob" ),
-                'value'  => '17/12/8888'
-    );
 
-    $summaries[] = array(
-                'icon'   => 'fa fa-gear',
-                'label'  => esc_html__( "Date Posted", "opaljob" ),
-                'value'  => '17/12/8888'
-    );
-
-    $summaries[] = array(
-                'icon'   => 'fa fa-gear',
-                'label'  => esc_html__( "Date Posted", "opaljob" ),
-                'value'  => '17/12/8888'
-    );
-
-    $summaries[] = array(
-                'icon'   => 'fa fa-gear',
-                'label'  => esc_html__( "Date Posted", "opaljob" ),
-                'value'  => '17/12/8888'
-    );
-
-    opaljob_render_template( 'single-job/parts/job-summary' , array('summaries'=> $summaries ) );
+    opaljob_render_template( 'single-job/parts/job-summary' );
 }
 
 /**

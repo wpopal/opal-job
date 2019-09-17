@@ -1,3 +1,30 @@
+<?php 
+	
+	$summaries = array();
+    $summaries[] =  array(
+                'icon'   => 'fa fa-gear',
+                'label'  => esc_html__( "Date Posted", "opaljob" ),
+                'value'  => '17/12/8888'
+    );
+
+    $summaries[] = array(
+                'icon'   => 'fa fa-gear',
+                'label'  => esc_html__( "Date Posted", "opaljob" ),
+                'value'  => '17/12/8888'
+    );
+
+    $summaries[] = array(
+                'icon'   => 'fa fa-gear',
+                'label'  => esc_html__( "Date Posted", "opaljob" ),
+                'value'  => '17/12/8888'
+    );
+
+    $summaries[] = array(
+                'icon'   => 'fa fa-gear',
+                'label'  => esc_html__( "Date Posted", "opaljob" ),
+                'value'  => '17/12/8888'
+    );
+?>
 <div class="job-summary">
 	<?php foreach( $summaries as $summary ): ?>
 	<div class="summary-item">
