@@ -106,6 +106,30 @@ class Job {
 	 */
 	public function render_search_map ( $atts ) {
 		
+		$default = array(
+			'show_pagination' => '',
+			'show_more' 	  => '',
+			'show_categories' => '',
+			'show_featured'   => '',
+			'layout'		  => 'content-job-grid',
+			'items_per_grid'  => 1,
+			'grid_class'	  => '',
+		);   
+		
+		$atts  = is_array( $atts ) ? $atts  : array();
+		$atts = array_merge( $default, $atts ); 
+
+		$query = new Job_Query(
+			array(
+				'posts_per_page'      => 4,
+				'post_status' 	      => 'publish',
+				'paged'			      => 2
+			)
+		); 
+
+		$atts['jobs']  = $query->get_list();
+		$atts['count'] =  1; //count( $atts['jobs'] ); //$query->get_count(); 
+		
 		return View::render_template( 'shortcodes/search-map', $atts );
 	}
 
