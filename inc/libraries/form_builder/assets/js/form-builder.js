@@ -25,6 +25,10 @@ jQuery( document ).ready( function ( $ ) {
 
     form_key_change();
 
+    etfields_container.find( '.opaljob-iconpicker' ).each( function () {
+        $( this ).fontIconPicker();
+    } );
+
     etfields_container.on( 'click', '.panel-title', function ( e ) {
         e.preventDefault();
         $( this ).closest( '.panel-group' ).find( '.panel-body' ).slideToggle();

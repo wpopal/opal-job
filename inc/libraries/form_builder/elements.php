@@ -1,15 +1,24 @@
 <?php
 namespace Opal_Job\Libraries\Form_Builder;
 
+use Opal_Job\Libraries\Form\Field\Fontawesome;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
 class Elements {
 	/**
+	 * @var
+	 */
+	public $icon_data;
+
+	/**
 	 * Elements constructor.
 	 */
 	public function __construct() {
+		$icons           = new Fontawesome();
+		$this->icon_data = $icons->get_icons();
 	}
 
 	/**
@@ -25,6 +34,7 @@ class Elements {
 			'default'     => '',
 			'placeholder' => '',
 			'required'    => '',
+			'icon'        => '',
 		];
 
 		$args = array_merge( $default, $args );
@@ -52,6 +62,8 @@ class Elements {
 					<?php $this->render_default( $default ); ?>
 
 					<?php $this->render_required( $required ); ?>
+
+					<?php $this->render_icon( $icon ); ?>
                 </div>
             </div>
             <input type="hidden" name="type[]" value="text"/>
@@ -71,6 +83,7 @@ class Elements {
 			'description' => '',
 			'default'     => '',
 			'required'    => '',
+			'icon'        => '',
 		];
 
 		$args = array_merge( $default, $args );
@@ -96,6 +109,8 @@ class Elements {
 					<?php $this->render_default( $default ); ?>
 
 					<?php $this->render_required( $required ); ?>
+
+					<?php $this->render_icon( $icon ); ?>
                 </div>
             </div>
             <input type="hidden" name="type[]" value="textarea"/>
@@ -116,6 +131,7 @@ class Elements {
 			'default'     => '',
 			'placeholder' => '',
 			'required'    => '',
+			'icon'        => '',
 		];
 
 		$args = array_merge( $default, $args );
@@ -144,6 +160,8 @@ class Elements {
 					<?php $this->render_default( $default ); ?>
 
 					<?php $this->render_required( $required ); ?>
+
+					<?php $this->render_icon( $icon ); ?>
                 </div>
             </div>
             <input type="hidden" name="type[]" value="date"/>
@@ -166,6 +184,7 @@ class Elements {
 			'options'     => [],
 			'multiple'    => 0,
 			'required'    => '',
+			'icon'        => '',
 		];
 
 		$args = array_merge( $default, $args );
@@ -246,6 +265,8 @@ class Elements {
                     </div>
 
 					<?php $this->render_required( $required ); ?>
+
+					<?php $this->render_icon( $icon ); ?>
                 </div>
             </div>
             <input type="hidden" name="type[]" value="select"/>
@@ -311,6 +332,7 @@ class Elements {
 			'description' => '',
 			'default'     => '',
 			'required'    => '',
+			'icon'        => '',
 		];
 
 		$args = array_merge( $default, $args );
@@ -344,6 +366,8 @@ class Elements {
                     </div>
 
 					<?php $this->render_required( $required ); ?>
+
+					<?php $this->render_icon( $icon ); ?>
                 </div>
             </div>
             <input type="hidden" name="type[]" value="checkbox"/>
@@ -453,6 +477,30 @@ class Elements {
                 <select name="required[]" class="form-control etf-in">
                     <option value="" <?php selected( $value, '' ); ?>><?php esc_html_e( 'No', 'opaljob' ); ?></option>
                     <option value="yes" <?php selected( $value, 'yes' ); ?>><?php esc_html_e( 'Yes', 'opaljob' ); ?></option>
+                </select>
+            </div>
+        </div>
+		<?php
+	}
+
+	/**
+	 * Render required.
+	 *
+	 * @param $value
+	 */
+	protected function render_icon( $value ) {
+		wp_enqueue_script( 'fonticonpicker' );
+		?>
+        <div class="form-group-field">
+            <label class="control-label label-field"><?php esc_html_e( 'Icon', 'opaljob' ); ?></label>
+            <div class="content-field">
+                <select name="icon[]" class="opaljob-iconpicker form-control etf-in">
+					<?php
+					foreach ( $this->icon_data as $icon_item ) {
+						$full_icon_class = $icon_item['prefix'] . ' ' . $icon_item['class'];
+						echo '<option value="' . $full_icon_class . '" ' . selected( $full_icon_class, $value, false ) . '>' . esc_html( $icon_item['class'] ) . '</option>';
+					}
+					?>
                 </select>
             </div>
         </div>
