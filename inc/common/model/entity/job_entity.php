@@ -135,6 +135,7 @@ class Job_Entity {
 
 		$job = WP_Post::get_instance( $_id );
 		$this->ID = $_id;
+		$this->map = $this->get_meta( 'map' );
 		return $this->setup( $job );
 	}
 
