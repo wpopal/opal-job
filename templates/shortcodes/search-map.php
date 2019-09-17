@@ -12,9 +12,10 @@
 				<div class="job-tab-head">
 					<a href="#"><?php esc_html_e( 'Filters', 'opalestate-pro' ); ?></a>
 				</div>
+				<?php echo opaljob_render_template( 'search-form/horizontal-v1' ); ?>	 
 			</div>	
 
-			<div class="opaljob-collection-results">
+			<div class="opaljob-collection-results"  style="display:none">
 				<div class="opaljob-job-listing">
 					<div class="job-listing-wrapper">
 						<?php if( $count > 0 ) : ?>

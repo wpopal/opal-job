@@ -13,15 +13,55 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+/**
+ * The args to pass to the give_get_collection() query
+ *
+ * @since  1.0
+ * @access public
+ *
+ * @var    array
+ */
+function opaljob_select_location_field ( $selected='' ) {
+
+    $id   = 'opaljob_location' . rand();
+
+    $args = [
+        'show_option_none' => esc_html__( 'Location', 'opaljob-pro' ),
+        'id'               => $id,
+        'class'            => 'form-control',
+        'name'             => 'location',
+        'show_count'       => 0,
+        'hierarchical'     => '',
+        'selected'         => $selected,
+        'value_field'      => 'slug',
+        'taxonomy'         => 'opaljob_location',
+        'orderby'          => 'name',
+        'order'            => 'ASC',
+        'echo'             => 0,
+    ];
+
+    $label = '<label class="opaljob-label opaljob-label--location" for="' . esc_attr( $id ) . '">' . esc_html__( 'Location', 'opalestate-pro' ) . '</label>';
+
+    echo $label . wp_dropdown_categories( $args );
+}
+
+/**
+ * The args to pass to the give_get_collection() query
+ *
+ * @since  1.0
+ * @access public
+ *
+ * @var    array
+ */
 function opaljob_display_member_social_icons () {
     global $member; 
     $socials = array(
-        'facebook' => $member->get_meta( 'facebook' ),
-        'twitter' => $member->get_meta( 'twitter' ),
+        'facebook'  => $member->get_meta( 'facebook' ),
+        'twitter'   => $member->get_meta( 'twitter' ),
         'pinterest' => $member->get_meta( 'pinterest' ),
-        'google' => $member->get_meta( 'google' ),
+        'google'    => $member->get_meta( 'google' ),
         'instagram' => $member->get_meta( 'instagram' ),
-        'linkedIn' => $member->get_meta( 'linkedIn' )
+        'linkedIn'  => $member->get_meta( 'linkedIn' )
     );    
     opaljob_render_template( 'common/social-icons', $socials );
 }
@@ -32,12 +72,26 @@ if ( ! function_exists( "opaljob_login_register_form_popup" ) ) {
     }
 }
 
-
+/**
+ * The args to pass to the give_get_collection() query
+ *
+ * @since  1.0
+ * @access public
+ *
+ * @var    array
+ */
 function opaljob_apply_form_popup() {
     
 }
 
-
+/**
+ * The args to pass to the give_get_collection() query
+ *
+ * @since  1.0
+ * @access public
+ *
+ * @var    array
+ */
 function opaljob_render_related_job () {
     $module = new \Opal_Job\Common\Module\Related_Job();
     $module->render();
@@ -55,6 +109,14 @@ function opaljob_display_enquiry_form() {
 	opaljob_render_template( 'messages/enquiry-form' );
 }
 
+/**
+ * The args to pass to the give_get_collection() query
+ *
+ * @since  1.0
+ * @access public
+ *
+ * @var    array
+ */
 function opaljob_following_button( $atts ) {   
     opaljob_render_template( 'single-employer/parts/following-button' ,$atts );
 }
@@ -82,29 +144,66 @@ function opaljob_display_candidate_contact_form() {
     opaljob_render_template( 'messages/contact-form', $args );
 }
 
+/**
+ * The args to pass to the give_get_collection() query
+ *
+ * @since  1.0
+ * @access public
+ *
+ * @var    array
+ */
 function opaljob_single_candidate_content_section_navbar () {
     opaljob_render_template( 'single-candidate/parts/navbar' );
 }
 
+/**
+ * The args to pass to the give_get_collection() query
+ *
+ * @since  1.0
+ * @access public
+ *
+ * @var    array
+ */
 function opaljob_single_candidate_content_section_meta () {
     opaljob_render_template( 'single-candidate/parts/meta' );
 }
 
-
+/**
+ * The args to pass to the give_get_collection() query
+ *
+ * @since  1.0
+ * @access public
+ *
+ * @var    array
+ */
 function opaljob_single_candidate_content_section_content() {
     opaljob_render_template( 'single-candidate/parts/content' );
 }
 
-
+/**
+ * The args to pass to the give_get_collection() query
+ *
+ * @since  1.0
+ * @access public
+ *
+ * @var    array
+ */
 function opaljob_single_candidate_content_section_summary () {
     opaljob_render_template( 'single-candidate/parts/summary' );
 }
 
+/**
+ * The args to pass to the give_get_collection() query
+ *
+ * @since  1.0
+ * @access public
+ *
+ * @var    array
+ */
 function opaljob_single_candidate_content_section_resume () {
     opaljob_render_template( 'single-candidate/parts/resume' );
 }
  
-
 /////////////////////////// Employer Templates functions ////////////////////////////
 
 /**
