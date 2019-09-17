@@ -22,3 +22,4 @@
 	</article><!-- #post-<?php the_ID(); ?> -->
 </div>
 <?php do_action( 'opaljob_single_candidate_content_after' ); ?>
+<?php do_action( 'opaljob_single_comment_employer_form'  ); ?>

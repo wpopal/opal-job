@@ -17,3 +17,6 @@
 	</article>
 </div>
 <?php do_action( 'opaljob_single_employer_content_after' ); ?>
+<?php do_action( 'opaljob_single_comment_employer_form'  ); ?>
+ha cong tien
+ <?php comments_template(); ?>

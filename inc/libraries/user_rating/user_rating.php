@@ -25,9 +25,13 @@ class User_Rating {
 	 * Post_Type constructor.
 	 */
 	public function __construct() {
+		
 		new Post_Type();
-		new Metabox();
-		new Settings();
-		new Columns();
+
+		if( is_admin() ) {
+			new Metabox();
+			new Settings();
+			new Columns();
+		}
 	}
 }
