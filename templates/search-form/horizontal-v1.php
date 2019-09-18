@@ -1,6 +1,6 @@
 <div class="opaljob-horizontal-form v1">
 	<div class="inner">
-		<form action="" method="post">
+		<form action="" class="opaljob-form-search-jobs" method="get">
 			<div class="form-group">
 				<?php opaljob_render_template( 'search-form/fields/search-text' ); ?>	
 			</div>

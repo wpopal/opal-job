@@ -205,17 +205,31 @@ var Opaljob_Search =  {
     },
 	trigger:function () {
 
-		if( $("#opaljob-search-map-preview").length > 0 )  { 
+        var updateMaps = function ( data ) {
+            if( $("#opaljob-search-map-preview").length > 0 )  { 
+                var page = 0;
+                var localURL = location.search.substr(1)+"&action=opaljob_get_jobs_map&paged="+page;
 
-            var page = 0;
-            var localURL = location.search.substr(1)+"&action=opaljob_get_jobs_map&paged="+page;
-       //     alert( localURL );
-            Opaljob_Search.updatePreviewGoogleMap( localURL );
-            // 
-		}
+                if( data ) { 
+                    localURL += '&' + data; 
+                }
 
+                Opaljob_Search.updatePreviewGoogleMap( localURL );
+            } 
+        }
+	    updateMaps( null );   
+
+        $('form.opaljob-form-search-jobs').submit( function ( ){  
+            if( $("#opaljob-search-map-preview").length > 0 ) {
+                
+                var params = $( this ).serialize();
+                updateMaps( params );
+                
+                return false;
+            }    
+            return false; 
+        } );
 	}
- 
 }
 
 

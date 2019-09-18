@@ -90,9 +90,7 @@ class Job {
 		); 
 
 		$atts['jobs']  = $query->get_list();
-		$atts['count'] =  1; //count( $atts['jobs'] ); //$query->get_count(); 
-
-		// echo '<Pre>' . print_r( $atts['jobs'] ,1 ) ;die;
+		$atts['count'] =  1; 
 
 		return View::render_template( 'shortcodes/job-listing', $atts );
 	}
@@ -131,7 +129,7 @@ class Job {
 		); 
 
 		$atts['jobs']  = $query->get_list();
-		$atts['count'] =  1; //count( $atts['jobs'] ); //$query->get_count(); 
+		$atts['count'] =  1; 
 		
 		return View::render_template( 'shortcodes/search-map', $atts );
 	}
