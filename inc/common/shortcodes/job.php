@@ -106,6 +106,9 @@ class Job {
 	 */
 	public function render_search_map ( $atts ) {
 		
+		wp_enqueue_script( 'infobox' );
+		wp_enqueue_script( 'markerclusterer' );
+
 		$default = array(
 			'show_pagination' => '',
 			'show_more' 	  => '',
