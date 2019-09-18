@@ -417,16 +417,17 @@ function opaljob_single_employer_content_section_navbar () {
 
 
 ///////// Search Listing Job ////////
-function oplajob_render_search_map_jobs( $jobs, $count , $_layout ) { ?>
+function oplajob_render_search_map_jobs( $query, $_layout ) { ?>
     <div class="opaljob-job-listing">
         <div class="job-listing-wrapper">
-            <?php if( $count > 0 ) : ?>
+            <?php if( $query->found_posts > 0 ) : ?>
                 <div class="job-listing opal-row-list">
-                    <?php foreach( $jobs as $_job ): global $job; $job = $_job; ?>
+                    <?php while ( $query->have_posts() ) : $query->the_post(); ?>
+                    <?php  global $job; $job = opaljob_new_job_object ( get_the_ID() ); ?>
                         <div class="job-items">
                             <?php opaljob_render_template( 'loop/'.$_layout  ); ?>
                         </div>
-                    <?php endforeach; ?>    
+                    <?php endwhile; ?>    
                 </div>  
             <?php else : ?>
             <div class="job-no-results">

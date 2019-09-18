@@ -203,6 +203,16 @@ var Opaljob_Search =  {
             }
         });
     },
+    updateResults:function( url ) {
+        $.ajax({
+            type: 'GET',
+            url: opaljobJS.ajaxurl,
+            data:  url,
+            success: function(data) {
+               $("#opaljob-collection-results").html( data );
+            }
+        });
+    },
 	triggerSearchJobs:function () {
         /////////////
         if( $("#opaljob-search-map-preview").length > 0 ) {
@@ -217,13 +227,27 @@ var Opaljob_Search =  {
 
                     Opaljob_Search.updatePreviewGoogleMap( localURL );
                 } 
-            }
+            };
+            
+            var updateResults = function ( data ) {
+                if( $("#opaljob-collection-results").length > 0 )  {  
+                    var page = 0;
+                    var localURL = location.search.substr(1)+"&action=opaljob_get_html_search_jobs&paged="+page;
+
+                    if( data ) { 
+                        localURL += '&' + data; 
+                    }
+
+                    Opaljob_Search.updateResults( localURL );
+                } 
+            };
+
     	    updateMaps( null );   
 
             $('form.opaljob-form-search-jobs').submit( function ( ){  
                 var params = $( this ).serialize();
                 updateMaps( params );
-                
+                updateResults( params );
                 if (history.pushState) {  
                     var ps     = $(this).serialize(); 
                     var newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?'+ ps;

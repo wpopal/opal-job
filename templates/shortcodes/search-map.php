@@ -13,8 +13,8 @@
 				<?php echo opaljob_render_template( 'search-form/horizontal-v1' ); ?>	 
 			</div>	
 
-			<div class="opaljob-collection-results">
-				<?php oplajob_render_search_map_jobs( $jobs , $count, $_layout ); ?>
+			<div id="opaljob-collection-results">
+				<?php oplajob_render_search_map_jobs( $query, $_layout ); ?>
 			</div>	
 		</div>	
 		<div class="col-md-8">

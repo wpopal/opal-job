@@ -49,8 +49,8 @@ class Job  extends Controller {
 	 */
 	public function register_ajax_hook_callbacks () {
  
-		add_action( 'wp_ajax_opaljob_get_jobs_map', array($this,'get_jobs_map') );
- 
+		add_action( 'wp_ajax_opaljob_get_jobs_map', array($this,'get_json_jobs_map') );
+ 		add_action( 'wp_ajax_opaljob_get_html_search_jobs', array($this,'get_html_search_jobs') );
 	}
 
 	/**
@@ -94,17 +94,7 @@ class Job  extends Controller {
 		echo View::render_template( "common/job/by-employer", array( 'jobs' =>  $jobs, 'founds' => 12 ) );
 	}
 
-	/**
-	 * Process Save Data Post Profile
-	 *
-	 *	Display Sidebar on left side and next is main content 
-	 *
-	 * @since 1.0
-	 *
-	 * @return string
-	 */
-	public function get_jobs_map () {
-		
+	private function get_params_by_request () {
 		$posts_per_page = 10; 
 		$paged = 1;
 
@@ -127,8 +117,23 @@ class Job  extends Controller {
 			}
 		}
 
+		return $args;
+	}
 
-		$query = Job_Query::get_job_query( $args ); 
+	/**
+	 * Process Save Data Post Profile
+	 *
+	 *	Display Sidebar on left side and next is main content 
+	 *
+	 * @since 1.0
+	 *
+	 * @return string
+	 */
+	public function get_json_jobs_map () {
+		
+		$args   = $this->get_params_by_request ();
+
+		$query  = Job_Query::get_job_query( $args ); 
 
 		$output = [];
 
@@ -142,6 +147,24 @@ class Job  extends Controller {
 
 		echo json_encode( $output );
 		exit;
+	}
+
+	/**
+	 * Process Save Data Post Profile
+	 *
+	 *	Display Sidebar on left side and next is main content 
+	 *
+	 * @since 1.0
+	 *
+	 * @return string
+	 */
+	public function get_html_search_jobs () {
+
+		$args   = $this->get_params_by_request ();
+
+		$query  = Job_Query::get_job_query( $args ); 
+
+		echo oplajob_render_search_map_jobs( $query, 'content-job-search-map' );die;
 	}
 	
 }

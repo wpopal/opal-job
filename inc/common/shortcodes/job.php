@@ -120,16 +120,9 @@ class Job {
 		$atts  = is_array( $atts ) ? $atts  : array();
 		$atts = array_merge( $default, $atts ); 
 
-		$query = new Job_Query(
-			array(
-				'posts_per_page'      => 4,
-				'post_status' 	      => 'publish',
-				'paged'			      => 2
-			)
-		); 
+		$query = Job_Query::get_job_query(); 
 
-		$atts['jobs']  = $query->get_list();
-		$atts['count'] =  1; 
+		$atts['query']  = $query;
 		
 		return View::render_template( 'shortcodes/search-map', $atts );
 	}
