@@ -104,6 +104,28 @@ class Job {
 	 */
 	public function render_search_map ( $atts ) {
 		
+		$posts_per_page = 10; 
+		$paged = 1;
+
+		$args = [
+	 		'posts_per_page' => $posts_per_page,
+		 	'paged'          => $paged 
+		];
+
+		$gets = array(
+			'location'  	=> 'location',
+			'types' 		=> 'types',
+			'categories'	=> 'categories',
+			'specialism'	=> 'specialism',
+			'tag'			=> 'tags'
+		); 
+
+		foreach ( $gets as $key =>  $get ) {
+			if( isset($_GET[$get]) && $_GET[$get] != -1 ) {
+				$args[$key] =  $_GET[$get];
+			}
+		}
+
 		wp_enqueue_script( 'infobox' );
 		wp_enqueue_script( 'markerclusterer' );
 
@@ -120,7 +142,7 @@ class Job {
 		$atts  = is_array( $atts ) ? $atts  : array();
 		$atts = array_merge( $default, $atts ); 
 
-		$query = Job_Query::get_job_query(); 
+		$query = Job_Query::get_job_query( $args ); 
 
 		$atts['query']  = $query;
 		

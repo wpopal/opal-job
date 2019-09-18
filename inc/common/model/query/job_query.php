@@ -164,7 +164,6 @@ class Job_Query extends Query_Base {
 	 */
 	public static function get_job_query( $args=array() ){
 
-		
 		$condition = array(
 			'post_type'         => 'opaljob_job',
 			'post_status'		=> 'publish',

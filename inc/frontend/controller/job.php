@@ -160,11 +160,7 @@ class Job  extends Controller {
 	 */
 	public function get_html_search_jobs () {
 
-		$args   = $this->get_params_by_request ();
-
-		$query  = Job_Query::get_job_query( $args ); 
-
-		echo oplajob_render_search_map_jobs( $query, 'content-job-search-map' );die;
+		echo do_shortcode( "[opaljob_search_map]" ); die;
 	}
 	
 }

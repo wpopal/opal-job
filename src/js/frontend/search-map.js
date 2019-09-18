@@ -209,7 +209,9 @@ var Opaljob_Search =  {
             url: opaljobJS.ajaxurl,
             data:  url,
             success: function(data) {
-               $("#opaljob-collection-results").html( data );
+                var html = $( data );  
+                var content = html.find(".opaljob-collection-results").html() 
+               $(".opaljob-collection-results").html( content );
             }
         });
     },
@@ -230,14 +232,14 @@ var Opaljob_Search =  {
             };
             
             var updateResults = function ( data ) {
-                if( $("#opaljob-collection-results").length > 0 )  {  
+                if( $(".opaljob-collection-results").length > 0 )  {  
                     var page = 0;
                     var localURL = location.search.substr(1)+"&action=opaljob_get_html_search_jobs&paged="+page;
 
                     if( data ) { 
                         localURL += '&' + data; 
                     }
-
+       
                     Opaljob_Search.updateResults( localURL );
                 } 
             };
