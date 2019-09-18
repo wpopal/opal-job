@@ -160,12 +160,45 @@ class User {
 		return View::render_template( 'shortcodes/employer-listing', $atts );
 	}
 
+	/**
+	 * Render Login Shortcode
+	 *
+	 * show login form and register form, forgotpass form in same box.
+	 *
+	 * @since    1.0.0
+	 */
+	public function render_search_candidates ( $atts ) {
+		$default = array(
+			'show_pagination' => '',
+			'show_more' 	  => '',
+			'show_categories' => '',
+			'show_featured'   => '',
+			'layout'		  => 'content-candidate-list',
+			'items_per_grid'  => 1,
+			'grid_class'	  => '',
+		);   
 
-	public function render_search_candidates () {
+		$query = new User_Query(); 
 
+		$atts  = is_array( $atts ) ? $atts  : array();
+		$atts = array_merge( $default, $atts ); 
+
+
+		$members = $query->get_list_candidates(); 
+		$atts['members'] = $members; 
+		$atts['count']	 = 10;
+
+		return View::render_template( 'shortcodes/search-map-candidates', $atts );
 	}
 
+	/**
+	 * Render Login Shortcode
+	 *
+	 * show login form and register form, forgotpass form in same box.
+	 *
+	 * @since    1.0.0
+	 */
 	public function render_search_employers () {
-		
+
 	}
 }
