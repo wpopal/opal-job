@@ -159,4 +159,13 @@ class User {
 
 		return View::render_template( 'shortcodes/employer-listing', $atts );
 	}
+
+
+	public function render_search_candidates () {
+
+	}
+
+	public function render_search_employers () {
+		
+	}
 }

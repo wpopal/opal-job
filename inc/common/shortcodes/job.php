@@ -140,7 +140,7 @@ class Job {
 		);   
 		
 		$atts  = is_array( $atts ) ? $atts  : array();
-		$atts = array_merge( $default, $atts ); 
+		$atts  = array_merge( $default, $atts ); 
 
 		$query = Job_Query::get_job_query( $args ); 
 
