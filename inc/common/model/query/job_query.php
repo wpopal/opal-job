@@ -252,7 +252,7 @@ class Job_Query extends Query_Base {
 			}	
  	 	}
 
-  
+
 		$query =  new WP_Query( $condition );
 
 		wp_reset_postdata();
