@@ -8,7 +8,7 @@
 	<?php foreach ( $sps as $tax ): ?>
 	<div class="more-options-item">
 	    <label class="more-options-label">
-	        <input type="checkbox" name="tags[]" value="<?php echo esc_attr( $tax->slug ); ?>">
+	        <input type="checkbox" name="tags[]" class="form-checkbox-control" value="<?php echo esc_attr( $tax->slug ); ?>">
 	        <?php echo esc_html( $tax->name ); ?>
 	    </label>
 	</div>

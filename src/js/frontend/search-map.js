@@ -204,31 +204,37 @@ var Opaljob_Search =  {
         });
     },
 	trigger:function () {
+        /////////////
+        if( $("#opaljob-search-map-preview").length > 0 ) {
+            var updateMaps = function ( data ) {
+                if( $("#opaljob-search-map-preview").length > 0 )  { 
+                    var page = 0;
+                    var localURL = location.search.substr(1)+"&action=opaljob_get_jobs_map&paged="+page;
 
-        var updateMaps = function ( data ) {
-            if( $("#opaljob-search-map-preview").length > 0 )  { 
-                var page = 0;
-                var localURL = location.search.substr(1)+"&action=opaljob_get_jobs_map&paged="+page;
+                    if( data ) { 
+                        localURL += '&' + data; 
+                    }
 
-                if( data ) { 
-                    localURL += '&' + data; 
-                }
+                    Opaljob_Search.updatePreviewGoogleMap( localURL );
+                } 
+            }
+    	    updateMaps( null );   
 
-                Opaljob_Search.updatePreviewGoogleMap( localURL );
-            } 
-        }
-	    updateMaps( null );   
-
-        $('form.opaljob-form-search-jobs').submit( function ( ){  
-            if( $("#opaljob-search-map-preview").length > 0 ) {
-                
+            $('form.opaljob-form-search-jobs').submit( function ( ){  
                 var params = $( this ).serialize();
                 updateMaps( params );
-                
-                return false;
-            }    
-            return false; 
-        } );
+                return false; 
+            } );
+            
+            $('form.opaljob-form-search-jobs .form-checkbox-control').change( function() {
+                 $('form.opaljob-form-search-jobs').submit();
+            } );
+
+            $('form.opaljob-form-search-jobs .form-control').change( function() {
+                 $('form.opaljob-form-search-jobs').submit();
+            } );
+        }    
+        //////////////////////////
 	}
 }
 
