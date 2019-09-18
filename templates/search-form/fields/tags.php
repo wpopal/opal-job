@@ -4,7 +4,7 @@
 ?>
 <?php if( $sps ) : ?>
 <div class="field-multi-select">
-	<div class="field-heading"><?php esc_html_e( 'Tags', 'opalestate-pro' ); ?></div>	
+	<div class="field-heading"><?php esc_html_e( 'Tags', 'opaljob' ); ?></div>	
 	<?php foreach ( $sps as $tax ): ?>
 	<div class="more-options-item">
 	    <label class="more-options-label">

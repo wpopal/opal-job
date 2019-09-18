@@ -1,6 +1,6 @@
 /* global tinymce, wpCookies, autosaveL10n, switchEditors */
 // Back-compat
-window.opalestate_uploader = function() {
+window.opaljob_uploader = function() {
     return true;
 };
 
@@ -24,7 +24,7 @@ window.opalestate_uploader = function() {
      *  The object with all functions for autosave.
      */
 
-    function opalestate_uploader() {
+    function opaljob_uploader() {
 
         $document = $( document );   
         
@@ -188,6 +188,6 @@ window.opalestate_uploader = function() {
 
     /** @namespace wp */
     window.wp = window.wp || {};
-    window.wp.opalestate_uploader = opalestate_uploader();
+    window.wp.opaljob_uploader = opaljob_uploader();
 
 }( jQuery, window ));

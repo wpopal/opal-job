@@ -17,7 +17,7 @@ use Opal_Job\Core\URI;
 use Opal_Job\Core\Controller;
 use Opal_Job\Common\Model as Model; 
 use Opal_Job\Frontend\Metabox;
-
+use Opal_Job\Common\Model\Query\Job_Query;
 /**
  * The public-facing functionality of the plugin.
  *
@@ -37,6 +37,21 @@ class Job  extends Controller {
 	 * @var User $model
 	 */
 	public $model;
+
+	/**
+	 * Process Save Data Post Profile
+	 *
+	 *	Display Sidebar on left side and next is main content 
+	 *
+	 * @since 1.0
+	 *
+	 * @return string
+	 */
+	public function register_ajax_hook_callbacks () {
+ 
+		add_action( 'wp_ajax_opaljob_get_jobs_map', array($this,'get_jobs_map') );
+ 
+	}
 
 	/**
 	 * Register callbacks for actions and filters
@@ -80,4 +95,22 @@ class Job  extends Controller {
 //			echo View::render_template( "dashboard/has-not-permission" );
 	//	}
 	}
+
+	public function get_jobs_map () {
+
+		$query = Job_Query::get_job_query();
+		$output = [];
+
+		while ( $query->have_posts() ) {
+			$query->the_post();
+			$property = opalesetate_property( get_the_ID() );
+			$output[] = $property->get_meta_search_objects();
+		}
+
+		wp_reset_query();
+
+		echo json_encode( $output );
+		exit;
+	}
+	
 }

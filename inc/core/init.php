@@ -221,6 +221,7 @@ class Init {
 
 		if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
 			$this->load_controller( "User@register_ajax_hook_callbacks" );
+			$this->load_controller( "Job@register_ajax_hook_callbacks" );
 			$this->load_controller( "Email@register_ajax_hook_callbacks" );
 			$this->load_controller( "Submission@register_ajax_hook_callbacks" );
 		}

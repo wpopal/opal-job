@@ -514,4 +514,57 @@ class Job_Entity {
 	public function get_user_meta ( $key ) {
 		return get_user_meta( $this->post_author, OPAL_JOB_METABOX_PREFIX.$key, true );
 	}
+
+	/**
+	 * 
+	 * @return [type] [description]
+	 */
+	public function get_search_map_data () {
+
+		$prop     = new stdClass();
+		$map      = $this->get_map( 'map' );
+		$image_id = get_post_thumbnail_id( $this->ID );
+
+		if ( $image_id ) {
+			$url = wp_get_attachment_url( $image_id, opaljob_options( 'loop_image_size', 'large' ), true );
+		} else {
+			//$url = opaljob_get_image_placeholder( apply_filters( 'opaljob_loop_property_thumbnail', 'large' ), true );
+		}
+
+
+		$prop->id    = $this->ID;
+		$prop->title = get_the_title();
+		$prop->url   = get_permalink( $this->ID );
+
+		$prop->lat     = $map['latitude'];
+		$prop->lng     = $map['longitude'];
+		$prop->address = $this->address;
+
+		$prop->pricehtml  = '';//opaljob_price_format( $this->get_price() );
+		$prop->pricelabel = '';//$this->get_price_label();
+		$prop->thumb      = $url;
+
+		if ( file_exists( get_template_directory() . '/images/map/cluster-icon.png' ) ) {
+			$prop->icon = get_template_directory_uri() . '/images/map/cluster-icon.png';
+		} else {
+			$prop->icon = OPALJOB_PLUGIN_URL . '/assets/images/cluster-icon.png';
+		}
+
+
+		$prop->featured = $this->featured;
+
+		$prop->metas  = array();
+		$prop->status = array();
+		$terms        = wp_get_post_terms( $this->ID, 'opaljob_types' );
+		if ( $terms ) {
+			$term = reset( $terms );
+			$icon = get_term_meta( $term->term_id, 'opaljob_type_iconmarker', true );
+			if ( $icon ) {
+				$prop->icon = $icon;
+			}
+		}
+
+		return $prop;
+	}
+
 }

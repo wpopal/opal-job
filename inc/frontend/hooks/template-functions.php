@@ -32,7 +32,7 @@ function opaljob_select_specialisms_field ( $selected='' ) {
     ];
 
     $label = '<label class="opaljob-label opaljob-label--types" for="' . esc_attr( $id ) . '">' 
-        . esc_html__( 'Specialisms', 'opalestate-pro' ) . '</label>';
+        . esc_html__( 'Specialisms', 'opaljob' ) . '</label>';
 
     echo $label . wp_dropdown_categories( $args );
 }
@@ -64,7 +64,7 @@ function opaljob_select_types_field ( $selected='' ) {
     ];
 
     $label = '<label class="opaljob-label opaljob-label--types" for="' 
-        . esc_attr( $id ) . '">' . esc_html__( 'Types', 'opalestate-pro' ) . '</label>';
+        . esc_attr( $id ) . '">' . esc_html__( 'Types', 'opaljob' ) . '</label>';
 
     echo $label . wp_dropdown_categories( $args );
 }
@@ -95,7 +95,7 @@ function opaljob_select_category_field ( $selected='' ) {
         'echo'             => 0,
     ];
 
-    $label = '<label class="opaljob-label opaljob-label--location" for="' . esc_attr( $id ) . '">' . esc_html__( 'Categories', 'opalestate-pro' ) . '</label>';
+    $label = '<label class="opaljob-label opaljob-label--location" for="' . esc_attr( $id ) . '">' . esc_html__( 'Categories', 'opaljob' ) . '</label>';
 
     echo $label . wp_dropdown_categories( $args );
 }
@@ -127,7 +127,7 @@ function opaljob_select_location_field ( $selected='' ) {
         'echo'             => 0,
     ];
 
-    $label = '<label class="opaljob-label opaljob-label--location" for="' . esc_attr( $id ) . '">' . esc_html__( 'Location', 'opalestate-pro' ) . '</label>';
+    $label = '<label class="opaljob-label opaljob-label--location" for="' . esc_attr( $id ) . '">' . esc_html__( 'Location', 'opaljob' ) . '</label>';
 
     echo $label . wp_dropdown_categories( $args );
 }

@@ -169,7 +169,7 @@ class Enqueue {
 		wp_enqueue_style( 'select2', OPAL_JOB_URL . 'assets/3rd/select2/css/select2.min.css', null, '4.0.7', false );
 		wp_enqueue_script( 'select2', OPAL_JOB_URL . 'assets/3rd/select2/js/select2.min.js', null, '4.0.7', false );
 
-		wp_enqueue_script( 'opalestate-google-maps', $this->get_map_api_uri(), null, '0.0.1', false );
+		wp_enqueue_script( 'opaljob-google-maps', $this->get_map_api_uri(), null, '0.0.1', false );
 	}
 
 	/**

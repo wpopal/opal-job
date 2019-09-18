@@ -3,7 +3,7 @@
  * $Desc$
  *
  * @version    $Id$
- * @package    opalestate
+ * @package    opaljob
  * @author     Opal  Team <info@wpopal.com >
  * @copyright  Copyright (C) 2019 wpopal.com. All Rights Reserved.
  * @license    GNU/GPL v2 or later http://www.gnu.org/licenses/gpl-2.0.html
@@ -150,7 +150,7 @@ if ( ! defined( 'ABSPATH' ) ) {
          		<div class="button-placehold">
                   <div class="button-placehold-content">
                       <i class="fa fa-plus"></i>   
-                      <span><?php _e( "Upload", "opalestate" ); ?></span>
+                      <span><?php _e( "Upload", "opaljob" ); ?></span>
                   </div>
          		</div>
          		<input type="file" name="<?php echo $args['id'];?>" <?php echo  $attrs; ?>   class="select-file" style="visibility: hidden;">
@@ -160,7 +160,7 @@ if ( ! defined( 'ABSPATH' ) ) {
           <p class="opaljob-metabox-description">
               <i>
                 <?php 
-                   echo sprintf( __( 'Allow upload file have size < %s MB and maximum number of files: %s' ,'opalestate-pro'), 
+                   echo sprintf( __( 'Allow upload file have size < %s MB and maximum number of files: %s' ,'opaljob'), 
                     '<strong>'.$info['size'].'</strong>', '<strong>'.$info['number'].'</strong>' ); ?>
                 
               </i>  

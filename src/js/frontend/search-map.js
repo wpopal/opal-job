@@ -192,10 +192,28 @@ var Opaljob_Search =  {
 	init:function () {  
 		Opaljob_Search.trigger();	 
 	},
+    updatePreviewGoogleMap:function( url ){
+        $.ajax({
+            type: 'GET',
+            dataType: 'json',
+            url: opaljobJS.ajaxurl,
+            data:  url,
+            success: function(data) {
+               new GoogleMapSearch( data );
+            }
+        });
+    },
 	trigger:function () {
-		if( $("#opaljob-search-map-preview").length > 0 )  {
-			// alert( " ha cong tien");
+
+		if( $("#opaljob-search-map-preview").length > 0 )  { 
+
+            var page = 0;
+            var localURL = location.search.substr(1)+"&action=opaljob_get_jobs_map&paged="+page;
+            alert( localURL );
+            Opaljob_Search.updatePreviewGoogleMap( localURL );
+            // 
 		}
+
 	}
  
 }

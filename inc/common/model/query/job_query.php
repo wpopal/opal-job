@@ -191,7 +191,7 @@ class Job_Query extends Query_Base {
 
 	    if ( !empty($args['types']) ) {
 	        array_push($condition['tax_query'], array(
-	            'taxonomy'  => 'opalestate_types',
+	            'taxonomy'  => 'opaljob_types',
 	            'terms' 	=> $args['types'],
 	            'field' 	=> 'slug',
 	            'operator'	=> 'IN'
@@ -201,7 +201,7 @@ class Job_Query extends Query_Base {
 
 	    if ( !empty($args['statuses']) ) {
 	        array_push($condition['tax_query'], array(
-	            'taxonomy'  => 'opalestate_status',
+	            'taxonomy'  => 'opaljob_status',
 	            'terms' 	=> $args['statuses'],
 	            'field' 	=> 'slug',
 	            'operator'	=> 'IN'
@@ -211,7 +211,7 @@ class Job_Query extends Query_Base {
 
 	    if ( !empty($args['labels']) ) {
 	        array_push($condition['tax_query'], array(
-	            'taxonomy'  => 'opalestate_label',
+	            'taxonomy'  => 'opaljob_label',
 	            'terms' 	=>  $args['labels'],
 	            'field' 	=> 'slug',
 	        ));
@@ -219,7 +219,7 @@ class Job_Query extends Query_Base {
 
 	    if ( !empty($args['cities']) ) {
 	        array_push($condition['tax_query'], array(
-	            'taxonomy'  => 'opalestate_city',
+	            'taxonomy'  => 'opaljob_city',
 	            'terms' 	=> $args['cities'],
 	            'field' 	=> 'slug',
 	            'operator'	=> 'IN'

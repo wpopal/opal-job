@@ -9,18 +9,18 @@
 	<div class="item-info">
 		<span>
 			<?php if( !empty($pack_listings) && $unlimited_listings  == 0 ): ?>
-				<?php echo trim( $pack_listings); ?><?php esc_html_e( ' Listings' , 'opalestate-pro' );?>
+				<?php echo trim( $pack_listings); ?><?php esc_html_e( ' Listings' , 'opaljob' );?>
 			<?php else: ?>
-				<?php esc_html_e('Unlimited', 'opalestate-pro');?><?php esc_html_e( ' Listings' , 'opalestate-pro' );?>
+				<?php esc_html_e('Unlimited', 'opaljob');?><?php esc_html_e( ' Listings' , 'opaljob' );?>
 			<?php endif; ?>
 		</span>
 	</div>
 	<div class="item-info">
 		<span>
 			<?php if( !empty($pack_featured_listings) && $unlimited_listings  == 0 ): ?>
-				<?php echo trim( $pack_featured_listings); ?><?php esc_html_e( ' Featured' , 'opalestate-pro' );?>
+				<?php echo trim( $pack_featured_listings); ?><?php esc_html_e( ' Featured' , 'opaljob' );?>
 			<?php else: ?>
-				<?php esc_html_e('Unlimited', 'opalestate-pro');?><?php esc_html_e( ' Featured' , 'opalestate-pro' );?>
+				<?php esc_html_e('Unlimited', 'opaljob');?><?php esc_html_e( ' Featured' , 'opaljob' );?>
 			<?php endif; ?>
 		</span>
 	</div>

@@ -49,9 +49,9 @@ class Third_Party extends Core\Metabox {
 
 		$fields  = array(
 			array(
-				'name'    => esc_html__( 'Google Map API', 'opalestate-pro' ),
+				'name'    => esc_html__( 'Google Map API', 'opaljob' ),
 				'desc'    => __( 'You need to register <a href="https://developers.google.com/maps/documentation/javascript/get-api-key" target="_blank">Google API Key</a>, then put the key in this setting.',
-					'opalestate-pro' ),
+					'opaljob' ),
 				'id'      => 'google_map_api_keys',
 				'type'    => 'text',
 				'default' => 'AIzaSyCfMVNIa7khIqYHCw6VBn8ShUWWm4tjbG8',

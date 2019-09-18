@@ -10,7 +10,7 @@
 		<div class="job-search-sidebar col-md-4">
 			<div class="opaljob-tab">
 				<div class="job-tab-head">
-					<a href="#"><?php esc_html_e( 'Filters', 'opalestate-pro' ); ?></a>
+					<a href="#"><?php esc_html_e( 'Filters', 'opaljob' ); ?></a>
 				</div>
 				<?php echo opaljob_render_template( 'search-form/horizontal-v1' ); ?>	 
 			</div>	

@@ -3,7 +3,7 @@
  * $Desc$
  *
  * @version    $Id$
- * @package    opalestate
+ * @package    opaljob
  * @author     Opal  Team <info@wpopal.com >
  * @copyright  Copyright (C) 2019 wpopal.com. All Rights Reserved.
  * @license    GNU/GPL v2 or later http://www.gnu.org/licenses/gpl-2.0.html
@@ -123,12 +123,12 @@ function opaljob_get_user_featured_remaining_listing( $user_id ){
 /**
  *
  */
-function opalestate_reset_user_free_package( $user_id ){ 
+function opaljob_reset_user_free_package( $user_id ){ 
  
-    $duration = opalestate_options('free_expired_month', 12);
+    $duration = opaljob_options('free_expired_month', 12);
     update_user_meta( $user_id, OPALMEMBERSHIP_USER_PREFIX_.'package_id', -1 );  
-    update_user_meta( $user_id, OPALMEMBERSHIP_USER_PREFIX_.'package_listings', opalestate_options('free_number_listing', 3) );
-    update_user_meta( $user_id, OPALMEMBERSHIP_USER_PREFIX_.'package_featured_listings', opalestate_options('free_number_featured', 3) );
+    update_user_meta( $user_id, OPALMEMBERSHIP_USER_PREFIX_.'package_listings', opaljob_options('free_number_listing', 3) );
+    update_user_meta( $user_id, OPALMEMBERSHIP_USER_PREFIX_.'package_featured_listings', opaljob_options('free_number_featured', 3) );
 
     update_user_meta( $user_id, OPALMEMBERSHIP_USER_PREFIX_.'package_activation', time() );
     update_user_meta( $user_id, OPALMEMBERSHIP_USER_PREFIX_.'package_expired', time() +  ($duration*60*60*24*30)  );

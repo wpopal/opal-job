@@ -68,7 +68,7 @@ register_activation_hook( __FILE__, array( 'Opal_Job\Core\Activator', 'activate'
 register_deactivation_hook( __FILE__, array( 'Opal_Job\Core\Deactivator', 'deactivate' ) );
 
 if ( ! defined( "OPALJOB_CLUSTER_ICON_URL" ) ) {
-	define( 'OPALJOB_CLUSTER_ICON_URL', apply_filters( 'opalestate_cluster_icon_url',
+	define( 'OPALJOB_CLUSTER_ICON_URL', apply_filters( 'opaljob_cluster_icon_url',
 				OPAL_JOB_URL . 'assets/images/cluster-icon.png' ) );
 }
 
