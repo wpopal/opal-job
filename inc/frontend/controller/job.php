@@ -77,6 +77,7 @@ class Job  extends Controller {
 		}
 		return $this->model; 
 	}
+
 	/**
 	 * Process Save Data Post Profile
 	 *
@@ -88,14 +89,20 @@ class Job  extends Controller {
 	 */
 	public function render_listing_by_employer( $id ){
 
-		//if( opaljob_has_role('employer') ) {
-			$jobs = $this->get_model()->get_list_by_employer( $id ); 
-			echo View::render_template( "common/job/by-employer", array( 'jobs' =>  $jobs, 'founds' => 12 ) );
-	//	} else {
-//			echo View::render_template( "dashboard/has-not-permission" );
-	//	}
+
+		$jobs = $this->get_model()->get_list_by_employer( $id ); 
+		echo View::render_template( "common/job/by-employer", array( 'jobs' =>  $jobs, 'founds' => 12 ) );
 	}
 
+	/**
+	 * Process Save Data Post Profile
+	 *
+	 *	Display Sidebar on left side and next is main content 
+	 *
+	 * @since 1.0
+	 *
+	 * @return string
+	 */
 	public function get_jobs_map () {
 
 		$query = Job_Query::get_job_query();
@@ -103,10 +110,10 @@ class Job  extends Controller {
 
 		while ( $query->have_posts() ) {
 			$query->the_post();
-			$property = opalesetate_property( get_the_ID() );
-			$output[] = $property->get_meta_search_objects();
+			$job = opaljob_new_job_object( get_the_ID() );
+			$output[] = $job->get_search_map_data();
 		}
-
+		
 		wp_reset_query();
 
 		echo json_encode( $output );

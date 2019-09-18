@@ -21,7 +21,7 @@ var GoogleMapSearch =  function ( data ) {
             }
         };
 
-        var map = new google.maps.Map( document.getElementById( "opaljob-map-preview" ), mapOptions );
+        var map = new google.maps.Map( document.getElementById( "opaljob-search-map-preview" ), mapOptions );
 
         var bounds = new google.maps.LatLngBounds();
 
@@ -94,7 +94,7 @@ var GoogleMapSearch =  function ( data ) {
                 pixelOffset: new google.maps.Size( -122, -48 ),
                 zIndex: null,
                 closeBoxMargin: "0 0 -16px -16px",
-                closeBoxURL: opalesateJS.mapiconurl+"close.png",
+                closeBoxURL: opaljobJS.mapiconurl+"close.png",
                 infoBoxClearance: new google.maps.Size( 1, 1 ),
                 isHidden: false,
                 pane: "floatPane",
@@ -144,7 +144,7 @@ var GoogleMapSearch =  function ( data ) {
             maxZoom: 14,
             styles: [{
                 textColor: '#000000',
-                url: opalesateJS.mapiconurl+"cluster-icon.png",
+                url: opaljobJS.mapiconurl+"cluster-icon.png",
                 height: 51,
                 width: 30
             }]
@@ -209,7 +209,7 @@ var Opaljob_Search =  {
 
             var page = 0;
             var localURL = location.search.substr(1)+"&action=opaljob_get_jobs_map&paged="+page;
-            alert( localURL );
+       //     alert( localURL );
             Opaljob_Search.updatePreviewGoogleMap( localURL );
             // 
 		}

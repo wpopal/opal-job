@@ -9,7 +9,7 @@
  * @since       1.0
  */
 namespace Opal_Job\Common\Model\Entity;
-
+use stdClass;
 use WP_Post;
 use Opal_Job\Core\URI; 
 use Opal_Job\Common\Model\Entity\Employer_Entity;
@@ -504,11 +504,12 @@ class Job_Entity {
 	}
 	
 	public function get_employer_avatar() {
-		$id  = $this->get_user_meta( 'avatar_id' );
-		$url = wp_get_attachment_url( $id );
+		$id  = $this->get_user_meta( 'avatar_id' ); 
+		$url = wp_get_attachment_url( $id );  
 		if( !empty($url) ){
 			return $url;
 		}
+		return get_avatar_url( $id );
 	}
 
 	public function get_user_meta ( $key ) {
@@ -521,20 +522,13 @@ class Job_Entity {
 	 */
 	public function get_search_map_data () {
 
-		$prop     = new stdClass();
-		$map      = $this->get_map( 'map' );
-		$image_id = get_post_thumbnail_id( $this->ID );
-
-		if ( $image_id ) {
-			$url = wp_get_attachment_url( $image_id, opaljob_options( 'loop_image_size', 'large' ), true );
-		} else {
-			//$url = opaljob_get_image_placeholder( apply_filters( 'opaljob_loop_property_thumbnail', 'large' ), true );
-		}
-
-
-		$prop->id    = $this->ID;
-		$prop->title = get_the_title();
-		$prop->url   = get_permalink( $this->ID );
+		$prop     	  = new stdClass();
+		$map      	  = $this->get_map( 'map' );
+	 	$url 		  = $this->get_employer_avatar().$this->post_author;
+ 
+		$prop->id     = $this->ID;
+		$prop->title  = get_the_title();
+		$prop->url    = get_permalink( $this->ID );
 
 		$prop->lat     = $map['latitude'];
 		$prop->lng     = $map['longitude'];
@@ -547,14 +541,13 @@ class Job_Entity {
 		if ( file_exists( get_template_directory() . '/images/map/cluster-icon.png' ) ) {
 			$prop->icon = get_template_directory_uri() . '/images/map/cluster-icon.png';
 		} else {
-			$prop->icon = OPALJOB_PLUGIN_URL . '/assets/images/cluster-icon.png';
+			$prop->icon = OPAL_JOB_URL . '/assets/images/cluster-icon.png';
 		}
 
-
-		$prop->featured = $this->featured;
+		$prop->featured = $this->get_meta( 'featured' );
 
 		$prop->metas  = array();
-		$prop->status = array();
+		$prop->status = array(); 
 		$terms        = wp_get_post_terms( $this->ID, 'opaljob_types' );
 		if ( $terms ) {
 			$term = reset( $terms );
