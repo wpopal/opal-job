@@ -223,15 +223,22 @@ var Opaljob_Search =  {
             $('form.opaljob-form-search-jobs').submit( function ( ){  
                 var params = $( this ).serialize();
                 updateMaps( params );
+                
+                if (history.pushState) {  
+                    var ps     = $(this).serialize(); 
+                    var newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?'+ ps;
+                    window.history.pushState({path:newurl},'',newurl);
+                }
+
                 return false; 
             } );
             
             $('form.opaljob-form-search-jobs .form-checkbox-control').change( function() {
-                 $('form.opaljob-form-search-jobs').submit();
+                $('form.opaljob-form-search-jobs').submit();
             } );
 
             $('form.opaljob-form-search-jobs .form-control').change( function() {
-                 $('form.opaljob-form-search-jobs').submit();
+                $('form.opaljob-form-search-jobs').submit();
             } );
         }    
         //////////////////////////
