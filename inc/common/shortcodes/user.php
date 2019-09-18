@@ -53,7 +53,9 @@ class User {
 			'login' 		=> array( $this, 'render_login'),
 			'dashboard' 	=> array( $this, 'render_dashboard'),
 			'candidates'	=> array ( $this, 'render_candidates' ),
-			'employers'		=> array ( $this, 'render_employers' )
+			'employers'		=> array ( $this, 'render_employers' ),
+			'search_map_candidates'  => array ( $this, 'render_search_candidates' ),
+			'search_map_employers'  => array ( $this, 'render_search_employers' ),
 		);
 
 		foreach ( $shortcodes as $tag => $shortcode ){  
