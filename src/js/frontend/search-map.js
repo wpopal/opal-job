@@ -191,6 +191,7 @@ var Opaljob_Search =  {
 	
 	init:function () {  
 		Opaljob_Search.triggerSearchJobs();	 
+        Opaljob_Search.triggerSearchCandidates();  
 	},
     updatePreviewGoogleMap:function( url ){
         $.ajax({
@@ -203,16 +204,12 @@ var Opaljob_Search =  {
             }
         });
     },
-    updateResults:function( url ) {
+    updateResults:function( url, _callback ) {
         $.ajax({
             type: 'GET',
             url: opaljobJS.ajaxurl,
             data:  url,
-            success: function(data) {
-                var html = $( data );  
-                var content = html.find(".opaljob-collection-results").html() 
-               $(".opaljob-collection-results").html( content );
-            }
+            success: _callback
         });
     },
 	triggerSearchJobs:function () {
@@ -240,7 +237,11 @@ var Opaljob_Search =  {
                         localURL += '&' + data; 
                     }
        
-                    Opaljob_Search.updateResults( localURL );
+                    Opaljob_Search.updateResults( localURL , function( data ){
+                        var html = $( data );  
+                        var content = html.find(".opaljob-collection-results").html() 
+                       $(".opaljob-collection-results").html( content );
+                    } );
                 } 
             };
 
@@ -268,7 +269,38 @@ var Opaljob_Search =  {
             } );
         }    
         //////////////////////////
-	}
+	},
+    triggerSearchCandidates:function(){
+        if( $("#opaljob-search-map-candidates").length > 0 ) {
+            var _this = $("#opaljob-search-map-candidates");
+            $('form').submit( function ( ){  
+
+                var params = $( this ).serialize();
+
+                var page = 0;
+                var localURL = location.search.substr(1)+"&action=opaljob_get_html_search_candidates&paged="+page;
+
+                if( params ) { 
+                    localURL += '&' + params; 
+                }
+
+                Opaljob_Search.updateResults( localURL , function( data ){ 
+                    var html = $( data );  
+                    var content = html.find(".opaljob-candidates-results").html() ;
+                    alert( content );
+                    $( ".opaljob-candidates-results", _this ).html( content );
+                } );
+
+                if (history.pushState) {  
+                    var ps     = $(this).serialize(); 
+                    var newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?'+ ps;
+                    window.history.pushState({path:newurl},'',newurl);
+                }
+
+                return false; 
+            } );
+        }
+    }
 }
 
 

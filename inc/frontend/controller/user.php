@@ -61,7 +61,7 @@ class User extends Controller {
 		// ajax process actions 
 		add_action( 'wp_ajax_opaljob_save_changepass', array($this,'save_change_password') );
 		add_action( 'wp_ajax_nopriv_opaljob_save_changepass', array($this,'save_change_password') );
-		 
+		add_action( 'wp_ajax_opaljob_get_html_search_candidates',  array($this,'get_html_search_candidates') ); 
 		// call sub controller to process addition functions follow by role
 		if( !is_admin() && $this->get_control() ) {
 			$this->control->register_ajax_hook_callbacks();
@@ -628,5 +628,9 @@ class User extends Controller {
 			'form_id'	=> 'opaljob-changepassword-form' 
 		); 
 		echo View::render_template( "dashboard/metabox-form", $args );
+	}
+
+	public function get_html_search_candidates () {
+		echo do_shortcode(  "[opaljob_search_map_candidates]" );die;
 	}
 }

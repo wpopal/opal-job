@@ -3,13 +3,12 @@
 	$style = $items_per_grid; 
 	$items_per_grid = 1;
 ?>
-<div id="opaljob-job-search-map">
+<div id="opaljob-search-map-candidates" class="search-listing-map">
 	<div class="job-search-map-wrapper opal-row">
-		
 		<div class="job-search-sidebar col-md-4">
 			<div class="search-form-wrap">
  
-				<?php echo opaljob_render_template( 'search-form/horizontal-v1' ); ?>	 
+				<?php echo opaljob_render_template( 'search-form/horizontal-candidate' ); ?>	 
 			</div>	
 
 			<div class="opaljob-candidates-results">
