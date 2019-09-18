@@ -1,5 +1,5 @@
-var GoogleMapSearch =  function ( data ) { 
-    var initializeJobsMap = function ( jobs ) {
+var GoogleMapSearch =  function ( data, _callback ) { 
+    var initializeJobsMap = function ( jobs, _callback ) {
         // Jobs Array
         var mapOptions = {
             zoom: 12,
@@ -69,23 +69,28 @@ var GoogleMapSearch =  function ( data ) {
             // console.log( jobs[i] );
             boxText.className = 'map-info-preview media';
 
-            var meta = '<ul class="list-inline job-meta-list">';
-            if( jobs[i].metas ){
-                for ( var x in jobs[i].metas ){
-                    var m = jobs[i].metas[x]; 
-                    meta += '<li><i class="icon-job-'+x+'"></i>' + m.value +'<span class="label-job">' + m.label + '</span></li>'
-                 }   
-            }
-            meta    += '</ul>';
+           
 
-            boxText.innerHTML = '<div class="media-top"><a class="thumb-link" href="' + jobs[i].url + '">' +
+            if( _callback ){
+                 boxText.innerHTML = _callback( jobs[i] );
+            } else { 
+
+                 var meta = '<ul class="list-inline job-meta-list">';
+                if( jobs[i].metas ){
+                    for ( var x in jobs[i].metas ){
+                        var m = jobs[i].metas[x]; 
+                        meta += '<li><i class="icon-job-'+x+'"></i>' + m.value +'<span class="label-job">' + m.label + '</span></li>'
+                     }   
+                }
+                meta    += '</ul>';
+                boxText.innerHTML = '<div class="media-top"><a class="thumb-link" href="' + jobs[i].url + '">' +
                                     '<img class="prop-thumb" src="' + jobs[i].thumb + '" alt="' + jobs[i].title + '"/>' +
                                     '</a>'+ jobs[i].status +'</div>' +
                                     '<div class="info-container media-body">' +
                                     '<h5 class="prop-title"><a class="title-link" href="' + jobs[i].url + '">' + jobs[i].title +
                                     '</a></h5><p class="prop-address"><em>' + jobs[i].address + '</em></p><p><span class="price text-primary">' + jobs[i].pricehtml + pricelabel +
                                     '</span></p>'+meta+'</div>'+'<div class="arrow-down"></div>';
-
+            }                        
             var myOptions = {
                 content: boxText,
                 disableAutoPan: true,
@@ -181,7 +186,7 @@ var GoogleMapSearch =  function ( data ) {
             });
         }
     }
-    initializeJobsMap( data );  
+    initializeJobsMap( data, _callback );  
 }
 
 /**
@@ -190,17 +195,17 @@ var GoogleMapSearch =  function ( data ) {
 var Opaljob_Search =  { 
 	
 	init:function () {  
-		Opaljob_Search.triggerSearchJobs();	 
+		// Opaljob_Search.triggerSearchJobs();	 
         Opaljob_Search.triggerSearchCandidates();  
 	},
-    updatePreviewGoogleMap:function( url ){
+    updatePreviewGoogleMap:function( url , _callback ){
         $.ajax({
             type: 'GET',
             dataType: 'json',
             url: opaljobJS.ajaxurl,
             data:  url,
             success: function(data) {
-               new GoogleMapSearch( data );
+               new GoogleMapSearch( data , _callback );
             }
         });
     },
@@ -287,17 +292,22 @@ var Opaljob_Search =  {
                 Opaljob_Search.updateResults( localURL , function( data ){ 
                     var html = $( data );  
                     var content = html.find(".opaljob-candidates-results").html() ;
-                    alert( content );
                     $( ".opaljob-candidates-results", _this ).html( content );
                 } );
-                /*
-                Opaljob_Search.updatePreviewGoogleMap( localURL , function( data ){ 
-                    var html = $( data );  
-                    var content = html.find(".opaljob-candidates-results").html() ;
-                    alert( content );
-                    $( ".opaljob-candidates-results", _this ).html( content );
-                } ); */
+                
+                var localURL = location.search.substr(1)+"&action=opaljob_get_jobs_map&paged="+page;
+                if( params ) { 
+                    localURL += '&' + params; 
+                }
 
+                
+                if( $("#opaljob-search-map-preview").length > 0 )  { 
+             
+                    Opaljob_Search.updatePreviewGoogleMap( localURL , function( data ){ 
+                        return "hacongtien";
+                    } );
+                }
+                    
                 if (history.pushState) {  
                     var ps     = $(this).serialize(); 
                     var newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?'+ ps;
