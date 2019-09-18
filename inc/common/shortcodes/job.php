@@ -112,7 +112,7 @@ class Job {
 			'show_more' 	  => '',
 			'show_categories' => '',
 			'show_featured'   => '',
-			'layout'		  => 'content-job-grid',
+			'layout'		  => 'content-job-search-map',
 			'items_per_grid'  => 1,
 			'grid_class'	  => '',
 		);   

@@ -190,7 +190,7 @@ var GoogleMapSearch =  function ( data ) {
 var Opaljob_Search =  { 
 	
 	init:function () {  
-		Opaljob_Search.trigger();	 
+		Opaljob_Search.triggerSearchJobs();	 
 	},
     updatePreviewGoogleMap:function( url ){
         $.ajax({
@@ -203,7 +203,7 @@ var Opaljob_Search =  {
             }
         });
     },
-	trigger:function () {
+	triggerSearchJobs:function () {
         /////////////
         if( $("#opaljob-search-map-preview").length > 0 ) {
             var updateMaps = function ( data ) {

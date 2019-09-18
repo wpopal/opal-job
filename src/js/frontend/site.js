@@ -10,8 +10,6 @@ var Opaljob_Site =  {
 	    
 	} 
 }
-
-
 $( document ).ready( function () { 
     $( Opaljob_Site.init );
 } );

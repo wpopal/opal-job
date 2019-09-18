@@ -109,8 +109,8 @@ class Job  extends Controller {
 		$paged = 1;
 
 		$args = [
-		//	'posts_per_page' => $posts_per_page,
-		//	'paged'          => $paged 
+	 		'posts_per_page' => $posts_per_page,
+		 	'paged'          => $paged 
 		];
 
 		$gets = array(
