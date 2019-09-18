@@ -290,6 +290,13 @@ var Opaljob_Search =  {
                     alert( content );
                     $( ".opaljob-candidates-results", _this ).html( content );
                 } );
+                /*
+                Opaljob_Search.updatePreviewGoogleMap( localURL , function( data ){ 
+                    var html = $( data );  
+                    var content = html.find(".opaljob-candidates-results").html() ;
+                    alert( content );
+                    $( ".opaljob-candidates-results", _this ).html( content );
+                } ); */
 
                 if (history.pushState) {  
                     var ps     = $(this).serialize(); 
