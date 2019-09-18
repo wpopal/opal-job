@@ -167,6 +167,7 @@ class Job_Query extends Query_Base {
 		
 		$condition = array(
 			'post_type'         => 'opaljob_job',
+			'post_status'		=> 'publish',
 			'posts_per_page'	=> isset($args['posts_per_page']) ? $args['posts_per_page'] : 5,
 			'paged'				=> isset($args['paged']) ? $args['paged'] : 1,
 			
@@ -182,12 +183,13 @@ class Job_Query extends Query_Base {
 
 	    if ( !empty($args['categories']) ) {
 	        array_push($condition['tax_query'], array(
-	            'taxonomy'  => 'property_category',
-	            'terms' 	=> implode( ',', $args['categories'] ),
+	            'taxonomy'  => 'opaljob_category',
+	            'terms' 	=>  $args['categories'],
 	            'field' 	=> 'slug',
 	            'operator'	=> 'IN'
 	        ));
 	    }
+
 
 	    if ( !empty($args['types']) ) {
 	        array_push($condition['tax_query'], array(
@@ -199,28 +201,36 @@ class Job_Query extends Query_Base {
 	    } 
 
 
-	    if ( !empty($args['statuses']) ) {
+	    if ( !empty($args['tags']) ) {
 	        array_push($condition['tax_query'], array(
-	            'taxonomy'  => 'opaljob_status',
-	            'terms' 	=> $args['statuses'],
+	            'taxonomy'  => 'opaljob_tag',
+	            'terms' 	=>  $args['tags'],
+	            'field' 	=> 'slug',
+	        ));
+	    } 
+
+	    if ( !empty($args['location']) ) {
+	        array_push($condition['tax_query'], array(
+	            'taxonomy'  => 'opaljob_location',
+	            'terms' 	=>  $args['location'],
 	            'field' 	=> 'slug',
 	            'operator'	=> 'IN'
 	        ));
 	    } 
 
-
-	    if ( !empty($args['labels']) ) {
+	    if ( !empty($args['specialism']) ) {
 	        array_push($condition['tax_query'], array(
-	            'taxonomy'  => 'opaljob_label',
-	            'terms' 	=>  $args['labels'],
+	            'taxonomy'  => 'opaljob_specialism',
+	            'terms' 	=>  $args['specialism'],
 	            'field' 	=> 'slug',
+	            'operator'	=> 'IN'
 	        ));
 	    } 
 
-	    if ( !empty($args['cities']) ) {
+	    if ( !empty($args['tag']) ) {
 	        array_push($condition['tax_query'], array(
-	            'taxonomy'  => 'opaljob_city',
-	            'terms' 	=> $args['cities'],
+	            'taxonomy'  => 'opaljob_tag',
+	            'terms' 	=>  $args['tag'],
 	            'field' 	=> 'slug',
 	            'operator'	=> 'IN'
 	        ));
@@ -242,10 +252,11 @@ class Job_Query extends Query_Base {
 			}	
  	 	}
 
+  
 		$query =  new WP_Query( $condition );
 
 		wp_reset_postdata();
-
+ 
 		return $query;
 	}
 
@@ -276,5 +287,70 @@ class Job_Query extends Query_Base {
 	public static function query_get_item( $args=array() ) {
 		$item = array();
 		return $item; 
+	}
+
+	/**
+	 * Render Sidebar
+	 *
+	 *	Display Sidebar on left side and next is main content 
+	 *
+	 * @since 1.0
+	 *
+	 * @return string
+	 */
+	public static function filter_by_location( $geo_lat, $geo_long, $radius, $prefix = OPALESTATE_PROPERTY_PREFIX ) {
+
+		global $wpdb;
+
+		$radius_measure = '';
+		$earth          = 3959;
+
+		if ( $radius_measure == 'km' ) {
+			$earth = 6371;
+		}
+
+		$latitude  = $prefix . 'map_latitude';
+		$longitude = $prefix . 'map_longitude';
+
+		$sql = "SELECT $wpdb->posts.ID,
+            ( %s * acos(
+                    cos( radians(%s) ) *
+                    cos( radians( latitude.meta_value ) ) *
+                    cos( radians( longitude.meta_value ) - radians(%s) ) +
+                    sin( radians(%s) ) *
+                    sin( radians( latitude.meta_value ) )
+            ) )
+            AS distance, latitude.meta_value AS latitude, longitude.meta_value AS longitude
+            FROM $wpdb->posts
+            INNER JOIN $wpdb->postmeta
+                    AS latitude
+                    ON $wpdb->posts.ID = latitude.post_id
+            INNER JOIN $wpdb->postmeta
+                    AS longitude
+                    ON $wpdb->posts.ID = longitude.post_id
+            WHERE 1=1
+
+                    AND latitude.meta_key = '" . $latitude . "'
+                    AND longitude.meta_key= '" . $longitude . "'
+            HAVING distance < %s
+            ORDER BY $wpdb->posts.menu_order ASC, distance ASC";
+
+		$query = $wpdb->prepare( $sql,
+
+			$earth,
+			$geo_lat,
+			$geo_long,
+			$geo_lat,
+			$radius
+		);
+
+		$post_ids = $wpdb->get_results( $query, OBJECT_K );
+		if ( $post_ids ) {
+			$post_ids = array_keys( $post_ids );
+
+			return $post_ids;
+		}
+
+		return [ 0 ];
 	}
 }

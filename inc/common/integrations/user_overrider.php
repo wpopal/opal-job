@@ -54,7 +54,8 @@ class User_Overrider implements Intergration {
 		////
 		/// Check Media show for current user and process pending 
 		///
-		add_filter( 'pre_get_posts', 			   [ $this, 'show_current_user_attachments' ] );
+		// hacongtien-fix
+		/// add_filter( 'pre_get_posts', 			   [ $this, 'show_current_user_attachments' ] );
 		add_filter( 'ajax_query_attachments_args', [$this, 'ajx_show_current_user_attachments']);	
 		// add_filter( 'wp_handle_upload', 		   [$this, 'handle_upload'], 10, 2 );
 

@@ -104,8 +104,32 @@ class Job  extends Controller {
 	 * @return string
 	 */
 	public function get_jobs_map () {
+		
+		$posts_per_page = 10; 
+		$paged = 1;
 
-		$query = Job_Query::get_job_query();
+		$args = [
+		//	'posts_per_page' => $posts_per_page,
+		//	'paged'          => $paged 
+		];
+
+		$gets = array(
+			'location'  	=> 'location',
+			'types' 		=> 'types',
+			'categories'	=> 'categories',
+			'specialism'	=> 'specialism',
+			'tag'			=> 'tags'
+		); 
+
+		foreach ( $gets as $key =>  $get ) {
+			if( isset($_GET[$get]) && $_GET[$get] != -1 ) {
+				$args[$key] =  $_GET[$get];
+			}
+		}
+
+
+		$query = Job_Query::get_job_query( $args ); 
+
 		$output = [];
 
 		while ( $query->have_posts() ) {
@@ -113,7 +137,7 @@ class Job  extends Controller {
 			$job = opaljob_new_job_object( get_the_ID() );
 			$output[] = $job->get_search_map_data();
 		}
-		
+
 		wp_reset_query();
 
 		echo json_encode( $output );
