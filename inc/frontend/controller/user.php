@@ -60,13 +60,14 @@ class User extends Controller {
 	public function register_ajax_hook_callbacks() {
 		
 		// ajax process actions 
-		add_action( 'wp_ajax_opaljob_save_changepass', array($this,'save_change_password') );
-		add_action( 'wp_ajax_nopriv_opaljob_save_changepass', array($this,'save_change_password') );
+		add_action( 'wp_ajax_opaljob_save_changepass', 			   array($this,'save_change_password') );
+		add_action( 'wp_ajax_nopriv_opaljob_save_changepass', 	   array($this,'save_change_password') );
 		add_action( 'wp_ajax_opaljob_get_html_search_candidates',  array($this,'get_html_search_candidates') ); 
 		
 
 		add_action( 'wp_ajax_opaljob_get_candidates_map', array($this, 'get_candidates_map') );
-
+		add_action( 'wp_ajax_opaljob_get_employers_map',  array($this, 'get_employers_map') );
+		
 		// call sub controller to process addition functions follow by role
 		if( !is_admin() && $this->get_control() ) {
 			$this->control->register_ajax_hook_callbacks();

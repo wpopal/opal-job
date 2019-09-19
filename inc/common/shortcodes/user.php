@@ -202,7 +202,7 @@ class User {
 	 *
 	 * @since    1.0.0
 	 */
-	public function render_search_employers () {
+	public function render_search_employers ( $atts ) {
 		
 		wp_enqueue_script( 'infobox' );
 		wp_enqueue_script( 'markerclusterer' );

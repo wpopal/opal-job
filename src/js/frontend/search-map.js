@@ -293,8 +293,14 @@ var Opaljob_Search =  {
                 }
             }
             updateMaps( null ); 
+            $('form .form-checkbox-control').change( function() {
+                $( 'form', _this ).submit();
+            } );
 
-            $('form').submit( function ( ){  
+            $('form .form-control', _this ).change( function() {
+                 $('form', _this).submit();
+            } );
+            $('form', _this).submit( function ( ){  
 
                 var params = $( this ).serialize();
 
@@ -343,7 +349,15 @@ var Opaljob_Search =  {
             }
             updateMaps( null ); 
 
-            $('form').submit( function ( ){  
+            $('form .form-checkbox-control').change( function() {
+                $( 'form', _this ).submit();
+            } );
+
+            $('form .form-control', _this ).change( function() {
+                 $('form', _this).submit();
+            } );
+
+            $( 'form', _this ).submit( function ( ){  
 
                 var params = $( this ).serialize();
 
