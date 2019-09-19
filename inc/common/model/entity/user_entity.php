@@ -274,7 +274,7 @@ class User_Entity {
 		if( !empty($url) ){
 			return $url;
 		}
-		return 'placehold image here';
+		return get_avatar_url( $this->ID );
 	}
 
 	/**
