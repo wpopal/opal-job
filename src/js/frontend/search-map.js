@@ -195,6 +195,7 @@ var Opaljob_Search =  {
 	init:function () {  
 	    Opaljob_Search.triggerSearchJobs();	 
         Opaljob_Search.triggerSearchCandidates();  
+        Opaljob_Search.triggerSearchEmployers();
 	},
     updatePreviewGoogleMap:function( url , _callback ){ 
         $.ajax({
@@ -275,7 +276,7 @@ var Opaljob_Search =  {
 	},
     triggerSearchCandidates:function(){
         if( $("#opaljob-search-map-candidates").length > 0 ) {
-            
+
             var _this = $("#opaljob-search-map-candidates");
 
             var updateMaps = function ( params ) {
@@ -309,6 +310,54 @@ var Opaljob_Search =  {
                     var html = $( data );  
                     var content = html.find(".opaljob-candidates-results").html() ;
                     $( ".opaljob-candidates-results", _this ).html( content );
+                } );
+               
+                if (history.pushState) {  
+                    var ps     = $(this).serialize(); 
+                    var newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?'+ ps;
+                    window.history.pushState({path:newurl},'',newurl);
+                }
+
+                return false; 
+            } );
+        }
+    },
+    triggerSearchEmployers:function(){
+        if( $("#opaljob-search-map-employers").length > 0 ) {
+            
+            var _this = $("#opaljob-search-map-employers");
+
+            var updateMaps = function ( params ) {
+               var localURL = location.search.substr(1)+"&action=opaljob_get_employers_map&paged="+page;
+                if( params ) { 
+                    localURL += '&' + params; 
+                }
+
+                if( $("#opaljob-search-map-preview").length > 0 )  {  
+                    Opaljob_Search.updatePreviewGoogleMap( localURL , function( data ){  
+                        return "hacongtien";
+                    } );
+                }
+            }
+            updateMaps( null ); 
+
+            $('form').submit( function ( ){  
+
+                var params = $( this ).serialize();
+
+                var page = 0;
+                var localURL = location.search.substr(1)+"&action=opaljob_get_html_search_employers&paged="+page;
+
+                if( params ) { 
+                    localURL += '&' + params; 
+                }
+                
+                updateMaps( params ); 
+
+                Opaljob_Search.updateResults( localURL , function( data ){ 
+                    var html = $( data );  
+                    var content = html.find(".opaljob-employers-results").html() ;
+                    $( ".opaljob-employers-results", _this ).html( content );
                 } );
                
                 if (history.pushState) {  
