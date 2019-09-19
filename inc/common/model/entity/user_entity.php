@@ -10,6 +10,7 @@
  */
 namespace Opal_Job\Common\Model\Entity;
 
+use stdClass; 
 
 /**
  * The public-facing functionality of the plugin.
@@ -334,5 +335,44 @@ class User_Entity {
 	 */
 	public function get_phone() {
 		return $this->get_meta( 'phone' );
+	}
+
+	/**
+	 *	Display Sidebar on left side and next is main content 
+	 *
+	 * @since 1.0
+	 *
+	 * @return string
+	 */
+	public function get_search_map_data () {
+
+		$prop     	  = new stdClass();
+		$map      	  = $this->get_map( 'map' );
+	 	$url 		  = $this->get_avatar();
+ 
+		$prop->id     = $this->ID;
+		$prop->title  = $this->get_name();
+		$prop->url    = $this->get_link();
+
+		$prop->lat     = $map['latitude'];
+		$prop->lng     = $map['longitude'];
+		$prop->address = $this->get_address();
+
+		$prop->pricehtml  = '';//opaljob_price_format( $this->get_price() );
+		$prop->pricelabel = '';//$this->get_price_label();
+		$prop->thumb      = $url;
+
+		if ( file_exists( get_template_directory() . '/images/map/cluster-icon.png' ) ) {
+			$prop->icon = get_template_directory_uri() . '/images/map/cluster-icon.png';
+		} else {
+			$prop->icon = OPAL_JOB_URL . '/assets/images/cluster-icon.png';
+		}
+
+		$prop->featured = $this->get_meta( 'featured' );
+
+		$prop->metas  = array();
+		$prop->status = array(); 
+
+		return $prop;
 	}
 }

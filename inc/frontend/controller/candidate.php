@@ -48,7 +48,6 @@ class Candidate extends Controller {
 		add_action( 'wp_ajax_opaljob_following_employer', array($this,'process_following_employer') );
 		add_action( 'wp_ajax_nopriv_opaljob_following_employer', array($this,'process_following_employer') );
 
-
 		/// apply job ///
 		/// 
 		add_action( 'wp_ajax_opaljob_apply_job_data', array($this,'process_candidate_apply') );

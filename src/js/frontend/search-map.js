@@ -1,5 +1,5 @@
 var GoogleMapSearch =  function ( data, _callback ) { 
-    var initializeJobsMap = function ( jobs, _callback ) {
+    var initializeJobsMap = function ( jobs, _callback ) { 
         // Jobs Array
         var mapOptions = {
             zoom: 12,
@@ -196,7 +196,7 @@ var Opaljob_Search =  {
 	    Opaljob_Search.triggerSearchJobs();	 
         Opaljob_Search.triggerSearchCandidates();  
 	},
-    updatePreviewGoogleMap:function( url , _callback ){
+    updatePreviewGoogleMap:function( url , _callback ){ 
         $.ajax({
             type: 'GET',
             dataType: 'json',
@@ -293,13 +293,13 @@ var Opaljob_Search =  {
                     $( ".opaljob-candidates-results", _this ).html( content );
                 } );
                 
-                var localURL = location.search.substr(1)+"&action=opaljob_get_jobs_map&paged="+page;
+                var localURL = location.search.substr(1)+"&action=opaljob_get_candidates_map&paged="+page;
                 if( params ) { 
                     localURL += '&' + params; 
                 }
 
-                if( $("#opaljob-search-map-preview").length > 0 )  { 
-                    Opaljob_Search.updatePreviewGoogleMap( localURL , function( data ){ 
+                if( $("#opaljob-search-map-preview").length > 0 )  {  
+                    Opaljob_Search.updatePreviewGoogleMap( localURL , function( data ){  
                         return "hacongtien";
                     } );
                 }

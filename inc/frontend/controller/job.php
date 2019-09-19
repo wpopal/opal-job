@@ -94,6 +94,15 @@ class Job  extends Controller {
 		echo View::render_template( "common/job/by-employer", array( 'jobs' =>  $jobs, 'founds' => 12 ) );
 	}
 
+	/**
+	 * Process Save Data Post Profile
+	 *
+	 *	Display Sidebar on left side and next is main content 
+	 *
+	 * @since 1.0
+	 *
+	 * @return string
+	 */
 	private function get_params_by_request () {
 		$posts_per_page = 10; 
 		$paged = 1;

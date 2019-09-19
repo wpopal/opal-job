@@ -18,6 +18,7 @@ use Opal_Job\Core\Controller;
 use Opal_Job\Common\Model;
 use Opal_Job\Libraries\Form\Form; 
 use Opal_Job\Frontend\Metabox\User_Metabox;
+use Opal_Job\Common\Model\Query\User_Query;
 
 // use Opal_Job\Common\Model\User;
 /**
@@ -62,6 +63,10 @@ class User extends Controller {
 		add_action( 'wp_ajax_opaljob_save_changepass', array($this,'save_change_password') );
 		add_action( 'wp_ajax_nopriv_opaljob_save_changepass', array($this,'save_change_password') );
 		add_action( 'wp_ajax_opaljob_get_html_search_candidates',  array($this,'get_html_search_candidates') ); 
+		
+
+		add_action( 'wp_ajax_opaljob_get_candidates_map', array($this, 'get_candidates_map') );
+
 		// call sub controller to process addition functions follow by role
 		if( !is_admin() && $this->get_control() ) {
 			$this->control->register_ajax_hook_callbacks();
@@ -630,7 +635,40 @@ class User extends Controller {
 		echo View::render_template( "dashboard/metabox-form", $args );
 	}
 
+	/**
+	 * Render Sidebar
+	 *
+	 *	Display Sidebar on left side and next is main content 
+	 *
+	 * @since 1.0
+	 *
+	 * @return string
+	 */
 	public function get_html_search_candidates () {
 		echo do_shortcode(  "[opaljob_search_map_candidates]" );die;
+	}
+
+	/**
+	 * Render Sidebar
+	 *
+	 *	Display Sidebar on left side and next is main content 
+	 *
+	 * @since 1.0
+	 *
+	 * @return string
+	 */
+	public function get_candidates_map () {
+
+		$query = new User_Query(); 
+
+		$atts  = is_array( $atts ) ? $atts  : array();
+		$atts = array_merge( $default, $atts ); 
+
+
+		$members = $query->get_list_data_candidates(); 
+		$atts['members'] = $members; 
+		$atts['count']	 = 10;
+
+		echo json_encode( $members ); exit;
 	}
 }
