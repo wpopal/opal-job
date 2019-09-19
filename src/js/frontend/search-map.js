@@ -157,8 +157,6 @@ var GoogleMapSearch =  function ( data, _callback ) {
 
         var markerClusterer = new MarkerClusterer( map, markers, markerClustererOptions );
 
-       
-
         function attachInfoBoxToMarker( map, marker, infoBox , i ){ 
 
             google.maps.event.addListener( marker, 'click', function(){
@@ -195,7 +193,7 @@ var GoogleMapSearch =  function ( data, _callback ) {
 var Opaljob_Search =  { 
 	
 	init:function () {  
-		// Opaljob_Search.triggerSearchJobs();	 
+	    Opaljob_Search.triggerSearchJobs();	 
         Opaljob_Search.triggerSearchCandidates();  
 	},
     updatePreviewGoogleMap:function( url , _callback ){
@@ -219,7 +217,7 @@ var Opaljob_Search =  {
     },
 	triggerSearchJobs:function () {
         /////////////
-        if( $("#opaljob-search-map-preview").length > 0 ) {
+        if( $("form.opaljob-form-search-jobs").length > 0 && $("#opaljob-search-map-preview").length > 0 ) {
             var updateMaps = function ( data ) {
                 if( $("#opaljob-search-map-preview").length > 0 )  { 
                     var page = 0;
@@ -300,9 +298,7 @@ var Opaljob_Search =  {
                     localURL += '&' + params; 
                 }
 
-                
                 if( $("#opaljob-search-map-preview").length > 0 )  { 
-             
                     Opaljob_Search.updatePreviewGoogleMap( localURL , function( data ){ 
                         return "hacongtien";
                     } );
