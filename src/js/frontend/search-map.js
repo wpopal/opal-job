@@ -274,6 +274,7 @@ var Opaljob_Search =  {
         }    
         //////////////////////////
 	},
+    ///////// / ////////
     triggerSearchCandidates:function(){
         if( $("#opaljob-search-map-candidates").length > 0 ) {
 
@@ -322,6 +323,7 @@ var Opaljob_Search =  {
             } );
         }
     },
+    ///////// / ////////
     triggerSearchEmployers:function(){
         if( $("#opaljob-search-map-employers").length > 0 ) {
             

@@ -122,6 +122,34 @@ class User_Query extends Query_Base {
 	 *
 	 * @return string
 	 */
+ 	public function get_list_data_employers ( $args=array() ) {
+
+ 		$args = array(
+        	'role' => 'opaljob_employer' 
+        );
+       
+        $query = new WP_User_Query( $args );
+
+        $collection = array();
+        foreach ( $query->results as $user ) {
+        	$employer 	  =  new Employer_Entity( $user->ID );  
+       		$collection[] = $employer->get_search_map_data(); 
+        }
+
+        return $collection;
+ 		
+ 	}
+
+ 	/**
+	 * 
+	 * Render Sidebar
+	 *
+	 *	Display Sidebar on left side and next is main content 
+	 *
+	 * @since 1.0
+	 *
+	 * @return string
+	 */
  	public function get_list_employers ( $args=array() ) {
 
  		 $args = array(

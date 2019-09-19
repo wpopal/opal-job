@@ -671,4 +671,41 @@ class User extends Controller {
 
 		echo json_encode( $members ); exit;
 	}
+
+	/**
+	 * Render Sidebar
+	 *
+	 *	Display Sidebar on left side and next is main content 
+	 *
+	 * @since 1.0
+	 *
+	 * @return string
+	 */
+	public function get_html_search_employers () {
+		echo do_shortcode(  "[opaljob_search_map_employers]" );die;
+	}
+
+	/**
+	 * Render Sidebar
+	 *
+	 *	Display Sidebar on left side and next is main content 
+	 *
+	 * @since 1.0
+	 *
+	 * @return string
+	 */
+	public function get_employers_map () {
+
+		$query = new User_Query(); 
+
+		$atts  = is_array( $atts ) ? $atts  : array();
+		$atts = array_merge( $default, $atts ); 
+
+
+		$members = $query->get_list_data_employers(); 
+		$atts['members'] = $members; 
+		$atts['count']	 = 10;
+
+		echo json_encode( $members ); exit;
+	}
 }
