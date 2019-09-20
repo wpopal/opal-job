@@ -81,7 +81,7 @@ class Candidate_Api  extends  Base_Api {
 	 */
 	public function get_list (  ) {
 
-		$response = array();
+		$response 		     = array();
  		$response['message'] = esc_html__( 'Fetched candidates done', 'opaljob' );
 
  		$default = array(
@@ -100,6 +100,6 @@ class Candidate_Api  extends  Base_Api {
 
 		$response['candiates'] = $members;
 
-		return new WP_REST_Response( $response );
+		return $this->get_response( 200, $response );
 	}
 }

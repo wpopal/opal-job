@@ -131,13 +131,13 @@ class Job_Api  extends  Base_Api {
 	public function get_list ( $request ) {
 
 		// if enable cache 
-		$response = array();
+		$response 		     = array();
  		
  		$response['message'] = esc_html__( 'Fetched jobs done', 'opaljob' );
 
- 		$args = []; 
+ 		$args   = []; 
 		$query  = Job_Query::get_job_query( $args ); 
-		$jobs = [];
+		$jobs   = [];
 
 		while ( $query->have_posts() ) {
 			$query->the_post();

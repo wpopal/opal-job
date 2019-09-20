@@ -81,7 +81,7 @@ class Employer_Api  extends  Base_Api {
 	 */
 	public function get_list (  ) {
 
-		$response = array();
+		$response 		     = array();
 
  		$response['message'] = esc_html__( 'Fetched employers done', 'opaljob' );
 
@@ -101,6 +101,6 @@ class Employer_Api  extends  Base_Api {
 
 		$response['employers'] = $members;
 
-		return new WP_REST_Response( $response );
+		return $this->get_response( 200, $response );
 	}
 }
