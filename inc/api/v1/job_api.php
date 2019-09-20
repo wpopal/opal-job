@@ -195,8 +195,8 @@ class Job_Api  extends  Base_Api {
 	 *
 	 * @return WP_REST_Response is json data
 	 */
-	public function get_job ( $request ) {
-		// echo '<pre>' . print_r( $request['id'] ,1 ); die;
+	public function get_job ( $request ) { 
+		
 		$response 		     = array();
 
 		if( $request['id'] > 0 ) {
