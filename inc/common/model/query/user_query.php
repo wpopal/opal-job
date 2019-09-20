@@ -82,7 +82,45 @@ class User_Query extends Query_Base {
         }
 
         return $collection;
- 	}
+ 	}	
+
+ 	/**
+	 * 
+	 * Render Sidebar
+	 *
+	 *	Display Sidebar on left side and next is main content 
+	 *
+	 * @since 1.0
+	 *
+	 * @return string
+	 */
+ 	public function get_api_list_candidates ( $args=array() ) {
+
+	    $args = array(
+        	'role' => 'opaljob_candidate' 
+        );
+       
+        $query = new WP_User_Query( $args );
+
+        $collection = array();
+        foreach ( $query->results as $user ) {
+
+        	$candidate =  new Candidate_Entity( $user->ID ); 
+        	$map      	  = $candidate->get_map( 'map' );
+        	
+        	$candidate->map = array(
+        		'address'	=>  $candidate->get_address(),
+        		'latitude'	=>  $map['latitude'],
+        		'longitude'	=>  $map['longitude'],
+        	);
+
+       		$collection[] = $candidate;
+        }
+
+        return $collection;
+ 	}	
+
+
 
  	/**
 	 * 

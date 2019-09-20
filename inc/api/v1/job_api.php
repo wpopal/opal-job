@@ -47,22 +47,22 @@ class Job_Api  extends  Base_Api {
 	 * @return avoid
 	 */
 	public function register_routes ( ) {  
-	 	/// call http://domain.com/wp-json/job/v1/jobs  ////
+	 	/// call http://domain.com/wp-json/job-api/v1/job/list  ////
 		register_rest_route( $this->namespace, $this->base.'/list', array(
 			'methods' => 'GET',
 			'callback' => array( $this, 'get_list' ),
 		));
-		/// call http://domain.com/wp-json/job/v1/jobs  ////
+		/// call http://domain.com/wp-json/job-api/v1/job/create  ////
 		register_rest_route( $this->namespace, $this->base.'/create', array(
 			'methods' => 'GET',
 			'callback' => array( $this, 'create' ),
 		));
-		/// call http://domain.com/wp-json/job/v1/jobs  ////
+		/// call http://domain.com/wp-json/job-api/v1/job/edit  ////
 		register_rest_route( $this->namespace, $this->base.'/edit', array(
 			'methods' => 'GET',
 			'callback' => array( $this, 'edit' ),
 		));
-		/// call http://domain.com/wp-json/job/v1/jobs  ////
+		/// call http://domain.com/wp-json/job-api/v1/job/delete  ////
 		register_rest_route( $this->namespace, $this->base.'/delete', array(
 			'methods' => 'GET',
 			'callback' => array( $this, 'delete' ),
@@ -97,7 +97,7 @@ class Job_Api  extends  Base_Api {
 
 		$employer = array(
 			'name' 	 => $member->get_name(),
-			'avatar' => $job->get_avatar(),
+			'avatar' => $member->get_avatar(),
 			'ID'	 => $member->ID	
 		);
 
@@ -130,6 +130,7 @@ class Job_Api  extends  Base_Api {
 	 */
 	public function get_list ( $request ) {
 
+		// if enable cache 
 		$response = array();
  		
  		$response['message'] = esc_html__( 'Fetched jobs done', 'opaljob' );

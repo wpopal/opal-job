@@ -37,34 +37,15 @@ class User_Entity {
 	 *
 	 * @since 2.2
 	 */
-	public $roles; 
-
-	/**
-	 * The job ID
-	 *
-	 * @since 2.2
-	 */
-	public $data; 
-
-	/**
-	 * The job ID
-	 *
-	 * @since 2.2
-	 */
-	public $business_profile = null; 
-
-	/**
-	 * The job ID
-	 *
-	 * @since 2.2
-	 */
 	private $related_id; 
 
 	public $display_name; 
 	public $user_email; 
 	public $address; 
-	public $vacancies; 
 	public $description;
+	public $avatar; 
+
+	public $map;
 	/**
 	 * Render Sidebar
 	 *
@@ -82,12 +63,12 @@ class User_Entity {
 
 	public function setup(){
 		if( $this->ID ){
-
-		
 			$user = get_userdata( $this->ID );
 	 		$this->display_name = $user->display_name;
 	 		$this->user_email   = $user->user_email; 
 	 		$this->description  = $user->description;
+	 		$this->avatar 		= $this->get_avatar();
+	 		$this->address      = $this->get_address();
 	 	}
 	}
 
@@ -246,7 +227,7 @@ class User_Entity {
 	 * @return string
 	 */
 	public function get_name() {
-		return "ha cong tien";
+		return $this->display_name;
 	}
 
 	/**
