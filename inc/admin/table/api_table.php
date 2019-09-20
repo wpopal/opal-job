@@ -142,19 +142,7 @@ class Api_Table extends WP_List_Table {
 
 		$actions = array();
 
-		if ( apply_filters( 'opaljob_api_log_requests', true ) ) {
-			$actions['view'] = sprintf(
-				'<a href="%s">%s</a>',
-				esc_url( add_query_arg( array(
-					'view'      => 'api_requests',
-					'post_type' => 'opaljob_forms',
-					'page'      => 'opaljob-reports',
-					'tab'       => 'logs',
-					's'         => $item['email']
-				), 'edit.php' ) ),
-				esc_html__( 'View API Log', 'opaljob' )
-			);
-		}
+		 
 
 		$actions['reissue'] = sprintf(
 			'<a href="%s" class="opaljob-regenerate-api-key">%s</a>',
@@ -211,7 +199,7 @@ class Api_Table extends WP_List_Table {
 			wp_nonce_field( 'bulk-' . $this->_args['plural'] );
 			}
 	?>
-	
+
 		<div class="alignleft actions bulkactions">
 			<?php $this->bulk_actions( $which ); ?>
 		</div>
