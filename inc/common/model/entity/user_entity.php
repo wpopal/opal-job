@@ -68,7 +68,6 @@ class User_Entity {
 	 		$this->user_email   = $user->user_email; 
 	 		$this->description  = $user->description;
 	 		$this->avatar 		= $this->get_avatar();
-	 		$this->address      = $this->get_address();
 	 	}
 	}
 

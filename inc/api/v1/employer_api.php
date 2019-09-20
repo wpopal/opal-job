@@ -18,6 +18,8 @@ use Opal_Job\API\Base_Api;
 use WP_REST_Server;
 
 use WP_REST_Response;
+use Opal_Job\Common\Model\Query\User_Query; 
+
 /**
  * Abstract class to define/implement base methods for all controller classes
  *
@@ -77,14 +79,27 @@ class Employer_Api  extends  Base_Api {
 	 *
 	 * @return avoid
 	 */
-	public function get_list ( $request ) {
+	public function get_list (  ) {
 
-		 
 		$response = array();
- 		
- 		$response['message'] = 'ha cong tien';
-		$response['status'] = 200;
-		$response['post_id'] = 100000;
+
+ 		$response['message'] = esc_html__( 'Fetched employers done', 'opaljob' );
+
+ 		$default = array(
+			'show_pagination' => '',
+			'show_more' 	  => '',
+			'show_categories' => '',
+			'show_featured'   => '',
+			'layout'		  => 'content-candidate-list',
+			'items_per_grid'  => 1,
+			'grid_class'	  => '',
+		);   
+
+		$query = new User_Query(); 
+		
+		$members = $query->get_api_list_candidates(); 
+
+		$response['employers'] = $members;
 
 		return new WP_REST_Response( $response );
 	}

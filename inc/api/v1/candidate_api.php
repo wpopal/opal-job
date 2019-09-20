@@ -82,7 +82,7 @@ class Candidate_Api  extends  Base_Api {
 	public function get_list (  ) {
 
 		$response = array();
- 		$response['message'] = esc_html__( 'Fetched jobs done', 'opaljob' );
+ 		$response['message'] = esc_html__( 'Fetched candidates done', 'opaljob' );
 
  		$default = array(
 			'show_pagination' => '',
@@ -95,7 +95,7 @@ class Candidate_Api  extends  Base_Api {
 		);   
 
 		$query = new User_Query(); 
-		
+
 		$members = $query->get_api_list_candidates(); 
 
 		$response['candiates'] = $members;
