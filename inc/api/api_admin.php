@@ -92,7 +92,25 @@ class API_Admin {
 	 * @since  1.1
 	 */
 	public $override = true;
-  
+  	
+	/**
+	 * Render Sidebar
+	 *
+	 *	Display Sidebar on left side and next is main content 
+	 *
+	 * @since 1.0
+	 *
+	 * @return string
+	 */
+	public static function get_instance(){
+		
+		static $_instance;
+		if( !$_instance ){
+			$_instance = new API_Admin();
+		}
+		return $_instance;
+	}
+
 
 	/**
 	 * Setup the Opalestate API

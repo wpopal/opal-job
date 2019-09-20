@@ -64,6 +64,13 @@ class API_Keys extends Core\Metabox {
 	}
 
 
+	/**
+	 * Register User Shortcodes
+	 *
+	 * Define and register list of user shortcodes such as register form, login form, dashboard shortcode
+	 *
+	 * @since    1.0.0
+	 */
 	public function api_tables() {
 		
 		if ( ! current_user_can( 'manage_opaljob_settings' ) ) {

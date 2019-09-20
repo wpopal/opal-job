@@ -46,9 +46,7 @@ class Api_Register {
 	public function init() {
 		
 		if( is_admin() ){
-			
-			$api = new API_Admin();
-			$api->register_actions();
+			API_Admin::get_instance()->register_actions();
 		}
 
 		add_action( 'rest_api_init', [$this,'register_resources'] ); 
