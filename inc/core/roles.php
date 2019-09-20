@@ -243,7 +243,7 @@ class Roles {
 		}
 
 		if ( is_object( $wp_roles ) ) {
-			/** Opalestate Manager Capabilities */
+			/** Opaljob Manager Capabilities */
 			$wp_roles->remove_cap( 'opaljob_manager', 'view_opaljob_reports' );
 			$wp_roles->remove_cap( 'opaljob_manager', 'view_opaljob_sensitive_data' );
 			$wp_roles->remove_cap( 'opaljob_manager', 'export_opaljob_reports' );

@@ -21,7 +21,7 @@ class Google_Login {
 	protected $google_api_key;
 
 	/**
-	 * Opalestate_Google_Login constructor.
+	 * Opaljob_Google_Login constructor.
 	 */
 	public function __construct() {
 		$this->google_client_id     = opaljob_get_option( 'google_client_id', '' );

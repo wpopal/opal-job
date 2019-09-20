@@ -66,11 +66,11 @@ class API_Keys extends Core\Metabox {
 
 	public function api_tables() {
 		
-		if ( ! current_user_can( 'manage_opalestate_settings' ) ) {
+		if ( ! current_user_can( 'manage_opaljob_settings' ) ) {
 			return;
 		}
 
-		do_action( 'opalestate_tools_api_keys_keys_before' );
+		do_action( 'opaljob_tools_api_keys_keys_before' );
 
 		$keys_table_list = new Api_Table();
 		$keys_table_list->prepare_items();
@@ -84,23 +84,14 @@ class API_Keys extends Core\Metabox {
 		$keys_table_list->display();
 		?>
 
-
-		<p>
-			<?php printf(
-				__( 'API keys allow users to use the <a href="%s">Opalestate REST API</a> to retrieve donation data in JSON or XML for external applications or devices, such as <a href="%s">Zapi_keyser</a>.', 'opalestate' ),
-				'https://wpopal.com/opalestate/documentation/opalestate-api_keys-reference/',
-				'https://wpopal.com/addons/opalestate/'
-			); ?>
-		</p>
-
 		<style>
-			.opalestate_properties_page_opalestate-settings .opalestate-submit-wrap {
+			.opaljob_properties_page_opaljob-settings .opaljob-submit-wrap {
 				display: none; /* Hide Save settings button on System Info Tab (not needed) */
 			}
 		</style>
 		<?php
 
-		do_action( 'opalestate_tools_api_keys_keys_after' );
+		do_action( 'opaljob_tools_api_keys_keys_after' );
 
 	}
 }

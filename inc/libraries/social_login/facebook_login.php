@@ -15,7 +15,7 @@ class Facebook_Login {
 	protected $facebook_secret;
 
 	/**
-	 * Opalestate_Facebook_Login constructor.
+	 * Opaljob_Facebook_Login constructor.
 	 */
 	public function __construct() {
 		$this->facebook_app_id = opaljob_get_option( 'facebook_app_id', '' );

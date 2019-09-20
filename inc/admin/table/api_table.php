@@ -2,7 +2,7 @@
 /**
  * API Key Table Class
  *
- * @package     Opalestate
+ * @package     Opaljob
  * @subpackage  Admin/Tools/APIKeys
  * @copyright   Copyright (c) 2019, WordImpress
  * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 use WP_List_Table;
 
 /**
- * Opalestate_API_Keys_Table Class
+ * Opaljob_API_Keys_Table Class
  *
  * Renders the API Keys table
  *
@@ -48,8 +48,8 @@ class Api_Table extends WP_List_Table {
 
 		// Set parent defaults
 		parent::__construct( array(
-			'singular' => esc_html__( 'API Key', 'opalestate-pro' ),     // Singular name of the listed records
-			'plural'   => esc_html__( 'API Keys', 'opalestate-pro' ),    // Plural name of the listed records
+			'singular' => esc_html__( 'API Key', 'opaljob-pro' ),     // Singular name of the listed records
+			'plural'   => esc_html__( 'API Keys', 'opaljob-pro' ),    // Plural name of the listed records
 			'ajax'     => false                       // Does this table support ajax?
 		) );
 
@@ -127,40 +127,40 @@ class Api_Table extends WP_List_Table {
 
 		$actions = array();
 
-		if ( apply_filters( 'opalestate_api_log_requests', true ) ) {
+		if ( apply_filters( 'opaljob_api_log_requests', true ) ) {
 			$actions['view'] = sprintf(
 				'<a href="%s">%s</a>',
 				esc_url( add_query_arg( array(
 					'view'      => 'api_requests',
-					'post_type' => 'opalestate_forms',
-					'page'      => 'opalestate-reports',
+					'post_type' => 'opaljob_forms',
+					'page'      => 'opaljob-reports',
 					'tab'       => 'logs',
 					's'         => $item['email']
 				), 'edit.php' ) ),
-				esc_html__( 'View API Log', 'opalestate-pro' )
+				esc_html__( 'View API Log', 'opaljob-pro' )
 			);
 		}
 
 		$actions['reissue'] = sprintf(
-			'<a href="%s" class="opalestate-regenerate-api-key">%s</a>',
+			'<a href="%s" class="opaljob-regenerate-api-key">%s</a>',
 			esc_url( wp_nonce_url( add_query_arg( array(
 				'user_id'          => $item['id'],
-				'opalestate_action'      => 'process_api_key',
-				'opalestate_api_process' => 'regenerate'
-			) ), 'opalestate-api-nonce' ) ),
-			esc_html__( 'Reissue', 'opalestate-pro' )
+				'opaljob_action'      => 'process_api_key',
+				'opaljob_api_process' => 'regenerate'
+			) ), 'opaljob-api-nonce' ) ),
+			esc_html__( 'Reissue', 'opaljob-pro' )
 		);
 		$actions['revoke']  = sprintf(
-			'<a href="%s" class="opalestate-revoke-api-key opalestate-delete">%s</a>',
+			'<a href="%s" class="opaljob-revoke-api-key opaljob-delete">%s</a>',
 			esc_url( wp_nonce_url( add_query_arg( array(
 				'user_id'          => $item['id'],
-				'opalestate_action'      => 'process_api_key',
-				'opalestate_api_process' => 'revoke'
-			) ), 'opalestate-api-nonce' ) ),
-			esc_html__( 'Revoke', 'opalestate-pro' )
+				'opaljob_action'      => 'process_api_key',
+				'opaljob_api_process' => 'revoke'
+			) ), 'opaljob-api-nonce' ) ),
+			esc_html__( 'Revoke', 'opaljob-pro' )
 		);
 
-		$actions = apply_filters( 'opalestate_api_row_actions', array_filter( $actions ) );
+		$actions = apply_filters( 'opaljob_api_row_actions', array_filter( $actions ) );
 
 		return sprintf( '%1$s %2$s', $item['user'], $this->row_actions( $actions ) );
 	}
@@ -174,10 +174,10 @@ class Api_Table extends WP_List_Table {
 	 */
 	public function get_columns() {
 		$columns = array(
-			'user'   => esc_html__( 'Username'    , 'opalestate-pro' ),
-			'key'    => esc_html__( 'Public Key'  , 'opalestate-pro' ),
-			'token'  => esc_html__( 'Token'		  , 'opalestate-pro' ),
-			'secret' => esc_html__( 'Secret Key'  , 'opalestate-pro' )
+			'user'   => esc_html__( 'Username'    , 'opaljob-pro' ),
+			'key'    => esc_html__( 'Public Key'  , 'opaljob-pro' ),
+			'token'  => esc_html__( 'Token'		  , 'opaljob-pro' ),
+			'secret' => esc_html__( 'Secret Key'  , 'opaljob-pro' )
 		);
 
 		return $columns;
@@ -219,19 +219,19 @@ class Api_Table extends WP_List_Table {
 	 */
 	public function bulk_actions( $which = '' ) {
 		// These aren't really bulk actions but this outputs the markup in the right place
-		static $opalestate_api_is_bottom;
+		static $opaljob_api_is_bottom;
 
-		if ( $opalestate_api_is_bottom ) {
+		if ( $opaljob_api_is_bottom ) {
 			return;
 		}
 		?>
-		<input type="hidden" name="opalestate_action" value="process_api_key"/>
-		<input type="hidden" name="opalestate_api_process" value="generate"/>
-		<?php wp_nonce_field( 'opalestate-api-nonce' ); ?>
+		<input type="hidden" name="opaljob_action" value="process_api_key"/>
+		<input type="hidden" name="opaljob_api_process" value="generate"/>
+		<?php wp_nonce_field( 'opaljob-api-nonce' ); ?>
 		<?php // echo OpalEstate()->html->ajax_user_search(); ?>
-		<?php submit_button( esc_html__( 'Generate New API Keys', 'opalestate-pro' ), 'secondary', 'submit', false ); ?>
+		<?php submit_button( esc_html__( 'Generate New API Keys', 'opaljob-pro' ), 'secondary', 'submit', false ); ?>
 		<?php
-		$opalestate_api_is_bottom = true;
+		$opaljob_api_is_bottom = true;
 	}
 
 	/**
@@ -254,7 +254,7 @@ class Api_Table extends WP_List_Table {
 	 */
 	public function query() {
 		$users = get_users( array(
-			'meta_value' => 'opalestate_user_secret_key',
+			'meta_value' => 'opaljob_user_secret_key',
 			'number'     => $this->per_page,
 			'offset'     => $this->per_page * ( $this->get_paged() - 1 )
 		) );
@@ -284,13 +284,13 @@ class Api_Table extends WP_List_Table {
 	public function total_items() {
 		global $wpdb;
 
-		if ( ! get_transient( 'opalestate_total_api_keys' ) ) {
-			$total_items = $wpdb->get_var( "SELECT count(user_id) FROM $wpdb->usermeta WHERE meta_value='opalestate_user_secret_key'" );
+		if ( ! get_transient( 'opaljob_total_api_keys' ) ) {
+			$total_items = $wpdb->get_var( "SELECT count(user_id) FROM $wpdb->usermeta WHERE meta_value='opaljob_user_secret_key'" );
 
-			set_transient( 'opalestate_total_api_keys', $total_items, 60 * 60 );
+			set_transient( 'opaljob_total_api_keys', $total_items, 60 * 60 );
 		}
 
-		return get_transient( 'opalestate_total_api_keys' );
+		return get_transient( 'opaljob_total_api_keys' );
 	}
 
 	/**

@@ -27,7 +27,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class Install {
 	/**
-	 * Install Opalestate.
+	 * Install Opaljob.
 	 */
 	public static function install() {
 		if ( ! is_blog_installed() ) {
@@ -60,7 +60,7 @@ class Install {
 	}
 
 	/**
-	 * Setup Opalestate environment - post types, taxonomies, endpoints.
+	 * Setup Opaljob environment - post types, taxonomies, endpoints.
 	 */
 	private static function setup_environment() {
 
@@ -110,7 +110,7 @@ class Install {
 	}
 
 	/**
-	 * Update Opalestate version to current.
+	 * Update Opaljob version to current.
 	 */
 	private static function update_opaljob_version() {
 		update_option( 'opaljob_version', OPALJOB_VERSION );

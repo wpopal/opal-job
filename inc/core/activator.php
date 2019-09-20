@@ -65,7 +65,7 @@ class Activator {
 		} else {
 			// remove_role( 'opaljob_manager' );
 			// remove_role( 'opaljob_manager' );
-			// $roles = new Opalestate_Roles;
+			// $roles = new Opaljob_Roles;
 			// $roles->remove_caps();
 		}
 
