@@ -559,5 +559,4 @@ class Job_Entity {
 
 		return $prop;
 	}
-
 }

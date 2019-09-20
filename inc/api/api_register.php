@@ -70,7 +70,8 @@ class Api_Register {
 	 *
 	 * @since  1.1
 	 */
-	public function register_resources (   ) {  
+	public function register_resources (  ) {  
+
 		$api_classes = apply_filters( 'woocommerce_api_classes',
 			array(
 				'\\Opal_Job\\API\\V1\\Job_Api',
@@ -81,7 +82,7 @@ class Api_Register {
 
 		$auth = new Api_Auth();
 		foreach ( $api_classes as $api_class ) {
-			$api_class = new $api_class(  );
+			$api_class = new $api_class( );
 		}
 	}
 
