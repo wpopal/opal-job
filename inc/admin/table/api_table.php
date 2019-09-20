@@ -141,9 +141,7 @@ class Api_Table extends WP_List_Table {
 	public function column_user( $item ) {
 
 		$actions = array();
-
-		 
-
+		
 		$actions['reissue'] = sprintf(
 			'<a href="%s" class="opaljob-regenerate-api-key">%s</a>',
 			esc_url( wp_nonce_url( add_query_arg( array(

@@ -12,8 +12,6 @@ namespace Opal_Job\Admin;
 
 use Opal_Job\Admin\Setting as Setting;
 use Opal_Job\Libraries as Libraries;
-use Opal_Job\API\API_Admin;
-
 /**
  * The admin-specific functionality of the plugin.
  *
@@ -67,8 +65,6 @@ class Admin {
 		$this->plugin_name        = $plugin_name;
 		$this->version            = $version;
 		$this->plugin_text_domain = $plugin_text_domain;
-
-		new API_Admin();
 	}
 
 	public $settings_objs = [];

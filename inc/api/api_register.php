@@ -14,6 +14,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 use Opal_Job\API\Api_Auth;
+use Opal_Job\API\API_Admin;
+
 /**
  * Abstract class to define/implement base methods for all controller classes
  *
@@ -43,10 +45,15 @@ class Api_Register {
 	 */
 	public function init() {
 		
+		if( is_admin() ){
+			
+			$api = new API_Admin();
+			$api->register_actions();
+		}
+
 		add_action( 'rest_api_init', [$this,'register_resources'] ); 
 		$this->register_resources(); 
 	}
-
 
 	/**
 	 * Registers a new rewrite endpoint for accessing the API

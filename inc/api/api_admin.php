@@ -102,6 +102,20 @@ class API_Admin {
 	 */
 	public function __construct() {
 
+	}
+
+	/**
+	 * Registers query vars for API access
+	 *
+	 * @access public
+	 * @since  1.1
+	 *
+	 * @param array $vars Query vars
+	 *
+	 * @return string[] $vars New query vars
+	 */
+	public function register_actions () {
+
 		add_action( 'admin_init', array( $this,'process_action') );
 		add_action( 'show_user_profile', array( $this, 'user_key_field' ) );
 		add_action( 'edit_user_profile', array( $this, 'user_key_field' ) );
@@ -145,204 +159,7 @@ class API_Admin {
 		}	
 	}
 
-	/**
-	 * Registers query vars for API access
-	 *
-	 * @access public
-	 * @since  1.1
-	 *
-	 * @param array $vars Query vars
-	 *
-	 * @return string[] $vars New query vars
-	 */
-	public function query_vars( $vars ) {
-
-		$vars[] = 'token';
-		$vars[] = 'key';
-		$vars[] = 'query';
-		$vars[] = 'type';
-		$vars[] = 'property';
-		$vars[] = 'number';
-		$vars[] = 'date';
-		$vars[] = 'startdate';
-		$vars[] = 'enddate';
-		$vars[] = 'donor';
-		$vars[] = 'propertyat';
-		$vars[] = 'id';
-		$vars[] = 'purchasekey';
-		$vars[] = 'email';
-
-		return $vars;
-	}
-
-	/**
-	 * Retrieve the API versions
-	 *
-	 * @access public
-	 * @since  1.1
-	 * @return array
-	 */
-	public function get_versions() {
-		return $this->versions;
-	}
-
-	/**
-	 * Retrieve the API version that was queried
-	 *
-	 * @access public
-	 * @since  1.1
-	 * @return string
-	 */
-	public function get_queried_version() {
-		return $this->queried_version;
-	}
-
-	/**
-	 * Retrieves the default version of the API to use
-	 *
-	 * @access public
-	 * @since  1.1
-	 * @return string
-	 */
-	public function get_default_version() {
-
-		$version = get_option( 'opaljob_default_api_version' );
-
-		if ( defined( 'OPALESTATE_API_VERSION' ) ) {
-			$version = OPALESTATE_API_VERSION;
-		} elseif ( ! $version ) {
-			$version = 'v1';
-		}
-
-		return $version;
-	}
-
-	/**
-	 * Sets the version of the API that was queried.
-	 *
-	 * Falls back to the default version if no version is specified
-	 *
-	 * @access private
-	 * @since  1.1
-	 */
-	private function set_queried_version() {
-
-		global $wp_query;
-
-		$version = $wp_query->query_vars['opaljob-api'];
-
-		if ( strpos( $version, '/' ) ) {
-
-			$version = explode( '/', $version );
-			$version = strtolower( $version[0] );
-
-			$wp_query->query_vars['opaljob-api'] = str_replace( $version . '/', '', $wp_query->query_vars['opaljob-api'] );
-
-			if ( array_key_exists( $version, $this->versions ) ) {
-
-				$this->queried_version = $version;
-
-			} else {
-
-				$this->is_valid_request = false;
-				$this->invalid_version();
-			}
-
-		} else {
-
-			$this->queried_version = $this->get_default_version();
-
-		}
-
-	}
-
-	/**
-	 * Validate the API request
-	 *
-	 * Checks for the user's public key and token against the secret key
-	 *
-	 * @access private
-	 * @global object $wp_query WordPress Query
-	 * @uses   Opalestate_API::get_user()
-	 * @uses   Opalestate_API::invalid_key()
-	 * @uses   Opalestate_API::invalid_auth()
-	 * @since  1.1
-	 * @return void
-	 */
-	private function validate_request() {
-		global $wp_query;
-
-		$this->override = false;
-
-		// Make sure we have both user and api key
-		if ( ! empty( $wp_query->query_vars['opaljob-api'] ) && ( $wp_query->query_vars['opaljob-api'] != 'properties' || ! empty( $wp_query->query_vars['token'] ) ) ) {
-
-			if ( empty( $wp_query->query_vars['token'] ) || empty( $wp_query->query_vars['key'] ) ) {
-				$this->missing_auth();
-			}
-
-			// Retrieve the user by public API key and ensure they exist
-			if ( ! ( $user = $this->get_user( $wp_query->query_vars['key'] ) ) ) {
-
-				$this->invalid_key();
-
-			} else {
-
-				$token  = urldecode( $wp_query->query_vars['token'] );
-				$secret = $this->get_user_secret_key( $user );
-				$public = urldecode( $wp_query->query_vars['key'] );
-
-				if ( hash_equals( md5( $secret . $public ), $token ) ) {
-					$this->is_valid_request = true;
-				} else {
-					$this->invalid_auth();
-				}
-			}
-		} elseif ( ! empty( $wp_query->query_vars['opaljob-api'] ) && $wp_query->query_vars['opaljob-api'] == 'properties' ) {
-			$this->is_valid_request = true;
-			$wp_query->set( 'key', 'public' );
-		}
-	}
-
-	/**
-	 * Retrieve the user ID based on the public key provided
-	 *
-	 * @access public
-	 * @since  1.1
-	 * @global WPDB $wpdb Used to query the database using the WordPress
-	 *                      Database API
-	 *
-	 * @param string $key Public Key
-	 *
-	 * @return bool if user ID is found, false otherwise
-	 */
-	public function get_user( $key = '' ) {
-		global $wpdb, $wp_query;
-
-		if ( empty( $key ) ) {
-			$key = urldecode( $wp_query->query_vars['key'] );
-		}
-
-		if ( empty( $key ) ) {
-			return false;
-		}
-
-		$user = get_transient( md5( 'opaljob_api_user_' . $key ) );
-
-		if ( false === $user ) {
-			$user = $wpdb->get_var( $wpdb->prepare( "SELECT user_id FROM $wpdb->usermeta WHERE meta_key = %s LIMIT 1", $key ) );
-			set_transient( md5( 'opaljob_api_user_' . $key ), $user, DAY_IN_SECONDS );
-		}
-
-		if ( $user != null ) {
-			$this->user_id = $user;
-
-			return $user;
-		}
-
-		return false;
-	}
-
+	
 	public function get_user_public_key( $user_id = 0 ) {
 		global $wpdb;
 
@@ -379,136 +196,6 @@ class API_Admin {
 		return $user_secret_key;
 	}
 
- 
-
-	/**
-	 * Log each API request, if enabled
-	 *
-	 * @access private
-	 * @since  1.1
-     *
-	 * @global Opalestate_Logging $opaljob_logs
-	 * @global WP_Query     $wp_query
-	 *
-	 * @param array $data
-	 *
-	 * @return void
-	 */
-	private function log_request( $data = array() ) {
-		if ( ! $this->log_requests ) {
-			return;
-		}
-
-        /**
-         * @var Opalestate_Logging $opaljob_logs
-         */
-		global $opaljob_logs;
-
-        /**
-         * @var WP_Query $wp_query
-         */
-        global $wp_query;
-
-		$query = array(
-			'opaljob-api'    => $wp_query->query_vars['opaljob-api'],
-			'key'         => isset( $wp_query->query_vars['key'] ) ? $wp_query->query_vars['key'] : null,
-			'token'       => isset( $wp_query->query_vars['token'] ) ? $wp_query->query_vars['token'] : null,
-			'query'       => isset( $wp_query->query_vars['query'] ) ? $wp_query->query_vars['query'] : null,
-			'type'        => isset( $wp_query->query_vars['type'] ) ? $wp_query->query_vars['type'] : null,
-			'property'        => isset( $wp_query->query_vars['property'] ) ? $wp_query->query_vars['property'] : null,
-			'customer'    => isset( $wp_query->query_vars['customer'] ) ? $wp_query->query_vars['customer'] : null,
-			'date'        => isset( $wp_query->query_vars['date'] ) ? $wp_query->query_vars['date'] : null,
-			'startdate'   => isset( $wp_query->query_vars['startdate'] ) ? $wp_query->query_vars['startdate'] : null,
-			'enddate'     => isset( $wp_query->query_vars['enddate'] ) ? $wp_query->query_vars['enddate'] : null,
-			'id'          => isset( $wp_query->query_vars['id'] ) ? $wp_query->query_vars['id'] : null,
-			'purchasekey' => isset( $wp_query->query_vars['purchasekey'] ) ? $wp_query->query_vars['purchasekey'] : null,
-			'email'       => isset( $wp_query->query_vars['email'] ) ? $wp_query->query_vars['email'] : null,
-		);
-
-		$log_data = array(
-			'log_type'     => 'api_request',
-			'post_excerpt' => http_build_query( $query ),
-			'post_content' => ! empty( $data['error'] ) ? $data['error'] : '',
-		);
-
-		$log_meta = array(
-			'request_ip' => opaljob_get_ip(),
-			'user'       => $this->user_id,
-			'key'        => isset( $wp_query->query_vars['key'] ) ? $wp_query->query_vars['key'] : null,
-			'token'      => isset( $wp_query->query_vars['token'] ) ? $wp_query->query_vars['token'] : null,
-			'time'       => $data['request_speed'],
-			'version'    => $this->get_queried_version()
-		);
-	}
-
-
-	/**
-	 * Retrieve the output data
-	 *
-	 * @access public
-	 * @since  1.1
-	 * @return array
-	 */
-	public function get_output() {
-		return $this->data;
-	}
-
-	/**
-	 * Output Query in either JSON/XML. The query data is outputted as JSON
-	 * by default
-	 *
-	 * @since 1.1
-	 * @global WP_Query $wp_query
-	 *
-	 * @param int $status_code
-	 */
-	public function output( $status_code = 200 ) {
-        /**
-         * @var WP_Query $wp_query
-         */
-		global $wp_query;
-
-		$propertyat = $this->get_output_propertyat();
-
-		status_header( $status_code );
-
-		do_action( 'opaljob_api_output_before', $this->data, $this, $propertyat );
-
-		switch ( $propertyat ) :
-
-			case 'xml' :
-
-				require_once OPALESTATE_PLUGIN_DIR . 'inc/libraries/array2xml.php';
-				$xml = Array2XML::createXML( 'opaljob-pro', $this->data );
-				echo $xml->saveXML();
-
-				break;
-
-			case 'json' :
-
-				header( 'Content-Type: application/json' );
-				if ( ! empty( $this->pretty_print ) ) {
-					echo json_encode( $this->data, $this->pretty_print );
-				} else {
-					echo json_encode( $this->data );
-				}
-
-				break;
-
-
-			default :
-
-				// Allow other propertyats to be added via extensions
-				do_action( 'opaljob_api_output_' . $propertyat, $this->data, $this );
-
-				break;
-
-		endswitch;
-
-		do_action( 'opaljob_api_output_after', $this->data, $this, $propertyat );
-
-		die();
-	}
 
 	/**
 	 * Modify User Profile
@@ -588,6 +275,7 @@ class API_Admin {
 			$userdata = get_user_by( 'login', $args['user_id'] );
 			$user_id  = $userdata->ID;
 		}
+
 		$process = isset( $args['opaljob_api_process'] ) ? strtolower( $args['opaljob_api_process'] ) : false;
 
 		
