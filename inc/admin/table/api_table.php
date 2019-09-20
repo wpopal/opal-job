@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 use WP_List_Table;
-
+use Opal_Job\Libraries\Form\Form;
 /**
  * Opaljob_API_Keys_Table Class
  *
@@ -48,8 +48,8 @@ class Api_Table extends WP_List_Table {
 
 		// Set parent defaults
 		parent::__construct( array(
-			'singular' => esc_html__( 'API Key', 'opaljob-pro' ),     // Singular name of the listed records
-			'plural'   => esc_html__( 'API Keys', 'opaljob-pro' ),    // Plural name of the listed records
+			'singular' => esc_html__( 'API Key', 'opaljob' ),     // Singular name of the listed records
+			'plural'   => esc_html__( 'API Keys', 'opaljob' ),    // Plural name of the listed records
 			'ajax'     => false                       // Does this table support ajax?
 		) );
 
@@ -137,7 +137,7 @@ class Api_Table extends WP_List_Table {
 					'tab'       => 'logs',
 					's'         => $item['email']
 				), 'edit.php' ) ),
-				esc_html__( 'View API Log', 'opaljob-pro' )
+				esc_html__( 'View API Log', 'opaljob' )
 			);
 		}
 
@@ -148,7 +148,7 @@ class Api_Table extends WP_List_Table {
 				'opaljob_action'      => 'process_api_key',
 				'opaljob_api_process' => 'regenerate'
 			) ), 'opaljob-api-nonce' ) ),
-			esc_html__( 'Reissue', 'opaljob-pro' )
+			esc_html__( 'Reissue', 'opaljob' )
 		);
 		$actions['revoke']  = sprintf(
 			'<a href="%s" class="opaljob-revoke-api-key opaljob-delete">%s</a>',
@@ -157,7 +157,7 @@ class Api_Table extends WP_List_Table {
 				'opaljob_action'      => 'process_api_key',
 				'opaljob_api_process' => 'revoke'
 			) ), 'opaljob-api-nonce' ) ),
-			esc_html__( 'Revoke', 'opaljob-pro' )
+			esc_html__( 'Revoke', 'opaljob' )
 		);
 
 		$actions = apply_filters( 'opaljob_api_row_actions', array_filter( $actions ) );
@@ -174,10 +174,10 @@ class Api_Table extends WP_List_Table {
 	 */
 	public function get_columns() {
 		$columns = array(
-			'user'   => esc_html__( 'Username'    , 'opaljob-pro' ),
-			'key'    => esc_html__( 'Public Key'  , 'opaljob-pro' ),
-			'token'  => esc_html__( 'Token'		  , 'opaljob-pro' ),
-			'secret' => esc_html__( 'Secret Key'  , 'opaljob-pro' )
+			'user'   => esc_html__( 'Username'    , 'opaljob' ),
+			'key'    => esc_html__( 'Public Key'  , 'opaljob' ),
+			'token'  => esc_html__( 'Token'		  , 'opaljob' ),
+			'secret' => esc_html__( 'Secret Key'  , 'opaljob' )
 		);
 
 		return $columns;
@@ -224,12 +224,63 @@ class Api_Table extends WP_List_Table {
 		if ( $opaljob_api_is_bottom ) {
 			return;
 		}
+
+		$prefix = '';
+		$fields =  array(
+
+			array(
+				'id'   		   => "opaljob_action",
+				'name' 		   => esc_html__( 'Type', 'opaljob' ),
+				'type' 		   => 'hidden',		
+				'default'	   => 'process_api_key',		 
+				'description'  => "",
+			),
+			array(
+				'id'   		   => "opaljob_api_process",
+				'name' 		   => esc_html__( 'Type', 'opaljob' ),
+				'type' 		   => 'hidden',		
+				'default'	   => 'generate',		 
+				'description'  => "",
+			),
+			array(
+				'id'   		   => "key_user",
+				'name' 		   => esc_html__( 'User', 'opaljob' ),
+				'type' 		   => 'text',
+				'before_row'   => '',
+				'required' 	   => 'required',
+				'description'  => "",
+			),
+			array(
+				'id'   		   => "description",
+				'name' 		   => esc_html__( 'Description', 'opaljob' ),
+				'type' 		   => 'text',
+				'before_row'   => '',
+				'required' 	   => 'required',
+				'description'  => "",
+			),
+			array(
+				'id'  		   => "key_permissions",
+				'name' 		   => esc_html__( 'Permissions', 'opaljob' ),
+				'type' 		   => 'select',
+				'options'	   => array(
+					'read'			=> esc_html__( 'Read', 'opaljob' ),
+					'read_write'	=> esc_html__( 'Read/Write', 'opaljob' ),
+					'write'			=> esc_html__( 'Write', 'opaljob' )
+				),
+				'required' 	   => 'required',
+			)
+		);
+
+		$form = Form::get_instance();
+		$form->set_type( 'custom' );
+		$args = [];
+
+	 	echo wp_nonce_field( 'opaljob-api-nonce' );
+		echo $form->render( $args, $fields );
+
 		?>
-		<input type="hidden" name="opaljob_action" value="process_api_key"/>
-		<input type="hidden" name="opaljob_api_process" value="generate"/>
-		<?php wp_nonce_field( 'opaljob-api-nonce' ); ?>
-		<?php // echo OpalEstate()->html->ajax_user_search(); ?>
-		<?php submit_button( esc_html__( 'Generate New API Keys', 'opaljob-pro' ), 'secondary', 'submit', false ); ?>
+	
+		<?php submit_button( esc_html__( 'Generate New API Keys', 'opaljob' ), 'secondary', 'submit', false ); ?>
 		<?php
 		$opaljob_api_is_bottom = true;
 	}
