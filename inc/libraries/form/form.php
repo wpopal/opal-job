@@ -194,7 +194,8 @@ class Form {
 				return new Iconpicker( $field, $this );
 				break;
 			default:
-				return sprintf( esc_html__( 'The field type: %s does not exist!', 'opaljob' ), $field ['type'] );
+				do_action( 'opaljob_form_render_field_'.$field['type'], $field , $this );
+				//return sprintf( esc_html__( 'The field type: %s does not exist!', 'opaljob' ), $field ['type'] );
 				break;
 		}
 	}

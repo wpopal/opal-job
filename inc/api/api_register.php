@@ -77,7 +77,7 @@ class Api_Register {
 				'\\Opal_Job\\API\\V1\\Job_Api',
 				'\\Opal_Job\\API\\V1\\Candidate_Api',
 				'\\Opal_Job\\API\\V1\\Employer_Api',
-				'\\Opal_Job\\API\\V1\\Settings_Api'
+				'\\Opal_Job\\API\\V1\\Employer_Api'
 			)
 		);
 

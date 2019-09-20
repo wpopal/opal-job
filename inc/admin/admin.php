@@ -164,6 +164,7 @@ class Admin {
 				'display'     => Setting\Display::class,
 				'email'       => Setting\Email::class,
 				'third_party' => Setting\Third_Party::class,
+				'api_keys' 	  => Setting\API_Keys::class,
 			] );
 
 			foreach ( $matching as $match => $class ) {
