@@ -13,7 +13,7 @@
  *
  * @wordpress-plugin
  * Plugin Name:       Opal Job
- * Plugin URI:        http://wpopal.com/opal-job-uri/
+ * Plugin URI:        http://wpopal.com/opal-job-/
  * Description:       This is a short description of what the plugin does. It's displayed in the WordPress admin area.
  * Version:           1.0.0
  * Author:            WpOpal

@@ -9,6 +9,7 @@
  * @since       1.0
  */
 namespace Opal_Job\Common\Model\Entity;
+use WP_Error; 
 use stdClass;
 use WP_Post;
 use Opal_Job\Core\URI; 
@@ -408,7 +409,56 @@ class Job_Entity {
 	 * @return string
 	 */
 	public function get_category_tax() {
-		$terms = wp_get_post_terms( $this->post_id, 'job_category' );
+		$terms = wp_get_post_terms( $this->ID, 'opaljob_category' );
+
+		return $terms;
+	}
+
+	/**
+	 * Gets meta box value
+	 *
+	 * Return create post with format by args,it support type: ago, date 
+	 *
+	 * @access public
+	 * @param $key
+	 * @param $single
+	 * @return string
+	 */
+	public function get_specialism_tax() {
+		$terms = wp_get_post_terms( $this->ID, 'opaljob_specialism' );
+
+		return $terms;
+	}
+
+	/**
+	 * Gets meta box value
+	 *
+	 * Return create post with format by args,it support type: ago, date 
+	 *
+	 * @access public
+	 * @param $key
+	 * @param $single
+	 * @return string
+	 */
+	public function get_tag_tax() {
+		$terms = wp_get_post_terms( $this->ID, 'opaljob_tag' );
+
+		return $terms;
+	}
+
+
+	/**
+	 * Gets meta box value
+	 *
+	 * Return create post with format by args,it support type: ago, date 
+	 *
+	 * @access public
+	 * @param $key
+	 * @param $single
+	 * @return string
+	 */
+	public function get_location_tax() {
+		$terms = wp_get_post_terms( $this->ID, 'opaljob_location' );
 
 		return $terms;
 	}
@@ -424,7 +474,7 @@ class Job_Entity {
 	 * @return string
 	 */
 	public function get_types_tax() {
-		$terms = wp_get_post_terms( $this->post_id, 'opaljob_types' );
+		$terms = wp_get_post_terms( $this->ID, 'opaljob_types' );
 
 		return $terms;
 	}

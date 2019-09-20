@@ -49,9 +49,15 @@ class Job_Api  extends  Base_Api {
 	public function register_routes ( ) {  
 	 	/// call http://domain.com/wp-json/job-api/v1/job/list  ////
 		register_rest_route( $this->namespace, $this->base.'/list', array(
-			'methods' => 'GET',
+			'methods' => WP_REST_Server::READABLE,
 			'callback' => array( $this, 'get_list' ),
 		));
+		/// call http://domain.com/wp-json/job-api/v1/job/1  ////
+		register_rest_route( $this->namespace, $this->base.'/(?P<id>\d+)', array(
+			'methods' => WP_REST_Server::READABLE,
+			'callback' => array( $this, 'get_job' ),
+		));
+
 		/// call http://domain.com/wp-json/job-api/v1/job/create  ////
 		register_rest_route( $this->namespace, $this->base.'/create', array(
 			'methods' => 'GET',
@@ -93,14 +99,22 @@ class Job_Api  extends  Base_Api {
 
 		$member = $job->get_employer();
 
+		// employer data
 		$employer = array(
 			'name' 	 => $member->get_name(),
 			'avatar' => $member->get_avatar(),
 			'ID'	 => $member->ID	
 		);
+		// categories
+		$categories = array() ;
+
+		/// tags
+		$tags = array();
+
+		/// 
+		$images = array();
 
 		$output = array(
-			'employer' 	   	=> $employer,
 			'ID'		   	=> $job->ID,
 			'post_title'   	=> $job->post_title,
 			'post_content' 	=> $job->post_content,
@@ -110,8 +124,32 @@ class Job_Api  extends  Base_Api {
 			'modified'     	=> $job->post_modified,
 			'expired'	   	=> $job->get_meta( 'expired_date' ),
 			'deadline_date' => $job->get_meta( 'deadline_date' ),
-			'guid' 		    => $job->guid
+			'guid' 		    => $job->guid,
+			'employer' 	   	=> $employer,
+			'types'			=> array(),
+			'categories'	=> $categories,
 		);
+
+		$taxs = array(
+			'opaljob_specialism',
+			'opaljob_category',
+			'opaljob_tag',
+			'opaljob_location',
+			'opaljob_types'
+		);
+
+		foreach ( $taxs as $tax ) {
+			$tdata = wp_get_post_terms( $job_id, $tax );
+			if( !is_wp_error( $tdata )  ) {
+				foreach ( $tdata as $t ) {
+					$output[$tax][] = array(
+						'name' 	  => $t->name,
+						'slug' 	  => $t->slug,
+						'term_id' => $t->term_id
+					);
+				}
+			}
+		} 
 
 		return $output;
 	}
@@ -148,6 +186,26 @@ class Job_Api  extends  Base_Api {
 		return $this->get_response( 200, $response );
 	}
 
+	/**
+	 * Get List Of Job
+	 *
+	 * Based on request to get collection
+	 *
+	 * @since 1.0
+	 *
+	 * @return WP_REST_Response is json data
+	 */
+	public function get_job ( $request ) {
+		// echo '<pre>' . print_r( $request['id'] ,1 ); die;
+		$response 		     = array();
+
+		if( $request['id'] > 0 ) {
+			$job = $this->get_job_data( $request['id'] );
+			$response['job'] = $job['ID'] ? $job : array();
+		}
+
+ 		return $this->get_response( 200, $response );
+	}
 
 	/**
 	 * Delete job
