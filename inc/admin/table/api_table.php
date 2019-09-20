@@ -211,11 +211,12 @@ class Api_Table extends WP_List_Table {
 			wp_nonce_field( 'bulk-' . $this->_args['plural'] );
 			}
 	?>
+	
+		<div class="alignleft actions bulkactions">
+			<?php $this->bulk_actions( $which ); ?>
+		</div>
 		<div class="tablenav <?php echo esc_attr( $which ); ?>">
 
-			<div class="alignleft actions bulkactions">
-				<?php $this->bulk_actions( $which ); ?>
-			</div>
 	<?php
 			$this->extra_tablenav( $which );
 			$this->pagination( $which );
@@ -297,6 +298,7 @@ class Api_Table extends WP_List_Table {
 		?>
 	
 		<?php submit_button( esc_html__( 'Generate New API Keys', 'opaljob' ), 'secondary', 'submit', false ); ?>
+
 		<?php
 		$opaljob_api_is_bottom = true;
 	}
