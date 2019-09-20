@@ -29,7 +29,7 @@ use Opal_Job\Common\Integrations\Favorite;
 use Opal_Job\Common\Interfaces\Intergration;
 
 use Opal_Job\Libraries\User_Rating\User_Rating;
-
+use Opal_Job\API\Api_Register;
 /**
  * The core plugin class.
  * Defines internationalization, admin-specific hooks, and public-facing site hooks.
@@ -98,6 +98,7 @@ class Init {
 		}
 
 		$this->define_intergrations();
+		
 
 		// Test user rating.
 		new User_Rating();
@@ -164,7 +165,9 @@ class Init {
 
 		// load intergration from vendors which working with 3rd 
 		/// if emable opal-membership is enabled
-
+		/// 
+		$api = new Api_Register(); 
+		$this->loader->add_action( 'init', $api, 'init', 1, 2 );
 	}
 
 	public function load_vendors() {
