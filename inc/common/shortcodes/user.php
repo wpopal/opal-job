@@ -14,9 +14,8 @@ namespace Opal_Job\Common\Shortcodes;
 use Opal_Job\Common\Model\Query\User_Query; 
 use Opal_Job\Core\View;
 /**
- * Fired during plugin deactivation
  *
- * This class defines all code necessary to run during the plugin's deactivation.
+ * @class User
  *
  * @link       http://wpopal.com
  * @since      1.0.0

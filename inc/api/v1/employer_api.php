@@ -30,18 +30,18 @@ use Opal_Job\Common\Model\Query\User_Query;
 class Employer_Api  extends  Base_Api {
 
 	/**
-	 * The unique identifier of this plugin.
+	 * The unique identifier of the route resource.
 	 *
 	 * @since    1.0.0
-	 * @access   protected
-	 * @var      string $plugin_base_name The string used to uniquely identify this plugin.
+	 * @access   public
+	 * @var      string $base.
 	 */
 	public $base = '/employer';
  	
  	/**
-	 * Definition
+	 * Register Routes
 	 *
-	 *	Register all Taxonomy related to Job post type as location, category, Specialism, Types
+	 * Register all CURD actions with POST/GET/PUT and calling function for each
 	 *
 	 * @since 1.0
 	 *
@@ -71,13 +71,13 @@ class Employer_Api  extends  Base_Api {
 	}
 
 	/**
-	 * Definition
+	 * Get List Of Employer
 	 *
-	 *	Register all Taxonomy related to Job post type as location, category, Specialism, Types
+	 * Based on request to get collection
 	 *
 	 * @since 1.0
 	 *
-	 * @return avoid
+	 * @return WP_REST_Response is json data
 	 */
 	public function get_list (  ) {
 

@@ -17,6 +17,7 @@ use Opal_Job\Core\Controller;
 use Opal_Job\Frontend\Metabox\User_Metabox;
 use Opal_Job\Libraries\Form\Scripts;
 use Opal_Job\Common\Model\User; 
+
 /**
  * Class Dashboard Controller
  *

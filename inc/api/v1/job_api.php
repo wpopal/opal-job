@@ -20,7 +20,7 @@ use WP_REST_Response;
 use Opal_Job\Common\Model\Query\Job_Query;
 
 /**
- * Abstract class to define/implement base methods for all controller classes
+ * @class Job_Api
  *
  * @since      1.0.0
  * @package    Opal_Job
@@ -29,18 +29,18 @@ use Opal_Job\Common\Model\Query\Job_Query;
 class Job_Api  extends  Base_Api {
 
 	/**
-	 * The unique identifier of this plugin.
+	 * The unique identifier of the route resource.
 	 *
 	 * @since    1.0.0
-	 * @access   protected
-	 * @var      string $plugin_base_name The string used to uniquely identify this plugin.
+	 * @access   public
+	 * @var      string $base.
 	 */
 	public $base = '/job';
  	
  	/**
-	 * Definition
+	 * Register Routes
 	 *
-	 *	Register all Taxonomy related to Job post type as location, category, Specialism, Types
+	 * Register all CURD actions with POST/GET/PUT and calling function for each
 	 *
 	 * @since 1.0
 	 *
@@ -76,23 +76,21 @@ class Job_Api  extends  Base_Api {
 			'methods' => 'GET',
 			'callback' => array( $this, 'delete' ),
 		));
-
 	}
 
 	/**
-	 * Definition
+	 * Get Job Data
 	 *
-	 *	Register all Taxonomy related to Job post type as location, category, Specialism, Types
+	 * Formating output of data with job information and employer information
 	 *
 	 * @since 1.0
 	 *
 	 * @return avoid
 	 */
-	private function get_job ( $job_id ){
+	private function get_job_data ( $job_id ){
 
-		$job =   opaljob_new_job_object( get_the_ID() );
+		$job 	=   opaljob_new_job_object( get_the_ID() );
 
-	
 		$member = $job->get_employer();
 
 		$employer = array(
@@ -116,17 +114,16 @@ class Job_Api  extends  Base_Api {
 		);
 
 		return $output;
-		return $job; 
 	}
 
 	/**
-	 * Definition
+	 * Get List Of Job
 	 *
-	 *	Register all Taxonomy related to Job post type as location, category, Specialism, Types
+	 * Based on request to get collection
 	 *
 	 * @since 1.0
 	 *
-	 * @return avoid
+	 * @return WP_REST_Response is json data
 	 */
 	public function get_list ( $request ) {
 
@@ -141,7 +138,7 @@ class Job_Api  extends  Base_Api {
 
 		while ( $query->have_posts() ) {
 			$query->the_post();
-			$jobs[] = $this->get_job( get_the_ID() );
+			$jobs[] = $this->get_job_data( get_the_ID() );
 		}
 
 		wp_reset_query();
@@ -152,6 +149,15 @@ class Job_Api  extends  Base_Api {
 	}
 
 
+	/**
+	 * Delete job
+	 *
+	 * Based on request to get collection
+	 *
+	 * @since 1.0
+	 *
+	 * @return WP_REST_Response is json data
+	 */
 	public function delete( ) {
 
 	}
