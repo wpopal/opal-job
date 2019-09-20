@@ -102,6 +102,21 @@ class Api_Table extends WP_List_Table {
 	}
 
 	/**
+	 * Displays the token rows
+	 *
+	 * @access public
+	 * @since  1.1
+	 *
+	 * @param array $item Contains all the data of the keys
+	 * @param string $column_name The name of the column
+	 *
+	 * @return string Column Name
+	 */
+	public function column_permission( $item ) {
+		return '<input onClick="this.setSelectionRange(0, this.value.length)" readonly="readonly" type="text" class="large-text" value="' . esc_attr( $item['permission'] ) . '"/>';
+	}
+
+	/**
 	 * Displays the secret key rows
 	 *
 	 * @access public
@@ -174,10 +189,11 @@ class Api_Table extends WP_List_Table {
 	 */
 	public function get_columns() {
 		$columns = array(
-			'user'   => esc_html__( 'Username'    , 'opaljob' ),
-			'key'    => esc_html__( 'Public Key'  , 'opaljob' ),
-			'token'  => esc_html__( 'Token'		  , 'opaljob' ),
-			'secret' => esc_html__( 'Secret Key'  , 'opaljob' )
+			'user'  	  => esc_html__( 'Username'    , 'opaljob' ),
+			'key'    	 => esc_html__( 'Public Key'  , 'opaljob' ),
+			'token'  	 => esc_html__( 'Token'		  , 'opaljob' ),
+			'secret' 	 => esc_html__( 'Secret Key'  , 'opaljob' ),
+			'permission' => esc_html__( 'Permission'  , 'opaljob' )
 		);
 
 		return $columns;
@@ -243,9 +259,9 @@ class Api_Table extends WP_List_Table {
 				'description'  => "",
 			),
 			array(
-				'id'   		   => "key_user",
+				'id'   		   => "user_id",
 				'name' 		   => esc_html__( 'User', 'opaljob' ),
-				'type' 		   => 'text',
+				'type' 		   => 'user',
 				'before_row'   => '',
 				'required' 	   => 'required',
 				'description'  => "",
@@ -316,14 +332,84 @@ class Api_Table extends WP_List_Table {
 			$keys[ $user->ID ]['email'] = $user->user_email;
 			$keys[ $user->ID ]['user']  = '<a href="' . add_query_arg( 'user_id', $user->ID, 'user-edit.php' ) . '"><strong>' . $user->user_login . '</strong></a>';
 
-			$keys[ $user->ID ]['key']    = '';//OpalEstate()->api->get_user_public_key( $user->ID );
-			$keys[ $user->ID ]['secret'] = '';//OpalEstate()->api->get_user_secret_key( $user->ID );
-			$keys[ $user->ID ]['token']  = '';//OpalEstate()->api->get_token( $user->ID );
+			$keys[ $user->ID ]['key']    = $this->get_user_public_key( $user->ID );
+			$keys[ $user->ID ]['secret'] = $this->get_user_secret_key( $user->ID );
+			$keys[ $user->ID ]['token']  = $this->get_token( $user->ID );
+			$keys[ $user->ID ]['permission']  = $this->get_token( $user->ID );
 		}
 
 		return $keys;
+	}	
+
+	/**
+	 * Retrieve the user's token
+	 *
+	 * @access private
+	 * @since  1.1
+	 *
+	 * @param int $user_id
+	 *
+	 * @return string
+	 */
+	public function get_token( $user_id = 0 ) {
+		return hash( 'md5', $this->get_user_secret_key( $user_id ) . $this->get_user_public_key( $user_id ) );
 	}
 
+	/**
+	 * Retrieve the user's token
+	 *
+	 * @access private
+	 * @since  1.1
+	 *
+	 * @param int $user_id
+	 *
+	 * @return string
+	 */
+	public function get_user_public_key( $user_id = 0 ) {
+		global $wpdb;
+
+		if ( empty( $user_id ) ) {
+			return '';
+		}
+
+		$cache_key       = md5( 'opaljob_api_user_public_key' . $user_id );
+		$user_public_key = get_transient( $cache_key );
+
+		if ( empty( $user_public_key ) ) {
+			$user_public_key = $wpdb->get_var( $wpdb->prepare( "SELECT meta_key FROM $wpdb->usermeta WHERE meta_value = 'opaljob_user_public_key' AND user_id = %d", $user_id ) );
+			set_transient( $cache_key, $user_public_key, HOUR_IN_SECONDS );
+		}
+
+		return $user_public_key;
+	}
+
+	/**
+	 * Retrieve the user's token
+	 *
+	 * @access private
+	 * @since  1.1
+	 *
+	 * @param int $user_id
+	 *
+	 * @return string
+	 */
+	public function get_user_secret_key( $user_id = 0 ) {
+		global $wpdb;
+
+		if ( empty( $user_id ) ) {
+			return '';
+		}
+
+		$cache_key       = md5( 'opaljob_api_user_secret_key' . $user_id );
+		$user_secret_key = get_transient( $cache_key );
+
+		if ( empty( $user_secret_key ) ) {
+			$user_secret_key = $wpdb->get_var( $wpdb->prepare( "SELECT meta_key FROM $wpdb->usermeta WHERE meta_value = 'opaljob_user_secret_key' AND user_id = %d", $user_id ) );
+			set_transient( $cache_key, $user_secret_key, HOUR_IN_SECONDS );
+		}
+
+		return $user_secret_key;
+	}
 
 	/**
 	 * Retrieve count of total users with keys
