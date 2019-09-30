@@ -65,10 +65,7 @@ class Dashboard extends Controller {
 	 * @return Avoid
 	 */
 	public function enqueue_scripts () {
-		
-		if( isset($_GET['tab']) ) {
-			Scripts::enqueue_scripts();
-		}
+	
 	}
 
 	/**
@@ -82,7 +79,6 @@ class Dashboard extends Controller {
 	 */
 	public function enqueue_styles() {
 		//if( isset($_GET['tab']) ) {
-			Scripts::enqueue_styles();
 			wp_enqueue_style( 'opaljob-dashboard', OPAL_JOB_URL . 'assets/css/frontend/dashboard.css', array(), '1.0', 'all' );
 		// }
 	}

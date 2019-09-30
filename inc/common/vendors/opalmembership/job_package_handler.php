@@ -632,6 +632,14 @@ class Job_Package_Handler {
 		echo opaljob_render_template( 'membership/pricing-info', array() );
 	}
 
+	/**
+	 * Define the locale for this plugin for internationalization.
+	 *
+	 * Uses the Internationalization_I18n class in order to set the domain and to register the hook
+	 * with WordPress.
+	 *
+	 * @access    private
+	 */
 	public function summary_middle_right(){
 		echo opaljob_render_template( 'membership/summary', array() );
 	}

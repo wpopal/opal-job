@@ -10,11 +10,13 @@
  */
 namespace Opal_Job\Libraries\Form;
 
+use Opal_Job\Libraries\Form\Helper;
 use Opal_Job\Libraries\Form\Field\File;
 use Opal_Job\Libraries\Form\Field\Iconpicker;
 use Opal_Job\Libraries\Form\Field\Map;
 use Opal_Job\Libraries\Form\Field\Uploader;
 use Opal_Job\Libraries\Form\Field\Taxonomy;
+use Opal_Job\Libraries\Form\Field\Page;
 
 // Exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) {
@@ -72,6 +74,12 @@ class Form {
 	public $object_id;
 
 	/**
+	 * Datas.
+	 *
+	 * @var array
+	 */
+	public $args; 
+	/**
 	 * Get the class instance.
 	 *
 	 * @return static
@@ -84,6 +92,8 @@ class Form {
 		return self::$instance;
 	}
 
+	public $show_label = true; 
+
 	/**
 	 * Init Constructor of this
 	 *
@@ -91,9 +101,49 @@ class Form {
 	 *
 	 */
 	public function __construct() {
+		add_action( "admin_enqueue_scripts", [$this,'enqueue_scripts'] );
+		add_action( "admin_enqueue_scripts", [$this,'enqueue_styles'] );
 
+		add_action('wp_enqueue_scripts', [$this,'enqueue_scripts'] );
+		add_action('wp_enqueue_scripts', [$this,'enqueue_styles'] );
+
+		// /ajax
+		add_action( 'wp_ajax_opaljob_search_users', [ '\Opal_Job\Libraries\Form\Helper', 'ajax_search_users' ] );
+		add_action('wp_head', array($this,'register_ajaxurl') );
 	}
 
+	/**
+	 * Init Constructor of this
+	 *
+	 * @return string
+	 *
+	 */	
+	public function register_ajaxurl() {
+
+	   echo '<script type="text/javascript">
+	           var ajaxurl = "' . admin_url('admin-ajax.php') . '";
+	         </script>';
+	}
+	
+	/**
+	 * Init Constructor of this
+	 *
+	 * @return string
+	 *
+	 */	
+	public function enqueue_scripts () { 
+		Helper::enqueue_scripts();
+	}
+
+	/**
+	 * Init Constructor of this
+	 *
+	 * @return string
+	 *
+	 */
+	public function enqueue_styles() { 
+		Helper::enqueue_styles();
+	}
 	/**
 	 * Setup.
 	 *
@@ -128,9 +178,22 @@ class Form {
 	 * @return string
 	 */
 	public function render_field( $field ) {
+
 		if ( ! isset( $field['id'] ) || ! isset( $field['type'] ) ) {
 			return sprintf( esc_html__( 'The field ID or field type is required.', 'opaljob' ), $field ['type'] );
 		}
+
+		$field_args = array(
+			'name'		  => '',
+			'placeholder' => '',
+			'show_label'  => $this->show_label
+		); 
+
+		$field = array_merge( $field_args, $field );
+
+		if( !$this->show_label && empty($field['placeholder']) ) {
+ 			$field['placeholder'] = $field['name'];
+ 		}
 
 		switch ( $field['type'] ) {
 			case 'text':
@@ -141,7 +204,8 @@ class Form {
 			case 'text_email':
 			case 'text_tel':
 			case 'password':
-			case 'hidden':
+			case 'hidden':  
+				
 				return $this->text_field( $field );
 				break;
 			case 'wysiwyg' :
@@ -183,6 +247,9 @@ class Form {
 			case 'taxonomy_select':
 			case 'taxonomy_multicheck':
 				return new Taxonomy( $field, $this, $field ['type'] );
+			case 'page_select':
+			case 'page_multicheck':
+				return new Page( $field, $this, $field ['type'] );	
 				break;
 			case 'map':
 				return new Map( $field, $this );
@@ -193,6 +260,9 @@ class Form {
 			case 'iconpicker':
 				return new Iconpicker( $field, $this );
 				break;
+			case 'html':
+				echo $field['content'];
+				break;	
 			default:
 				do_action( 'opaljob_form_render_field_'.$field['type'], $field , $this );
 				//return sprintf( esc_html__( 'The field type: %s does not exist!', 'opaljob' ), $field ['type'] );
@@ -242,7 +312,7 @@ class Form {
 	 * @access public
 	 */
 	public function get_field_path( $field ) {
-		return plugin_dir_path( __FILE__ ) . 'field/views/input-' . $field . '.php';
+		return plugin_dir_path( __FILE__ ) . 'Field/views/input-' . $field . '.php';
 	}
 
 	/**
@@ -522,11 +592,21 @@ class Form {
 	 * @param array $settings Array for fields and form.
 	 * @return string
 	 */
-	public function render( $args, $settings ) {
+	public function render( $args, $settings, $istab=true ) {
 
-		 
+		$this->args = $args; 
+		
+		if( isset($this->args['label']) ) {
+			$this->show_label = $this->args['label'];
+		}
+
 		if ( $form_data_tabs = $this->get_tabs( $settings ) ) {
-			$this->output_tabs( $form_data_tabs );
+			if( $istab ) {
+				$this->output_tabs( $form_data_tabs );
+			} else {
+				$this->output_indexes( $form_data_tabs );
+			}
+			
 		} else {
 			$this->output_normal( $settings );
 		}
@@ -537,83 +617,20 @@ class Form {
 	 *
 	 * @param $form_data_tabs
 	 */
+	public function output_indexes ( $form_data_tabs ) {
+		$file = dirname(__FILE__ ). '/View/indexes.php';
+		include( $file );
+	}
+
+	/**
+	 * Render Tabs Navigation
+	 *
+	 * @param $form_data_tabs
+	 */
 	public function output_tabs( $form_data_tabs ) {
 
-		$active_tab = ! empty( $_GET['opaljob_tab'] ) ? opaljob_clean( $_GET['opaljob_tab'] ) : 'form_field_options';
-		wp_nonce_field( 'opaljob_save_form_meta', 'opaljob_meta_nonce' );
-		?>
-        <input id="opaljob_active_tab" type="hidden" name="opaljob_active_tab">
-        <div class="js-opaljob-metabox-wrap opaljob-metabox-panel-wrap">
-            <ul class="opaljob-form-data-tabs opaljob-metabox-tabs">
-				<?php foreach ( $form_data_tabs as $index => $form_data_tab ) : ?>
-					<?php
-					// Determine if current tab is active.
-					$is_active = $active_tab === $form_data_tab['id'] ? true : false;
-					?>
-                    <li class="<?php echo "{$form_data_tab['id']}_tab" . ( $is_active ? ' active' : '' ) . ( $this->has_sub_tab( $form_data_tab ) ? ' has-sub-fields' : '' ); ?>"
-                        data-tab="<?php echo $form_data_tab['id']; ?>">
-                        <a href="#<?php echo $form_data_tab['id']; ?>"
-                           data-tab-id="<?php echo $form_data_tab['id']; ?>">
-							<?php if ( ! empty( $form_data_tab['icon-html'] ) ) : ?>
-								<?php echo $form_data_tab['icon-html']; ?>
-							<?php else : ?>
-                                <span class="opaljob-icon opaljob-icon-default"></span>
-							<?php endif; ?>
-                            <span class="opaljob-label"><?php echo $form_data_tab['label']; ?></span>
-                        </a>
-						<?php if ( $this->has_sub_tab( $form_data_tab ) ) : ?>
-                            <ul class="opaljob-metabox-sub-tabs opaljob-hidden">
-								<?php foreach ( $form_data_tab['sub-fields'] as $sub_tab ) : ?>
-                                    <li class="<?php echo "{$sub_tab['id']}_tab"; ?>">
-                                        <a href="#<?php echo $sub_tab['id']; ?>"
-                                           data-tab-id="<?php echo $sub_tab['id']; ?>">
-											<?php if ( ! empty( $sub_tab['icon-html'] ) ) : ?>
-												<?php echo $sub_tab['icon-html']; ?>
-											<?php else : ?>
-                                                <span class="opaljob-icon opaljob-icon-default"></span>
-											<?php endif; ?>
-                                            <span class="opaljob-label"><?php echo $sub_tab['label']; ?></span>
-                                        </a>
-                                    </li>
-								<?php endforeach; ?>
-                            </ul>
-						<?php endif; ?>
-                    </li>
-				<?php endforeach; ?>
-            </ul>
-
-			<?php foreach ( $this->settings as $setting ) : ?>
-				<?php do_action( "opaljob_before_{$setting['id']}_settings" ); ?>
-				<?php
-				// Determine if current panel is active.
-				$is_active = $active_tab === $setting['id'] ? true : false;
-				?>
-                <div id="<?php echo $setting['id']; ?>"
-                     class="panel opaljob_options_panel<?php echo( $is_active ? ' active' : '' ); ?>">
-					<?php if ( ! empty( $setting['fields'] ) ) : ?>
-						<?php foreach ( $setting['fields'] as $field ) : ?>
-							<?php $this->render_field( $field ); ?>
-						<?php endforeach; ?>
-					<?php endif; ?>
-                </div>
-				<?php do_action( "opaljob_after_{$setting['id']}_settings" ); ?>
-
-				<?php if ( $this->has_sub_tab( $setting ) ) : ?>
-					<?php if ( ! empty( $setting['sub-fields'] ) ) : ?>
-						<?php foreach ( $setting['sub-fields'] as $index => $sub_fields ) : ?>
-                            <div id="<?php echo $sub_fields['id']; ?>" class="panel opaljob_options_panel opaljob-hidden">
-								<?php if ( ! empty( $sub_fields['fields'] ) ) : ?>
-									<?php foreach ( $sub_fields['fields'] as $sub_field ) : ?>
-										<?php $this->render_field( $sub_field ); ?>
-									<?php endforeach; ?>
-								<?php endif; ?>
-                            </div>
-						<?php endforeach; ?>
-					<?php endif; ?>
-				<?php endif; ?>
-			<?php endforeach; ?>
-        </div>
-		<?php
+		$file = dirname(__FILE__ ). '/View/tabs.php';
+		include( $file );
 	}
 
 	/**
@@ -723,6 +740,25 @@ class Form {
 				$field_value = $field['default'];
 			}
 
+		 	if( isset( $field['taxonomy'] ) ) { 
+				$tax = $field['taxonomy'];
+				$terms = get_the_terms( $thepostid , $tax ); 
+				if( $terms ) {
+					if( $field['multiple'] == true ) {
+						$_tmp = array(); 
+						foreach ( $terms as $term ) {
+							$_v = $term->{$field['value_type']};
+							$_tmp[$_v] = $_v;
+						}	
+						return $_tmp;
+					} else {
+						foreach ( $terms as $term ) {
+							$_v = $term->{$field['value_type']};
+							return $_v;
+						}
+					}
+				}
+			}
 			return $field_value;
 		}
 	}

@@ -12,7 +12,45 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
+/********************************************************************************************************************************************************
+ *  
+ *  ARCHIVE JOB -- HOOKS FUNCTIONS 
+ *  
+ *********************************************************************************************************************************************************/
 
+/**
+ * The args to pass to the give_get_collection() query
+ *
+ * @since  1.0
+ * @access public
+ *
+ * @var    array
+ */
+function opaljob_get_search_keyword_suggestion () {
+    
+}
+
+/**
+ * The args to pass to the give_get_collection() query
+ *
+ * @since  1.0
+ * @access public
+ *
+ * @var    array
+ */
+function opaljob_get_search_job_form() {
+    opaljob_render_template( 'search-form/vertical-job' );
+}
+
+
+/**
+ * The args to pass to the give_get_collection() query
+ *
+ * @since  1.0
+ * @access public
+ *
+ * @var    array
+ */
 function opaljob_select_specialisms_field ( $selected='' ) {
     $id   = 'opaljob_specialism' . rand();
 
@@ -36,6 +74,7 @@ function opaljob_select_specialisms_field ( $selected='' ) {
 
     echo $label . wp_dropdown_categories( $args );
 }
+
 /**
  * The args to pass to the give_get_collection() query
  *
@@ -179,7 +218,7 @@ function opaljob_apply_form_popup() {
  *
  * @var    array
  */
-function opaljob_render_related_job () {
+function opaljob_render_related_job () {  
     $module = new \Opal_Job\Common\Module\Related_Job();
     $module->render();
 }
@@ -310,8 +349,7 @@ function opaljob_display_employer_contact_form() {
         'email'   => $email,
         'message' => '',
         'heading' => 'Contact Us',
-        'type'    => 'employer',
-        'popup'   => true
+        'type'    => 'employer'
     ];
 	opaljob_render_template( 'messages/contact-form', $args );
 }
@@ -322,18 +360,51 @@ function opaljob_display_employer_summary() {
     opaljob_render_template( 'single-job/parts/employer-summary', $args );
 }
 
-/**
- * The args to pass to the give_get_collection() query
- *
- * @since  1.0
- * @access public
- *
- * @var    array
- */
+/********************************************************************************************************************************************************
+ *  
+ *  SINGLE JOB FUNCTIONS
+ *  
+ *********************************************************************************************************************************************************/
+
+function opaljob_single_tab_nav () { ?>
+<div class="opaljob-job-nav opaljob-tab">
+    <div class="job-tab-head">
+        <a href="#job-information" class="tab-item"><?php esc_html_e( 'Information', 'opaljob' ); ?></a>
+        <a href="#job-employer" class="tab-item"><?php esc_html_e( 'Employer', 'opaljob' ); ?></a>
+        <a href="#job-listing" class="tab-item"><?php esc_html_e( 'Jobs From This Employer', 'opaljob' ); ?></a>
+    </div>
+        
+<?php }
+
+function opaljob_single_job_tab_contents () {
+    add_action( "opaljob_single_job_content_before", function(){
+        echo '<div class="opaljob-tab-wrap"><div class="opaljob-tab-content" id="job-information">'; 
+    } , 11 );
+    add_action( "opaljob_single_job_content_after", function(){
+        echo '</div>'; 
+    } , 15 );
+
+    add_action( "opaljob_single_job_content_after", function(){
+        echo '</div></div>'; 
+    } , 99 );
+}
+
+function opaljob_single_job_employer_info () { ?>
+    <div class="opaljob-tab-content" id="job-employer">
+        <?php  opaljob_render_template( 'single-job/parts/job-employer' ); ?>
+    </div>    
+<?php }
+
+function opaljob_single_job_listing () { ?>
+    <div class="opaljob-tab-content" id="job-listing">
+        <?php  opaljob_render_template( 'single-job/parts/job-listing' ); ?>
+    </div>    
+<?php }
+
+
 function opaljob_single_job_content_sections_content() {
      opaljob_render_template( 'single-job/parts/job-content' );
 }
-
 
 
 function opaljob_single_job_meta_list () {
@@ -373,10 +444,14 @@ function opaljob_single_job_content_sections_map() {
  * @var    array
  */
 function opaljob_single_job_content_sections_job_summary() {
-    
-
     opaljob_render_template( 'single-job/parts/job-summary' );
 }
+
+
+function opaljob_single_job_content_sections_job_tags() {
+    opaljob_render_template( 'single-job/parts/job-tags' );
+}
+
 
 /**
  * The args to pass to the give_get_collection() query
@@ -407,11 +482,60 @@ function opaljob_single_employer_content_sections_gallery() {
 function opaljob_single_employer_content_sections_video() {
      opaljob_render_template( 'single-employer/parts/video' );
 }
-function opaljob_single_employer_content_sections_jobs() {
+function opaljob_single_employer_content_sections_jobs_listing() {
     opaljob_render_template( 'single-employer/parts/jobs-listing' );
 }
 
 function opaljob_single_employer_content_section_navbar () {
     opaljob_render_template( 'single-employer/parts/navbar' );
+}
+
+function opaljob_single_employer_meta_list () {
+    
+    $metas = array();
+    $metas =  apply_filters( 'opaljob_single_employer_meta_list', $metas )  ; 
+
+    opaljob_render_template( 'single-employer/parts/meta', array( 'metas' => $metas ) );
+}
+
+function opaljob_render_share_socials_block() {
+    opaljob_render_template( 'common/share-socials' );
+}
+
+///// // MAIN LAYOUT / / /
+function opaljob_layout_container () { 
+    add_action( 'opaljob_before_main_content', function () {
+        echo '<div class="opal-container">';
+    } , 4 );
+
+    add_action( 'opaljob_after_main_content', function () {
+        echo '</div>';
+    }, 4 );
+}
+
+
+function opaljob_favorite_candidate_button ( $user_id, $atts = array() ) {
+
+    $atts['user_id'] = get_current_user_id();   
+
+    if( !isset($atts['member_id']) ){
+        $atts['member_id'] = $user_id;
+    }
+
+    $items = get_user_meta( $atts['user_id'],  'opaljob_candidate_favorite', true );
+
+
+    if( is_array($items) && in_array( $atts['member_id'] , $items ) ){
+        $atts['existed'] = 1;
+    } else {
+        $atts['existed'] = 0;
+    }
+    
+    ob_start();
+    echo opaljob_render_template( 'common/member/favorite-candidate-button' , $atts );
+    $ouput = ob_get_contents();
+    ob_end_clean();
+
+    return $ouput;
 }
 ?>

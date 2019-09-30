@@ -11,7 +11,7 @@
 namespace Opal_Job\Common\Integrations;
 
 use WP_Query; 
-use Opal_Job\Common\interfaces\Intergration; 
+use Opal_Job\Common\Interfaces\Intergration; 
 /**
  * Fired during plugin deactivation
  *
@@ -66,9 +66,9 @@ class Favorite implements Intergration {
 	 */
 	public function register_frontend_actions() {
 
-		add_shortcode( 'opaljob_favorite_button' , array( $this,  'favorite_button' ) );
+		add_shortcode( 'opaljob_favorite_button' ,   array( $this,  'favorite_button' ) );
  		add_shortcode( 'opaljob_user_favious_jobs' , array( $this,  'favorite_jobs' ) );
- 		
+ 		add_action( 'opaljob_job_loop_content_before', array( $this,  'render_favorite_button' ) );
 		/**
 	 	 * Ajax action
 	 	 */
@@ -152,9 +152,23 @@ class Favorite implements Intergration {
 	 * @param Array $atts Parameter as setting for display in many styles.
 	 * @return String Html of favorite button.
 	 */
+	
+	public function render_favorite_button () {
+		echo $this->favorite_button( );
+	}
+
+	/**
+	 * favorite button
+	 *
+	 * render favorite button in loop
+	 *
+	 * @since    1.0.0
+	 * @param Array $atts Parameter as setting for display in many styles.
+	 * @return String Html of favorite button.
+	 */
 	public function favorite_button( $atts=array() ){ 
 
-		$atts['userId'] = $this->userId; 
+		$atts['userId'] = $this->userId;   
 		if( !isset($atts['job_id']) ){
 			$atts['job_id'] = get_the_ID();
 		}
@@ -168,7 +182,6 @@ class Favorite implements Intergration {
 			$atts['existed'] = 0;
 		}
  	    
-
 		ob_start();
 		echo opaljob_render_template( 'common/favorite-button' , $atts );
 		$ouput = ob_get_contents();

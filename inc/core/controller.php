@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-use Opal_Job\Core\Controller_Registry; 
+use Opal_Job\Core\Object_Registry; 
 
 /**
  * Abstract class to define/implement base methods for all controller classes
@@ -35,9 +35,9 @@ abstract class Controller {
 	public static function get_instance( $model_class_name = false, $view_class_name = false ) {
 
 		$classname = get_called_class();
-		$key_in_registry = Controller_Registry::get_key( $classname, $model_class_name, $view_class_name );
+		$key_in_registry = Object_Registry::get_key( $classname, $model_class_name, $view_class_name );
 
-		$instance = Controller_Registry::get( $key_in_registry );
+		$instance = Object_Registry::get( $key_in_registry );
 
 		// Create a object if no object is found.
 		if ( null === $instance ) {
@@ -47,7 +47,7 @@ abstract class Controller {
 
 			$instance = new $classname( $model, $view );
 
-			Controller_Registry::set( $key_in_registry, $instance );
+			Object_Registry::set( $key_in_registry, $instance );
 		}
 
 		return $instance;

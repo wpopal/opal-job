@@ -18,7 +18,7 @@ use WP_REST_Request;
 use Opal_Job\API\Base_Api;
 
 /**
- * Opalestate_API Class
+ * Opaljob_API Class
  *
  * Renders API returns as a JSON/XML array
  *
@@ -68,7 +68,7 @@ class API_Admin {
 	public $user_id = 0;
 
 	/**
-	 * Instance of Opalestate Stats class
+	 * Instance of OpalJob Stats class
 	 *
 	 * @var object
 	 * @access private
@@ -113,7 +113,7 @@ class API_Admin {
 
 
 	/**
-	 * Setup the Opalestate API
+	 * Setup the OpalJob API
 	 *
 	 * @since 1.1
 	 * @access public
@@ -177,7 +177,46 @@ class API_Admin {
 		}	
 	}
 
-	
+	/**
+	 * Retrieve the user ID based on the public key provided
+	 *
+	 * @access public
+	 * @since  1.1
+	 * @global WPDB $wpdb Used to query the database using the WordPress
+	 *                      Database API
+	 *
+	 * @param string $key Public Key
+	 *
+	 * @return bool if user ID is found, false otherwise
+	 */
+	public function get_user( $key = '' ) {
+		global $wpdb, $wp_query;
+
+		if ( empty( $key ) ) {
+			$key = urldecode( $wp_query->query_vars['key'] );
+		}
+
+		if ( empty( $key ) ) {
+			return false;
+		}
+
+		$user = get_transient( md5( 'opaljob_api_user_' . $key ) );
+
+		if ( false === $user ) {
+			$user = $wpdb->get_var( $wpdb->prepare( "SELECT user_id FROM $wpdb->usermeta WHERE meta_key = %s LIMIT 1", $key ) );
+			set_transient( md5( 'opaljob_api_user_' . $key ), $user, DAY_IN_SECONDS );
+		}
+
+		if ( $user != null ) {
+			$this->user_id = $user;
+
+			return $user;
+		}
+
+		return false;
+	}
+
+
 	public function get_user_public_key( $user_id = 0 ) {
 		global $wpdb;
 
@@ -229,7 +268,7 @@ class API_Admin {
 	 */
 	function user_key_field( $user ) {
 
-		if ( ( opaljob_get_option( 'api_allow_user_keys', false ) || current_user_can( 'manage_opaljob_settings' ) ) && current_user_can( 'edit_user', $user->ID ) ) {
+		if ( ( opaljob_options( 'api_allow_user_keys', false ) || current_user_can( 'manage_opaljob_settings' ) ) && current_user_can( 'edit_user', $user->ID ) ) {
 			$user = get_userdata( $user->ID );
 			?>
 			<hr class="clearfix clear">
@@ -237,7 +276,7 @@ class API_Admin {
 				<tbody>
 				<tr>
 					<th>
-						<?php esc_html_e( 'Opalestate API Keys', 'opaljob-pro' ); ?>
+						<?php esc_html_e( 'OpalJob API Keys', 'opaljob' ); ?>
 					</th>
 					<td>
 						<?php
@@ -246,19 +285,19 @@ class API_Admin {
 						?>
 						<?php if ( empty( $user->opaljob_user_public_key ) ) { ?>
 							<input name="opaljob_set_api_key" type="checkbox" id="opaljob_set_api_key" value="0"/>
-							<span class="description"><?php esc_html_e( 'Generate API Key', 'opaljob-pro' ); ?></span>
+							<span class="description"><?php esc_html_e( 'Generate API Key', 'opaljob' ); ?></span>
 						<?php } else { ?>
-							<strong style="display:inline-block; width: 125px;"><?php esc_html_e( 'Public key:', 'opaljob-pro' ); ?>&nbsp;</strong>
+							<strong style="display:inline-block; width: 125px;"><?php esc_html_e( 'Public key:', 'opaljob' ); ?>&nbsp;</strong>
 							<input type="text" disabled="disabled" class="regular-text" id="publickey" value="<?php echo esc_attr( $public_key ); ?>"/>
 							<br/>
-							<strong style="display:inline-block; width: 125px;"><?php esc_html_e( 'Secret key:', 'opaljob-pro' ); ?>&nbsp;</strong>
+							<strong style="display:inline-block; width: 125px;"><?php esc_html_e( 'Secret key:', 'opaljob' ); ?>&nbsp;</strong>
 							<input type="text" disabled="disabled" class="regular-text" id="privatekey" value="<?php echo esc_attr( $secret_key ); ?>"/>
 							<br/>
-							<strong style="display:inline-block; width: 125px;"><?php esc_html_e( 'Token:', 'opaljob-pro' ); ?>&nbsp;</strong>
+							<strong style="display:inline-block; width: 125px;"><?php esc_html_e( 'Token:', 'opaljob' ); ?>&nbsp;</strong>
 							<input type="text" disabled="disabled" class="regular-text" id="token" value="<?php echo esc_attr( $this->get_token( $user->ID ) ); ?>"/>
 							<br/>
 							<input name="opaljob_set_api_key" type="checkbox" id="opaljob_set_api_key" value="0"/>
-							<span class="description"><label for="opaljob_set_api_key"><?php esc_html_e( 'Revoke API Keys', 'opaljob-pro' ); ?></label></span>
+							<span class="description"><label for="opaljob_set_api_key"><?php esc_html_e( 'Revoke API Keys', 'opaljob' ); ?></label></span>
 						<?php } ?>
 					</td>
 				</tr>
@@ -280,11 +319,11 @@ class API_Admin {
 	public function process_api_key( $args ) {  
 		
 		if ( ! wp_verify_nonce( $_REQUEST['_wpnonce'], 'opaljob-api-nonce' ) ) {
-			wp_die( esc_html__( 'Nonce verification failed.', 'opaljob-pro' ), esc_html__( 'Error', 'opaljob-pro' ), array( 'response' => 403 ) );
+			wp_die( esc_html__( 'Nonce verification failed.', 'opaljob' ), esc_html__( 'Error', 'opaljob' ), array( 'response' => 403 ) );
 		}
 
 		if ( empty( $args['user_id'] ) ) {
-			wp_die( esc_html__( 'User ID Required.', 'opaljob-pro' ), esc_html__( 'Error', 'opaljob-pro' ), array( 'response' => 401 ) );
+			wp_die( esc_html__( 'User ID Required.', 'opaljob' ), esc_html__( 'Error', 'opaljob' ), array( 'response' => 401 ) );
 		}
 
 		if ( is_numeric( $args['user_id'] ) ) {
@@ -298,24 +337,24 @@ class API_Admin {
 
 		
 
-		if ( $user_id == get_current_user_id() && ! opaljob_get_option( 'allow_user_api_keys' ) && ! current_user_can( 'manage_opaljob_settings' ) ) {
+		if ( $user_id == get_current_user_id() && ! opaljob_options( 'allow_user_api_keys' ) && ! current_user_can( 'manage_opaljob_settings' ) ) {
 			wp_die(
 				sprintf(
 					/* translators: %s: process */
-					esc_html__( 'You do not have permission to %s API keys for this user.', 'opaljob-pro' ),
+					esc_html__( 'You do not have permission to %s API keys for this user.', 'opaljob' ),
 					$process
 				),
-				esc_html__( 'Error', 'opaljob-pro' ),
+				esc_html__( 'Error', 'opaljob' ),
 				array( 'response' => 403 )
 			);
 		} elseif ( ! current_user_can( 'manage_opaljob_settings' ) ) {
 			wp_die(
 				sprintf(
 					/* translators: %s: process */
-					esc_html__( 'You do not have permission to %s API keys for this user.', 'opaljob-pro' ),
+					esc_html__( 'You do not have permission to %s API keys for this user.', 'opaljob' ),
 					$process
 				),
-				esc_html__( 'Error', 'opaljob-pro' ),
+				esc_html__( 'Error', 'opaljob' ),
 				array( 'response' => 403 )
 			);
 		}

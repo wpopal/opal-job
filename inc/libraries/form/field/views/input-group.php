@@ -20,7 +20,7 @@ $wrapper_class   = isset( $args['wrapper_class'] ) ? $args['wrapper_class'] : ''
     <table class="opaljob-repeatable-fields-section-wrapper" cellspacing="0">
 		<?php
 		$repeater_field_values = $this->get_field_value(  $args  );
-
+	
 		$header_title          = isset( $args['options']['header_title'] )
 			? $args['options']['header_title']
 			: esc_attr__( 'Group', 'opaljob' );
@@ -109,15 +109,17 @@ $wrapper_class   = isset( $args['wrapper_class'] ) ? $args['wrapper_class'] : ''
                         </div>
                         <div class="opal-row-body">
 							<?php foreach ( $args['fields'] as $field ) : 
-							 
+							 	
 								?>
                                 
 								<?php
 								$value = $this->get_repeater_field_value( $field, $field_group, $args );
- 
+ 								$field['attributes']['value'] = $value;
 								$field['repeat']              = true;
+								$field['value'] = $value;
+								$field['default'] = $value;
 								$field['id'] = $this->get_repeater_field_id( $field, $args, $index );
-								$field['attributes']['value'] = $value;
+								
  
 								?>
 								<?php $this->render_field( $field ); ?>

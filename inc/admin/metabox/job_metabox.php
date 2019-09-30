@@ -130,19 +130,33 @@ class Job_Metabox extends Core\Metabox {
 	 * @param string $plugin_text_domain The text domain of this plugin.
 	 */
 	public function metaboxes_owner_fields () {
+		global $post; 
+
+	 
+
+		$author = opaljob_new_user_object( $post->post_author );
+		
+		$author_html = '<a href="'.$author->get_link().'" target="_blank">'.$author->get_name() .' ( '.$author->user_login.')</a>';
+
 		$prefix = OPAL_JOB_METABOX_PREFIX;
 		$fields = [
 			[
-				'name'    => esc_html__( 'Change Owner', 'opaljob' ),
-				'id'      => $prefix . 'request_login',
-				'type'    => 'switch',
-				'options' => [
-					0 => esc_html__( 'No', 'opaljob' ),
-					1 => esc_html__( 'Yes', 'opaljob' ),
-				],
-				'default' => 0,
-				'description' => esc_html__( 'Change Owner of this to other author', 'opaljob' ),
+				'name'    	  => esc_html__( 'Change Owner', 'opaljob' ),
+				'id'      	  => $prefix . 'author_override',
+				'name'        => esc_html__( 'User', 'opalestate-pro' ),
+				'id'          => "post_author_override_head",
+				'type'        => 'html',
+				'content'	  => "<div>".sprintf( esc_html__( 'This job is posted by %s', 'opaljob' ) , $author_html )."</div><hr>"
 			],
+			[
+				'name'    	  => esc_html__( 'Change Owner', 'opaljob' ),
+				'id'      	  => $prefix . 'author_override',
+				'id'          => "post_author_override",
+				'type'        => 'select',
+				'options' => array(),
+				'default' => "11",
+				'description' => esc_html__( 'Change Owner of this to other author', 'opaljob' ),
+			]
 			 
 		];
 
@@ -186,7 +200,8 @@ class Job_Metabox extends Core\Metabox {
 			[
 				'name'        => esc_html__( 'Currency', 'opaljob' ),
 				'id'          => $prefix . 'currency',
-				'type'        => 'text',
+				'type'        => 'select',
+				'options'	  => opaljob_custom_selected_currencies_options(),
 				'description' => esc_html__( 'Please Enter Your Job SKU', 'opaljob' ),
 			],
 			[
@@ -220,6 +235,16 @@ class Job_Metabox extends Core\Metabox {
 			[
 				'name'    => esc_html__( 'Featured', 'opaljob' ),
 				'id'      => $prefix . 'featured',
+				'type'    => 'switch',
+				'options' => [
+					0 => esc_html__( 'No', 'opaljob' ),
+					1 => esc_html__( 'Yes', 'opaljob' ),
+				],
+				'default' => 0,
+			],
+			[
+				'name'    => esc_html__( 'Highlighted', 'opaljob' ),
+				'id'      => $prefix . 'highlighted',
 				'type'    => 'switch',
 				'options' => [
 					0 => esc_html__( 'No', 'opaljob' ),

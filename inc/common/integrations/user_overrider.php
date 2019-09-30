@@ -9,7 +9,7 @@
  * @since       1.0
  */
 namespace Opal_Job\Common\Integrations;
-use Opal_Job\Common\interfaces\Intergration;  
+use Opal_Job\Common\Interfaces\Intergration;  
 use Opal_Job\Core\URI;
 /**
  * Class Responsible for Loading Templates
@@ -163,14 +163,14 @@ class User_Overrider implements Intergration {
 
 		$user = get_user_by( 'ID', $author_id );
 		if( !$user->roles ){
-			$author_level = 'user';
+			$author_level = 'author';
 		} else {
 			if( in_array( "opaljob_candidate", $user->roles )) {
 				$author_level = 'candidate';
 			} else if( in_array( "opaljob_employer", $user->roles )) {
 				$author_level = 'employer';
 			} else {
-				$author_level = 'user';
+				$author_level = 'author';
 			}
 		}
 
@@ -259,6 +259,8 @@ class User_Overrider implements Intergration {
 				$template = OPAL_JOB_DIR . 'templates/single-opaljob-employer.php';
 			} else if ( in_array( "opaljob_candidate", $author->roles ) ) {
 				$template = OPAL_JOB_DIR . 'templates/single-opaljob-candidate.php';
+			}  else {
+				$template = OPAL_JOB_DIR . 'templates/single-opaljob-author.php';
 			}
 		}
 		return $template;

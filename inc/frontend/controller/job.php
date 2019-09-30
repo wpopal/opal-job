@@ -49,8 +49,15 @@ class Job  extends Controller {
 	 */
 	public function register_ajax_hook_callbacks () {
  
-		add_action( 'wp_ajax_opaljob_get_jobs_map', array($this,'get_json_jobs_map') );
- 		add_action( 'wp_ajax_opaljob_get_html_search_jobs', array($this,'get_html_search_jobs') );
+		add_action( 'wp_ajax_opaljob_get_jobs_map', 		 array( $this, 'get_json_jobs_map' ) );
+		add_action( 'wp_ajax_nopriv_opaljob_get_jobs_map', 		 array( $this, 'get_json_jobs_map' ) );
+		
+
+ 		add_action( 'wp_ajax_opaljob_get_html_search_jobs',  array( $this, 'get_html_search_jobs' ) );
+ 		add_action( 'wp_ajax_nopriv_opaljob_get_html_search_jobs',  array( $this, 'get_html_search_jobs' ) );
+
+ 		add_action( 'wp_ajax_opaljob_quick_view_single_job', array( $this, 'get_html_quick_view_job' ) );
+ 		add_action( 'wp_ajax_nopriv_opaljob_quick_view_single_job', array( $this, 'get_html_quick_view_job' ) );
 	}
 
 	/**
@@ -59,6 +66,7 @@ class Job  extends Controller {
 	 * @since    1.0.0
 	 */
 	public function register_hook_callbacks() {
+
 		add_action( "opaljob/job/listing/employer", array( $this, 'render_listing_by_employer' ) , 1, 1 );
 	}	
 
@@ -88,10 +96,12 @@ class Job  extends Controller {
 	 * @return string
 	 */
 	public function render_listing_by_employer( $id ){
+				
+		$data = $this->get_model()->get_list_by_employer( $id ); 
+		$jobs   = $data['collection'];
+		$founds = $data['founds'];
 
-
-		$jobs = $this->get_model()->get_list_by_employer( $id ); 
-		echo View::render_template( "common/job/by-employer", array( 'jobs' =>  $jobs, 'founds' => 12 ) );
+		echo View::render_template( "common/job/by-employer", array( 'jobs' =>  $jobs, 'founds' => $founds ) );
 	}
 
 	/**
@@ -170,6 +180,10 @@ class Job  extends Controller {
 	public function get_html_search_jobs () {
 
 		echo do_shortcode( "[opaljob_search_map]" ); die;
+	}
+
+	public function get_html_quick_view_job () {
+		echo do_shortcode( "[opaljob_search_view_jobs]" ); die;
 	}
 	
 }

@@ -7,6 +7,7 @@ var Opaljob_Features =  {
         Opaljob_Features.applyJob();
         Opaljob_Features.sendMessage();
         Opaljob_Features.submitJob();
+        Opaljob_Features.candidateFavorite();
 	},
  	makeAjax:function( formData, $submit_btn, _callback, isform ) {
        
@@ -237,6 +238,40 @@ var Opaljob_Features =  {
             }  );
             return false;
         } );
+    },
+    // remove or add job in favorite
+    candidateFavorite:function () {  
+
+        $( 'body' ).delegate( '.candidate-toggle-favorite', 'click', function () { 
+
+            var $this = $( this );
+            if ( $( this ).hasClass( 'opaljob-need-login' ) ) {
+                return;
+            }
+            var ps = 'member_id=' + $( this ).data( 'member-id' ) + '&action=opaljob_toggle_candidate_favorite' ; 
+
+            Opaljob_Features.makeAjax( ps, $(this), function ( response ) {
+                if( response.html ){ 
+                    $this.replaceWith( $( response.html ) );
+                }
+            }  );
+        } );
+
+        ////
+        $( 'body' ).delegate( '.candidate-remove-favorite', 'click', function() {  
+            var ps = 'member_id=' + $( this ).data( 'member-id' ) + '&action=opaljob_toggle_candidate_favorite' ; 
+            var $this = $( this );
+        
+            Opaljob_Features.makeAjax( ps, $(this), function ( response ) {
+                $( $this ).parent().parent().remove();
+                if( response.html ){ 
+                    $this.replaceWith( $( response.html ) );
+                }
+                
+            }  );
+            return false;
+        } );
+
     },
     /// change password page
 	submitForm:function(){

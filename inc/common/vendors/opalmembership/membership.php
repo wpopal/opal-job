@@ -87,6 +87,14 @@ class Membership  implements Intergration{
 		}
 	}
 
+	/**
+	 * Define the locale for this plugin for internationalization.
+	 *
+	 * Uses the Internationalization_I18n class in order to set the domain and to register the hook
+	 * with WordPress.
+	 *
+	 * @access    private
+	 */
 	public function get_history_page_uri () {
 		return URI::get_dashboard_url( 'invoices' );
 	}

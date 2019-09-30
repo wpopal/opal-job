@@ -48,9 +48,8 @@ class Api_Register {
 		if( is_admin() ){
 			API_Admin::get_instance()->register_actions();
 		}
-
+		
 		add_action( 'rest_api_init', [$this,'register_resources'] ); 
-		$this->register_resources(); 
 	}
 
 	/**
@@ -75,9 +74,9 @@ class Api_Register {
 	 *
 	 * @since  1.1
 	 */
-	public function register_resources (  ) {  
-
-		$api_classes = apply_filters( 'woocommerce_api_classes',
+	public function register_resources (  ) {   
+ 
+		$api_classes = apply_filters( 'opaljob_api_classes',
 			array(
 				'\\Opal_Job\\API\\V1\\Job_Api',
 				'\\Opal_Job\\API\\V1\\Candidate_Api',
@@ -87,8 +86,9 @@ class Api_Register {
 		);
 
 		$auth = new Api_Auth();
-		foreach ( $api_classes as $api_class ) {
+		foreach ( $api_classes as $api_class ) { 
 			$api_class = new $api_class( );
+			$api_class->register_routes();
 		}
 	}
 

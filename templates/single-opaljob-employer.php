@@ -23,7 +23,7 @@ get_header();
  *
  * @since 1.0
  */
- 
+do_action( 'opaljob_before_main_content' ); 
 if( $author ):
 
 	$member = opaljob_new_employer_object( $author );

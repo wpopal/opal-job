@@ -67,10 +67,13 @@ window.OPAL = window.OPAL || {};
         ///
         opal.groupFields( $(".opaljob-group-field-wrap", $metabox) );
         ///    
+        $( '.opaljob-select' ).select2();
+        ///    
+        opal.loadAutosugesstion();
         ///        ///    
         opal.trigger( 'opal_init' );
 
-        $( '.opaljob-select' ).select2();
+       
 
         $metabox.find( '.opaljob-iconpicker' ).each( function () {
             $( this ).fontIconPicker();
@@ -492,7 +495,59 @@ window.OPAL = window.OPAL || {};
 
         return false;
     };
+    opal.loadAutosugesstion = function () {
+        
+        function formatRepo (repo) {
+            if ( repo.loading ) {
+                return repo.text;
+            }
+            var markup = "<div class='select2-result-repository clearfix'>" +
+            "<div class='select2-result-repository__avatar'><img width=\"50\" src='" + repo.avatar_url + "' /></div>" +
+            "<div class='select2-result-repository__meta'>" +
+              "<div class='select2-result-repository__title'>" + repo.full_name + "</div>";
+            markup +=  "</div></div>";
+            return markup;
+        }
 
+        function formatRepoSelection (repo) {
+          return repo.full_name || repo.text;
+        }
+
+        function load_select2_member ( id, action ) {
+
+            $( id ).select2( {
+                width: '100%',
+                ajax: {
+                    url: ajaxurl+"?action="+action,
+                    dataType: 'json',
+                    delay: 250,
+                    data: function (params) {
+                      return {
+                            q: params.term, // search term
+                            page: params.page
+                      };
+                    },
+                    processResults: function (data, params) {    
+                        params.page = params.page || 1;
+
+                           return {
+                                    results: data.items,
+                                    pagination: {
+                                        more: (params.page * 30) < data.total_count
+                                    }
+                               };
+                        },
+                        cache: true
+                     },
+                    placeholder: 'Search for a repository',
+                    escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
+                    minimumInputLength: 1,
+                    templateResult: formatRepo,
+                    templateSelection: formatRepoSelection
+            } );
+        }
+       load_select2_member( '#post_author_override', 'opaljob_search_users' );
+    }; 
     opal.groupFields = function ( $group_containers ) {
    
         var changeIndexes = function () {

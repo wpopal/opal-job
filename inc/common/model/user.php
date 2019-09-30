@@ -544,7 +544,7 @@ class User {
 	 */
 	public function toggle_following_employer ( $employer_id ) {
 		 
-		$items = get_user_meta( $this->user_id,  '_following_employer', true );
+		$items = get_user_meta( $this->user_id,  OPAL_JOB_METABOX_PREFIX.'following_employer', true );
 		if( !is_array($items) ){
 			$items = array();
 		}
@@ -566,7 +566,50 @@ class User {
     	}
 
 
-    	update_user_meta( $this->user_id,  '_following_employer', $items );
+    	update_user_meta( $this->user_id,  OPAL_JOB_METABOX_PREFIX.'following_employer', $items );
+
+    	$this->toggle_followers( $employer_id ); 
+
+    	return $status;
+	}
+
+	/**
+	 * Render Sidebar
+	 *
+	 *	Display Sidebar on left side and next is main content 
+	 *
+	 * @since 1.0
+	 *
+	 * @return string
+	 */
+	public function toggle_followers ( $employer_id ) {
+
+		$member_id = $this->user_id; 
+
+		$items = get_user_meta( $employer_id,  OPAL_JOB_METABOX_PREFIX.'followers', true );
+		if( !is_array($items) ){
+			$items = array();
+		}
+		$items = array_unique( $items );	
+		$status = true; 
+
+		// remove following employer
+    	if( in_array( $member_id, $items ) ){  
+    		$key = array_search( $member_id, $items);
+    		unset($items[$key]);
+    		$status = false;
+    	}else { 
+    		$items[] = $member_id;
+    	}
+    	// remove items emty 
+    	foreach( $items as $key => $value ) {
+    		if( empty($value) ) {
+    			unset( $items[$key] );
+    		}
+    	}
+
+
+    	update_user_meta( $employer_id,  OPAL_JOB_METABOX_PREFIX.'followers', $items );
     	return $status;
 	}
 
@@ -723,10 +766,47 @@ class User {
 	 * @return string
 	 */
 	public function can_submit_job () {
+		return apply_filters( 'opaljob_can_submit_job', true ,  $this->user_id );
+	}
 
-		if( $this->user_id ){ 
-			return true; 
+	/**
+	 * Render Sidebar
+	 *
+	 *	Display Sidebar on left side and next is main content 
+	 *
+	 * @since 1.0
+	 *
+	 * @return string
+	 */
+	public function toggle_add_candidate( $member_id ){
+
+		$msg = esc_html__( 'Added this to your favorite.', 'opaljob' );
+
+		$items = get_user_meta( $this->user_id,  'opaljob_candidate_favorite', true );
+
+		if( !is_array($items) ){
+			$items = array();
 		}
-		return false;
+
+		$items = array_unique( $items );	
+		
+	   
+    	if( in_array( $member_id, $items ) ){  
+    		$key = array_search( $member_id, $items);
+    		unset($items[$key]);
+    		$msg = esc_html__( 'Removed this to your favorite.', 'opaljob' );
+    	}else { 
+    		$items[] = $member_id;
+    	}
+    	// remove items emty 
+    	foreach( $items as $key => $value ) {
+    		if( empty($value) ) {
+    			unset( $items[$key] );
+    		}
+    	}
+
+    	update_user_meta( $this->user_id,  'opaljob_candidate_favorite', $items );
+		
+		return $msg; 
 	}
 }

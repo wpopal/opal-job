@@ -9,7 +9,7 @@
  * @since       1.0
  */
 namespace Opal_Job\Common\Integrations;
-use Opal_Job\Common\interfaces\Intergration; 
+use Opal_Job\Common\Interfaces\Intergration; 
 /**
  * Fired during plugin deactivation
  *

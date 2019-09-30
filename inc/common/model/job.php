@@ -41,16 +41,17 @@ class Job {
 	 *
 	 * @return string
 	 */
-	public function get_list_by_employer( $id ) {
+	public function get_list_by_employer( $id, $args=[] ) {
 		
-		$query = new Job_Query(
-			array(
-				'post_type' => 'opaljob_job',
-				'post_author' => $id
-			)
+		$query = new Job_Query( array_merge(
+				array(
+					'post_type' 	 => 'opaljob_job',
+					'author' 		 => $id,
+				), $args )
 		); 
-		$query->post_author = $id;
 		
+		$query->author = $id;
+
 		return $query->get_list();
 	}
 

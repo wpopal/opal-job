@@ -3,19 +3,19 @@
 	$style = $items_per_grid; 
 	 
 ?>
-<div class="opaljob-candidate-listing">
-	<div class="candidate-listing-wrapper">
+<div class="opaljob-member-listing employer-listing">
+	<div class="member-listing-wrapper">
 		<?php if( $count > 0 ) : ?>
  
-			<div class="candidate-listing opal-row">
+			<div class="member-listing opal-row">
 				<?php foreach( $members as $_member ): global $member; $member = $_member  ?>
-					<div class="candidate-item col-md-12">
+					<div class="member-item col-md-12">
 						<?php opaljob_render_template( 'loop/'.$_layout  ); ?>
 					</div>
 				<?php endforeach; ?>	
 			</div>	
 		<?php else : ?>	 
-		<div class="candidate-no-results">
+		<div class="member-no-results">
 			<?php esc_html_e( "Sorry, we have not found any result to show.", "opaljob" ) ; ?>
 		</div>	
 		<?php endif; ?>	

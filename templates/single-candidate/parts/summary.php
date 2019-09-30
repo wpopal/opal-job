@@ -5,36 +5,40 @@
 		<div class="overlay-gray"></div>
 	</div>
 	<div class="container">
-	 	<div class="opal-row">
-	 		<div class="col-lg-2">
+	 	<div class="member-summary-inner card-wrap">
 	 			<div class="member-avatar">
-		 			<a href="<?php echo $member->get_link(); ?>" class="member-thumb">
-		 				<img src="<?php echo $member->get_avatar(); ?>">
-		 			</a>
-		 			<?php if( $member->is_featured() ): ?>
-                        <div class="agency-label">
-                            <span class="label label-featured" aria-label="<?php esc_html_e('Featured Agency', 'opaljob'); ?>"  title="<?php esc_html_e('Featured Agency', 'opaljob'); ?>">
-                                <?php echo esc_html_e('Featured','opaljob'); ?>
-                            </span>
-                        </div>
-                    <?php endif; ?>
-
+                <a href="<?php echo $member->get_link(); ?>" class="member-thumb">
+                    <img src="<?php echo $member->get_avatar(); ?>">
+                </a>
+                <?php if( $member->is_featured() ): ?>
+                    <div class="agency-label">
+                        <span class="label label-featured" aria-label="<?php esc_html_e('Featured Agency', 'opaljob'); ?>"  title="<?php esc_html_e('Featured Agency', 'opaljob'); ?>">
+                            <samp class="screen-reader-text"><?php esc_html_e( 'Featured', 'opaljob' ); ?></samp>
+                            <i class="fa fa-bolt" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                <?php endif; ?>
+	 		</div>
+	 		<div class="member-content-wrap card-body">
+	 			<h2 class="opaljob-title">
+                    <?php echo $member->get_name(); ?>
                     <?php if( $member->is_trusted() ): ?>
-                    <span class="trusted-label hint--top" aria-label="<?php esc_html_e('Trusted Member', 'opaljob'); ?>" title="<?php esc_html_e('Trusted Member', 'opaljob'); ?>">
-                        <i class="fa fa-star"></i>
+                        <sup class="trusted-label hint--top" aria-label="<?php esc_html_e('Trusted Member', 'opaljob'); ?>" title="<?php esc_html_e('Trusted Member', 'opaljob'); ?>">
+                            <i class="text-primary fa fa-check-circle " aria-hidden="true"></i>
+                        </sup>
                     </span>
-                    <?php endif; ?> 
-		 		</div>	
-	 		</div>
-	 		<div class="col-lg-7">
-	 			<h2><?php echo $member->get_name(); ?></h2>
-	 			<div class="member-title"><?php echo $member->get_meta( 'job_title' ); ?></div>
-	 			<div class="member-address"><?php echo $member->get_address(); ?></div>
+                    <?php endif; ?>
+                </h2>
+                <ul class="list-inline">
+                    <li class="member-title list-inline-item"><?php echo $member->get_meta( 'job_title' ); ?></li>
+                    <li class="member-address list-inline-item"><?php echo $member->get_address(); ?></li>
+                </ul>
 	 			<?php opaljob_display_member_social_icons(); ?>
+
 	 		</div>
 
-	 		<div class="col-lg-3">
-	 			<a href="#" class="btn btn-primary"><?php esc_html_e( 'Download CV', 'opaljob' ); ?></a>
+	 		<div class="member-apply-wrap member-button">
+	 			<a href="#" class="btn btn-lg btn-primary"><?php esc_html_e( 'Download CV', 'opaljob' ); ?></a>
 	 		</div>
 
 	 	</div>	

@@ -83,7 +83,9 @@ class Employer_Fields extends User_Fields {
 	 * @param string $post The instance of Post having post typo opaljob
 	 */
 	public function get_base_fields(  ) {
+
 		$prefix=OPAL_JOB_METABOX_PREFIX;
+
 		return [
 			[
 				'id'          => "{$prefix}featured",
@@ -129,7 +131,7 @@ class Employer_Fields extends User_Fields {
 				'desc'   => esc_html__( 'This image will display in user detail and profile box information', 'cmb2' ),
 				'id'     => $prefix . 'gallery',
 				'type'   =>  'file_list' ,
-				'single'	  => true,
+				'single' => true,
 				'avatar' => true,
 			],
 			[
@@ -152,6 +154,33 @@ class Employer_Fields extends User_Fields {
 				'attributes'	 => [
 					'required' => true
 				]
+			],
+
+			[
+				'name'       => esc_html__( 'Company Size', 'opaljob' ),
+				'id'         => "{$prefix}company_size",
+				'type'       => 'select',
+				'options'	 => opaljob_get_company_sizes_options(),
+				'attributes'	 => [
+					'required' => true
+				]
+			],
+
+			[
+				'name'     => esc_html__( 'Categories', 'opaljob' ),
+				'desc'     => esc_html__( 'Select one, to add new you create in location of estate panel', 'opaljob' ),
+				'id'       => $prefix . "category",
+				'taxonomy' => 'opaljob_category', //Enter Taxonomy Slug
+				"multiple" => true,
+				'type'     => 'taxonomy_select',
+			],
+			[
+				'name'     => esc_html__( 'Tags', 'opaljob' ),
+				'desc'     => esc_html__( 'Select one, to add new you create in location of estate panel', 'opaljob' ),
+				'id'       => $prefix . "tags",
+				'taxonomy' => 'opaljob_tag', //Enter Taxonomy Slug
+				"multiple" => true,
+				'type'     => 'taxonomy_select',
 			],
 			[
 				'name'       => esc_html__( 'Email', 'opaljob' ),

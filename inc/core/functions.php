@@ -14,6 +14,113 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
+ * Get Money with format
+ *
+ *	Base on price and currency to show format style.
+ *
+ * @since 1.0
+ *
+ * @return string
+ */
+function opaljob_get_currencies_options () {
+	$currencies = Opal_Job\Libraries\Money\Currency::getAllCurrencies();
+
+ 	$output = array();
+ 	foreach ( $currencies as $code => $currency ) {
+ 		$output[$code] = $currency['title'] . ' ( '.$code.' )';
+ 	}
+
+ 	return $output; 
+}
+
+/**
+ * Get Money with format
+ *
+ *	Base on price and currency to show format style.
+ *
+ * @since 1.0
+ *
+ * @return string
+ */
+function opaljob_custom_selected_currencies_options () {
+
+	$output  = array(
+		'' => esc_html__( 'Use Global', 'opaljob' )
+	); 
+	
+	$default 	= opaljob_options( 'currency' );
+	
+	if( $default ){
+		$output[$default] = $default;
+	} else {
+		$output['USD'] = esc_html__( 'USD', 'opaljob' );
+	}
+
+	$supported  = opaljob_options( 'supported_currency' );	
+	
+	if( $supported  ){
+		foreach( $supported as $code ) {
+			$output[$code] = $code;
+		}
+	}
+
+	return $output; 
+}
+
+/**
+ * Get Money with format
+ *
+ *	Base on price and currency to show format style.
+ *
+ * @since 1.0
+ *
+ * @return string
+ */
+function opaljob_get_money_format( $price, $currency="USD" ) {
+
+	if( empty($currency) || !is_string($currency) ){
+		return $price; 
+	}
+
+	$classname       = "Opal_Job\Libraries\Money\Money";
+	$key_in_registry = $classname.$currency;
+	$instance 	     = Opal_Job\Core\Object_Registry::get( $key_in_registry );
+
+	if ( null === $instance ) { 
+		$instance = new $classname( $currency );
+		Opal_Job\Core\Object_Registry::set( $key_in_registry, $instance );
+	}
+
+    return $instance->set_amount( $price )->format();
+}
+
+/**
+ * Render Sidebar
+ *
+ *	Display Sidebar on left side and next is main content 
+ *
+ * @since 1.0
+ *
+ * @return string
+ */
+function opaljob_get_search_page_uri () {
+	return Opal_Job\Core\URI::get_search_url();
+}
+
+/**
+ * Render Sidebar
+ *
+ *	Display Sidebar on left side and next is main content 
+ *
+ * @since 1.0
+ *
+ * @return string
+ */
+function opaljob_get_image_placeholder_src( $size = 'thumbnail' ) {
+    return OPAL_JOB_URL . 'assets/images/'.$size.'.png';
+}
+
+/**
  * Render Sidebar
  *
  *	Display Sidebar on left side and next is main content 
@@ -24,6 +131,29 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 function opaljob_get_dashboard_uri( $key ) {
 	return Opal_Job\Core\URI::get_dashboard_url( $key );
+}
+
+/**
+ * Render Sidebar
+ *
+ *	Display Sidebar on left side and next is main content 
+ *
+ * @since 1.0
+ *
+ * @return string
+ */
+function opaljob_get_company_sizes_options () {
+	return apply_filters(
+		'opaljob_get_company_sizes_options',
+		array (
+			'0-10' 	   => esc_html__( '0-10 Staffs', 'opaljob' ),
+			'10-50'    => esc_html__( '10-50 Staffs', 'opaljob' ),
+			'50-100'   => esc_html__( '50-100 Staffs', 'opaljob' ),
+			'100-300'  => esc_html__( '100-300 Staffs', 'opaljob' ),
+			'300-500'  => esc_html__( '300-500 Staffs', 'opaljob' ),
+			'500-more' => esc_html__( 'More than 500 Staffs', 'opaljob' ),
+		)
+	);
 }
 
 /**
@@ -104,9 +234,10 @@ function is_single_job() {
  */
 function opaljob_options( $key , $default='' ) {
 	global $opaljob_options;
-
+	$key = OPAL_JOB_METABOX_PREFIX.$key;
 	$value = isset( $opaljob_options[ $key ] ) ? $opaljob_options[ $key ] : $default;
 	$value = apply_filters( 'opaljob_option_', $value, $key, $default );
+
 
 	return apply_filters( 'opaljob_option_' . $key, $value, $key, $default );
 }
@@ -165,7 +296,7 @@ function opaljob_new_job_object( $id ) {
 }
 
 
-function opaljob_new_user_object( $id ) { 
+function opaljob_new_user_object( $id ) { //echo 'hacongtien';
 	return new \Opal_Job\Common\Model\Entity\User_Entity(  $id );   	
 }
 
@@ -179,7 +310,7 @@ function opaljob_new_user_object( $id ) {
  * @return string
  */
 function opaljob_new_candidate_object( $id ) {
-	return new \Opal_Job\Common\Model\Entity\Candicate_Entity(  $id ); 
+	return new \Opal_Job\Common\Model\Entity\Candidate_Entity(  $id ); 
 }
 
 function opaljob_get_user_model(){
@@ -257,10 +388,28 @@ if ( ! function_exists( 'opaljob_print_notices' ) ) {
 	}
 }
 
+/**
+ * print all notices
+ *
+ *	Display Sidebar on left side and next is main content 
+ *
+ * @since 1.0
+ *
+ * @return string
+ */
 function opaljob_user_can_submit_job() {
 	return opaljob_get_user_model()->can_submit_job( );
 }
 
+/**
+ * print all notices
+ *
+ *	Display Sidebar on left side and next is main content 
+ *
+ * @since 1.0
+ *
+ * @return string
+ */
 function opaljob_user_can_edit_job( $job_id ) {
 
 	return opaljob_get_user_model()->can_edit_job( $job_id );

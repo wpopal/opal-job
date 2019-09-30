@@ -1,0 +1,36 @@
+.list-style {
+    list-style: none;
+    // No need to set list-style: none; since .list-group-item is block level
+    padding-left: 0; // reset padding because ul and ol
+    margin-bottom: 0;
+
+    li {
+        &:not(:last-child) {
+            margin-right: 15px;
+        }
+    }
+}
+
+.list-horizontal {
+    li {
+        display: inline-block;
+    }
+}
+.list-inline,
+.list-unstyled {
+    padding-left: 0;
+    list-style: none;
+}
+
+.list-inline-item {
+    display: inline-block;
+}
+.list-inline-item:not(:last-child) {
+    margin-right: 5px;
+}
+
+.opaljob-member-listing {
+    .card-wrap {
+        overflow: hidden;
+    }
+}

@@ -15,16 +15,18 @@
 						?>
 							<div class="opal-row job-item">
 				 				<div class="col-lg-1 col-md-1">
-			                    	<a href="<?php echo $member->get_link(); ?>" class="member-avatar">
-						 				<img src="<?php echo $member->get_avatar(); ?>">
-						 			</a>
+                                    <div class="member-avatar">
+                                        <a href="<?php echo $member->get_link(); ?>">
+                                            <img src="<?php echo $member->get_avatar(); ?>">
+                                        </a>
+                                    </div>
 			                	</div>
 			                	<div class="col-lg-6 col-md-6 job-info">
 			                    	<h5><a href="<?php echo $job->get_link(); ?>"><?php echo $job->post_title; ?></a></h5>
 			                    	<div class="job-summary">
 			                    		<div><?php echo $member->get_company(); ?></div>
 				                    	<div class="job-salary">
-											<span class="salary-label"><?php esc_html_e( 'Offerd Salary', 'opaljob' ); ?></span>
+											<span class="salary-label"><?php esc_html_e( 'Offerd Salary:', 'opaljob' ); ?></span>
 											<span class="salary-number">
 												<span><?php echo $job->get_salary(); ?></span>
 												<span><?php echo $job->get_salary_label(); ?></span>

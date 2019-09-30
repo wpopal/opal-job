@@ -29,6 +29,7 @@ use Opal_Job\Common\Model\User;
  *
  * @author    WpOpal
  */
+
 class Candidate extends Controller {
 
 	/**
@@ -44,10 +45,8 @@ class Candidate extends Controller {
 		//// Candidate actions //////
 		add_action( 'wp_ajax_opaljob_candidate_apply_now', array($this,'process_candidate_apply') );
 		add_action( 'wp_ajax_nopriv_opaljob_candidate_apply_now', array($this,'process_candidate_apply') );
-
-		///// Employers actions /////
-		add_action( 'wp_ajax_opaljob_following_employer', array($this,'process_following_employer') );
-		add_action( 'wp_ajax_nopriv_opaljob_following_employer', array($this,'process_following_employer') );
+ 	
+		add_action( 'wp_ajax_nopriv_opaljob_toggle_candidate_favorite', array($this,'process_candidate_favorite') );
 
 		/// apply job ///
 		/// 
@@ -63,7 +62,7 @@ class Candidate extends Controller {
 	 *
 	 * @return string
 	 */
-	public function register_hook_callbacks () {
+	public function register_hook_callbacks () { 
 		add_action( "opaljob/dashboard/tab_content/resume", array( $this, 'render_dashboard_resume' ) );
 		add_action( "opaljob/dashboard/tab_content/resumecv", array( $this, 'render_dashboard_resumecv' ) );
 		add_action( "opaljob/dashboard/tab_content/following_employers", array( $this, 'render_following_employers' ) );
@@ -169,62 +168,6 @@ class Candidate extends Controller {
 		echo View::render_template( "dashboard/candidate/following-employers", $args );
 	}
 
-	/**
-	 * Process Save Data Post Profile
-	 *
-	 *	Display Sidebar on left side and next is main content 
-	 *
-	 * @since 1.0
-	 *
-	 * @return string
-	 */
-	public function process_following_employer () {
-
-		if( isset($_POST['employer_id']) && intval($_POST['employer_id']) > 0 ){
-
-
-			$employer_id = intval( $_POST['employer_id'] ); 
-			$member 	 = opaljob_new_employer_object( $employer_id );
-
-			do_action( 'opaljob/user/following_employer/before', $employer_id, $member );
-
-			$status	 	 = $this->get_model()->toggle_following_employer( $employer_id );
-			
-			if( $status == false ) {
-				$msg = esc_html__( 'You unfollowed this employer.', 'opaljob' );
-			} else {
-				$msg = esc_html__( 'You followed this employer success.', 'opaljob' );
-			}
-			
-			$member->update_count_followers( $status );
-			$html 	 	 = $this->get_following_button( array('member' => $member ) );
-
-			return opaljob_output_msg_json(
-				true,
-				$msg,
-				array( 'html' => $html )
-			);
-		}
-	}
-
-	/**
-	 * Process Save Data Post Profile
-	 *
-	 *	Display Sidebar on left side and next is main content 
-	 *
-	 * @since 1.0
-	 *
-	 * @return string
-	 */
-	protected function get_following_button( $args ) {
-
-		ob_start();
-		opaljob_following_button( $args );
-		$ouput = ob_get_contents();
-		ob_end_clean();
-
-		return $ouput;
-	}
 
 	/**
 	 * Render Sidebar
@@ -249,8 +192,6 @@ class Candidate extends Controller {
 		echo View::render_template( "dashboard/metabox-form", $args );
 	}
 	
-
-
 	/**
 	 * Render Sidebar
 	 *

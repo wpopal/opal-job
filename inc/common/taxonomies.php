@@ -122,11 +122,11 @@ class Taxonomies {
 
 		register_taxonomy( 'opaljob_types', [ 'opaljob_job' ], [
 			'labels'       => apply_filters( 'opaljob_taxomony_types_labels', $labels ),
-			'hierarchical' => true,
-			'query_var'    => 'type',
-			'rewrite'      => [ 'slug' => esc_html__( 'type', 'opaljob' ) ],
 			'public'       => true,
+			'hierarchical' => true,
 			'show_ui'      => true,
+			'query_var'    => true,
+			'rewrite'      => [ 'slug' => _x( 'types', 'slug', 'opaljob' ), 'with_front' => false, 'hierarchical' => true ],
 		] );
 	}
 
@@ -159,11 +159,11 @@ class Taxonomies {
 
 		register_taxonomy( 'opaljob_location', 'opaljob_job', [
 			'labels'       => apply_filters( 'opaljob_taxomony_location_labels', $labels ),
-			'hierarchical' => true,
-			'query_var'    => 'location',
-			'rewrite'      => [ 'slug' => esc_html__( 'location', 'opaljob' ) ],
 			'public'       => true,
+			'hierarchical' => true,
 			'show_ui'      => true,
+			'query_var'    => true,
+			'rewrite'      => [ 'slug' => _x( 'location', 'slug', 'opaljob' ), 'with_front' => false, 'hierarchical' => true ],
 		] );
 
 		// 
@@ -183,7 +183,7 @@ class Taxonomies {
 		
 		/// register Location /////
 		$labels = [
-			'name'              => esc_html__( 'Tag', 'opaljob' ),
+			'name'              => esc_html__( 'Skill Tag', 'opaljob' ),
 			'singular_name'     => esc_html__( 'Jobs By Tags', 'opaljob' ),
 			'search_items'      => esc_html__( 'Search Tags', 'opaljob' ),
 			'all_items'         => esc_html__( 'All Tags', 'opaljob' ),
@@ -193,18 +193,41 @@ class Taxonomies {
 			'update_item'       => esc_html__( 'Update Tags', 'opaljob' ),
 			'add_new_item'      => esc_html__( 'Add New Tags', 'opaljob' ),
 			'new_item_name'     => esc_html__( 'New Tags', 'opaljob' ),
-			'menu_name'         => esc_html__( 'Tags', 'opaljob' ),
+			'menu_name'         => esc_html__( 'Skill Tags', 'opaljob' ),
 		];
 
 		register_taxonomy( 'opaljob_tag', 'opaljob_job', [
-			'labels'       => apply_filters( 'opaljob_taxomony_location_labels', $labels ),
-			'hierarchical' => true,
-			'query_var'    => 'location',
-			'rewrite'      => [ 'slug' => esc_html__( 'location', 'opaljob' ) ],
+			'labels'       => apply_filters( 'opaljob_taxomony_tag_labels', $labels ),
 			'public'       => true,
+			'hierarchical' => true,
 			'show_ui'      => true,
+			'query_var'    => true,
+			'rewrite'      => [ 'slug' => _x( 'skill-tag', 'slug', 'opaljob' ), 'with_front' => false, 'hierarchical' => true ],
 		] );
 
 		// 
+	}
+
+	/**
+	 * Render Sidebar
+	 *
+	 *	Display Sidebar on left side and next is main content 
+	 *
+	 * @since 1.0
+	 *
+	 * @return string
+	 */
+	public static function get_category_list( $args = [] ) {
+		
+		$default = [
+			'taxonomy'   => 'opaljob_category',
+			'hide_empty' => true,
+		];
+
+		if ( $args ) {
+			$default = array_merge( $default, $args );
+		}
+
+		return get_terms( $default );
 	}
 }

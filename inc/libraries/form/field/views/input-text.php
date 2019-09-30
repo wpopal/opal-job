@@ -45,8 +45,8 @@ if ( ! empty( $args['attributes'] )  ) {
 }
 
 if ( ! empty( $args['data'] ) ) {
-	foreach ( $args['data'] as $key => $value ) {
-		$data .= 'data-' . $key . '="' . esc_attr( $value ) . '" ';
+	foreach ( $args['data'] as $key => $_value ) {
+		$data .= 'data-' . $key . '="' . esc_attr( $_value ) . '" ';
 	}
 }
 
@@ -64,7 +64,7 @@ $output = '';
 if ( 'hidden' !== $args['type'] ) {
 	$output .= '<div class="opaljob-field-wrap opaljob-text-field-wrap form-group" id="' . sanitize_key( $this->form_id . $args['id'] ) . '-wrap">';
 
-	if ( $args['name'] ) {
+	if ( $args['name'] && $this->show_label ) {
 		$output .= '<label class="opaljob-label" for="' . sanitize_key( $this->form_id . $args['id'] ) . '">' . esc_html( $args['name'] ) . $required_label . '</label>';
 	}
 }

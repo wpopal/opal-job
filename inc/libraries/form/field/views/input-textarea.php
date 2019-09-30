@@ -19,14 +19,20 @@ if ( $args['disabled'] ) {
 
 $output = '<div class="opaljob-field-wrap opaljob-textarea-field-wrap form-group" id="opaljob-' . sanitize_key( $this->form_id . $args['id'] ) . '-wrap">';
 
-$output .= '<label class="opaljob-label" for="opaljob-' . sanitize_key( $this->form_id . $args['id'] ) . '">' . esc_html( $args['name'] ) . '</label>';
-
+if(  $this->show_label ) {
+	$output .= '<label class="opaljob-label" for="opaljob-' . sanitize_key( $this->form_id . $args['id'] ) . '">' . esc_html( $args['name'] ) . '</label>';
+}
 $data = '';
 if ( $args['required'] ) {
 	$data .= ' required="required" ';
 }
 
-$output .= '<textarea name="' . esc_attr( $args['id'] ) . '" id="' . esc_attr( $this->form_id . $args['id'] ) . '" class="' . $args['class'] . '"' . $disabled . ' ' . $data . ' >' . esc_attr(
+if ( $args['placeholder'] ) {
+	$data .= ' placeholder="' . esc_attr( $args['placeholder'] ) . '"';
+}
+
+
+$output .= '<textarea name="' . esc_attr( $args['id'] ) . '"  id="' . esc_attr( $this->form_id . $args['id'] ) . '" class="' . $args['class'] . '"' . $disabled . ' ' . $data . ' >' . esc_attr(
 		$args['value'] ) . '</textarea>';
 
 if ( ! empty( $args['description'] ) ) {

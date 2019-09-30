@@ -69,6 +69,7 @@ class Admin {
 
 	public $settings_objs = [];
 
+ 
 	/**
 	 * Register the stylesheets for the admin area.
 	 *
@@ -88,9 +89,7 @@ class Admin {
 		 */
 
 		wp_enqueue_style( $this->plugin_name . '_admin', OPAL_JOB_URL . 'assets/css/admin/admin.css', [], $this->version, 'all' );
-
-		Libraries\Form\Scripts::enqueue_styles();
-
+		
 		wp_enqueue_style( 'select2', OPAL_JOB_URL . 'assets/3rd/select2/css/select2.min.css', null, '4.0.7', false );
 		wp_register_style( 'font-awesome', OPAL_JOB_URL . 'assets/3rd/font-awesome/css/all.min.css', [], '5.10.2' );
 		wp_enqueue_style( 'font-awesome' );
@@ -118,9 +117,7 @@ class Admin {
 
 		wp_enqueue_script( 'select2', OPAL_JOB_URL . 'assets/3rd/select2/js/select2.min.js', null, '4.0.7', false );
 		wp_enqueue_script( 'opaljob-admin', OPAL_JOB_URL . 'assets/js/admin.js', null, '4.0.7', false );
-
-		Libraries\Form\Scripts::enqueue_scripts();
-
+		
 		do_action( 'opaljob_admin_enqueue_scripts', $this );
 	}
 
@@ -148,6 +145,7 @@ class Admin {
 			$this->plugin_name . '-addons',
 			[ $this, 'page_addons' ]
 		);
+		remove_meta_box( 'authordiv', 'opaljob_job', 'normal' );
 	}
 
 	/**
@@ -237,7 +235,7 @@ class Admin {
 		echo '</ul></div>';
 
 
-		$form = new Libraries\Form\Form();
+		$form = Libraries\Form\Form::get_instance();
 
 		$form->setup( 'page_options', 'opaljob_settings' );
 

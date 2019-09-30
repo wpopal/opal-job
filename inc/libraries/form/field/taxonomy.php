@@ -75,6 +75,7 @@ class Taxonomy {
 			'readonly'         => false,
 			'disabled'         => false,
 			'required'         => '',
+			'model' 		   => ''
 		];
 
 		$args             = wp_parse_args( $args, $defaults );
@@ -84,7 +85,132 @@ class Taxonomy {
 		$this->form = $form;
 		$this->type = $type;
 
-		$this->render();
+		if( $args['model'] == 'css' ) {
+ 
+				$this->render_custom_style( $args['multiple'] );
+	  
+		} else {
+			$this->render();	
+		}
+	}
+
+	private function render_check_item ( $args, $term ) {
+		$value = $term->{$args['value_type']};
+
+		
+		if ( $args['multiple'] && is_array( $args['selected'] ) ) {
+			$checked = checked( true, in_array( $value, $args['selected'] ), false );
+		} else {
+			$checked = checked( $args['selected'], $value, false );
+		}
+
+		$_id = sanitize_key( $this->form->form_id . $args['id'] ).$term->term_id;
+
+		$output = '<span class="checkbox-item">';
+		$output .= '<input type="checkbox" name="' . esc_attr( $args['id'] ) . '[]" id="' . esc_attr( $_id ) . '" value="'.$term->slug.'" class="form-control-checkbox" ' .$checked . ' ' .  ' />';
+		$output .= '<label class="opaljob-option-label" for="' . $_id  . '">' . esc_html( $term->name ) . '</label>';
+		$output .= '</span>';
+
+		return $output;
+	}
+
+	private function render_radio_item ( $args, $term ) {
+		$value = $term->{$args['value_type']};
+
+		
+		if ( $args['multiple'] && is_array( $args['selected'] ) ) {
+			$checked = checked( true, in_array( $value, $args['selected'] ), false );
+		} else {
+			$checked = checked( $args['selected'], $value, false );
+		}
+
+		$_id = sanitize_key( $this->form->form_id . $args['id'] ).$term->term_id;
+
+		$output = '<span class="checkbox-item">';
+		$output .= '<input type="radio" name="' . esc_attr( $args['id'] ) . '[]" id="' . esc_attr( $_id ) . '" value="'.$term->slug.'" class="form-control-checkbox" ' .$checked . ' ' .  ' />';
+		$output .= '<label class="opaljob-option-label" for="' . $_id  . '">' . esc_html( $term->name ) . '</label>';
+		$output .= '</span>';
+
+		return $output;
+	}
+
+	public function render_custom_style( $ismulti = true ) {
+		$args = $this->args;
+
+		$all_terms = $this->get_terms();
+
+		if ( ! $all_terms || is_wp_error( $all_terms ) ) {
+			echo $this->no_terms_result( $all_terms, 'strong' );
+			return;
+		}
+
+		if ( $args['chosen'] ) {
+			$args['class'] .= ' opaljob-select-chosen';
+		}
+
+		$data = '';
+		if ( $args['multiple'] ) {
+			$data .= ' multiple="multiple"';
+		}
+
+		if ( $args['readonly'] ) {
+			$data .= ' readonly';
+		}
+
+		if ( 'on' === $args['autocomplete'] ) {
+			$data .= ' autocomplete="' . esc_attr( $args['autocomplete'] ) . '"';
+		}
+
+		if ( $args['placeholder'] ) {
+			$data .= ' data-placeholder="' . esc_attr( $args['placeholder'] ) . '"';
+		}
+
+		if ( $args['disabled'] ) {
+			$data .= ' disabled="disabled"';
+		}
+
+		if ( ! empty( $args['data'] ) ) {
+			foreach ( $args['data'] as $key => $value ) {
+				$data .= ' data-' . esc_attr( $key ) . '="' . esc_attr( $value ) . '"';
+			}
+		}
+
+		if ( $args['required'] ) {
+			$data .= ' required="required" ';
+		}
+
+		$output = '<div class="opaljob-field-wrap opaljob-taxonomy-select-wrap form-group" id="' . sanitize_key( $this->form->form_id . $args['id'] ) . '-wrap" >';
+		if( $args['show_label'] ) {
+			$output .= '<label class="opaljob-label" for="' . esc_attr( sanitize_key( str_replace( '-', '_', $this->form->form_id . $args['id'] ) ) ) . '">' . esc_html( $args['name'] ) . '</label>';
+		}
+
+		$args    = $this->args;
+		$options = '';
+ 	
+	 	if( $ismulti ){
+	 		foreach ( $all_terms as $term ) {
+				$output .= $this->render_check_item( $args , $term );
+			}	
+	 	} else {
+	 		foreach ( $all_terms as $term ) {
+				$output .= $this->render_radio_item( $args , $term );
+			}	
+	 	}
+		
+
+ 
+
+		if ( ! empty( $args['description'] ) ) {
+			$output .= '<p class="opaljob-description">' . esc_html( $args['description'] ) . '</p>';
+		}
+
+		$output .= '</div>';
+
+		echo $output;
+	}
+
+	public function render_select_style() {
+		echo 'select';
 	}
 
 	/**
@@ -148,8 +274,9 @@ class Taxonomy {
 
 		$output = '<div class="opaljob-field-wrap opaljob-taxonomy-select-wrap form-group" id="' . sanitize_key( $this->form->form_id . $args['id'] ) . '-wrap" >';
 
-		$output .= '<label class="opaljob-label" for="' . esc_attr( sanitize_key( str_replace( '-', '_', $this->form->form_id . $args['id'] ) ) ) . '">' . esc_html( $args['name'] ) . '</label>';
-
+		if( $args['show_label'] ) {
+			$output .= '<label class="opaljob-label" for="' . esc_attr( sanitize_key( str_replace( '-', '_', $this->form->form_id . $args['id'] ) ) ) . '">' . esc_html( $args['name'] ) . '</label>';
+		}
 		$output .= sprintf(
 			'<select id="%1$s" class="%2$s" name="%3$s"  %4$s>',
 			sanitize_key( $this->form->form_id . $args['id'] ),

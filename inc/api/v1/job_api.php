@@ -46,22 +46,25 @@ class Job_Api  extends  Base_Api {
 	 *
 	 * @return avoid
 	 */
-	public function register_routes ( ) {  
+	public function register_routes ( ) { 
 	 	/// call http://domain.com/wp-json/job-api/v1/job/list  ////
 		register_rest_route( $this->namespace, $this->base.'/list', array(
 			'methods' => WP_REST_Server::READABLE,
 			'callback' => array( $this, 'get_list' ),
+			'permission_callback' => array( $this, 'validate_request'  ),
 		));
 		/// call http://domain.com/wp-json/job-api/v1/job/1  ////
 		register_rest_route( $this->namespace, $this->base.'/(?P<id>\d+)', array(
 			'methods' => WP_REST_Server::READABLE,
 			'callback' => array( $this, 'get_job' ),
+			'permission_callback' => array( $this, 'validate_request' ),
 		));
 
 		/// call http://domain.com/wp-json/job-api/v1/job/create  ////
 		register_rest_route( $this->namespace, $this->base.'/create', array(
 			'methods' => 'GET',
 			'callback' => array( $this, 'create' ),
+			'permission_callback' => array( $this, 'validate_request' ),
 		));
 		/// call http://domain.com/wp-json/job-api/v1/job/edit  ////
 		register_rest_route( $this->namespace, $this->base.'/edit', array(
@@ -72,15 +75,17 @@ class Job_Api  extends  Base_Api {
 		register_rest_route( $this->namespace, $this->base.'/delete', array(
 			'methods' => 'GET',
 			'callback' => array( $this, 'delete' ),
+			'permission_callback' => array( $this, 'validate_request' ),
 		));
 
 		/**
 		 *  List job by tags and taxonmies 
 		 */
-		/// call http://domain.com/wp-json/job/v1/jobs  ////
+		/// call http://domain.com/wp-json/job-api/v1/jobs  ////
 		register_rest_route( $this->namespace, $this->base.'/tags', array(
 			'methods' => 'GET',
 			'callback' => array( $this, 'delete' ),
+			'permission_callback' => array( $this, 'validate_request' ),
 		));
 	}
 
@@ -142,6 +147,7 @@ class Job_Api  extends  Base_Api {
 			$tdata = wp_get_post_terms( $job_id, $tax );
 			if( !is_wp_error( $tdata )  ) {
 				foreach ( $tdata as $t ) {
+					$tax = str_replace( "opaljob_", "", $tax );
 					$output[$tax][] = array(
 						'name' 	  => $t->name,
 						'slug' 	  => $t->slug,
@@ -181,8 +187,9 @@ class Job_Api  extends  Base_Api {
 
 		wp_reset_query();
 
-		$response['jobs'] = $jobs;
-
+		$response['jobs'] 	 = $jobs;
+		$response['pages'] 	 = 4; 
+		$response['current'] = 1;
 		return $this->get_response( 200, $response );
 	}
 
@@ -220,5 +227,16 @@ class Job_Api  extends  Base_Api {
 
 	}
 
+
+	public function reviews () {
+
+	}
+
+	public function categories () {
+
+	}
 	
+	public function tags () {
+		
+	}
 }

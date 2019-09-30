@@ -42,11 +42,18 @@ class Template_Loader {
 			'opaljob_employer',
 			'opaljob_candidate'
 		);
-		if ( is_single() && in_array( get_post_type(), $posttypes ) ) {  
-			$sub 	= str_replace('_','-',get_post_type() );
-			$file   = 'single-'.$sub.'.php';
-			$find[] = $file;
-			$find[] = apply_filters( 'opaljob_template_path', 'opaljob/' ) . $file;
+		if ( in_array( get_post_type(), $posttypes ) ) {  
+
+			if( is_single() ) {
+				$sub 	= str_replace('_','-',get_post_type() );
+				$file   = 'single-'.$sub.'.php';
+				$find[] = $file;
+				$find[] = apply_filters( 'opaljob_template_path', 'opaljob/' ) . $file;
+			} elseif ( is_archive() ) {
+				$file   = 'archive-opaljob-job.php';
+				$find[] = $file;
+				$find[] = apply_filters( 'opaljob_template_path', 'opaljob/' ) . $file;
+			}
 		}
 
 		if ( $file ) {

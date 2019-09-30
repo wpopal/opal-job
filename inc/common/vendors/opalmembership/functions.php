@@ -121,8 +121,8 @@ function opaljob_get_user_featured_remaining_listing( $user_id ){
 }
 
 /**
- *
- */
+
+
 function opaljob_reset_user_free_package( $user_id ){ 
  
     $duration = opaljob_options('free_expired_month', 12);

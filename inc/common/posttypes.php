@@ -76,7 +76,6 @@ class Posttypes {
  
 	}	
 	
-
 	/**
 	 * Register the Employer Post Type
 	 *

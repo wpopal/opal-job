@@ -78,7 +78,7 @@ class Related_Job {
 			'column' => 3,
 			'style'  => '',
 		];
-
+		 
 		return $args;
 	}
 

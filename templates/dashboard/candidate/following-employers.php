@@ -14,20 +14,24 @@
 					 			<?php if( $member->is_featured() ): ?>
 			                        <div class="member-avatar-label">
 			                            <span class="label label-featured" aria-label="<?php esc_html_e('Featured Employer', 'opaljob'); ?>"  title="<?php esc_html_e('Featured Employer', 'opaljob'); ?>">
-			                                <?php echo esc_html_e('Featured','opaljob'); ?>
+			                                <samp class="screen-reader-text"><?php esc_html_e( 'Featured', 'opaljob' ); ?></samp>
+                                            <i class="fa fa-bolt" aria-hidden="true"></i>
 			                            </span>
 			                        </div>
 			                    <?php endif; ?>
 
-			                    <?php if( $member->is_trusted() ): ?>
-			                    <span class="trusted-label hint--top" aria-label="<?php esc_html_e('Trusted Employer', 'opaljob'); ?>" title="<?php esc_html_e('Trusted Employer', 'opaljob'); ?>">
-			                        <i class="fa fa-star"></i>
-			                    </span>
-			                    <?php endif; ?> 
-					 		</div>	
+
+					 		</div>
 				 		</div>
 				 		<div class="col-lg-7">
-				 			<h2><?php echo $member->get_company(); ?></h2>
+				 			<h2>
+                                <?php echo $member->get_company(); ?>
+                                <?php if( $member->is_trusted() ): ?>
+                                    <sup class="trusted-label hint--top" aria-label="<?php esc_html_e('Trusted Employer', 'opaljob'); ?>" title="<?php esc_html_e('Trusted Employer', 'opaljob'); ?>">
+                                        <i class="text-primary fa fa-check-circle " aria-hidden="true"></i>
+                                    </sup>
+                                <?php endif; ?>
+                            </h2>
 				 			<div class="member-address"><?php echo $member->get_address(); ?></div>
 				 		</div>
 

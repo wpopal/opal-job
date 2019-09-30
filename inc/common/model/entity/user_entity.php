@@ -44,7 +44,7 @@ class User_Entity {
 	public $address; 
 	public $description;
 	public $avatar; 
-
+	public $user_login;
 	public $map;
 	/**
 	 * Render Sidebar
@@ -66,6 +66,7 @@ class User_Entity {
 			$user = get_userdata( $this->ID );
 	 		$this->display_name = $user->display_name;
 	 		$this->user_email   = $user->user_email; 
+	 		$this->user_login   = $user->user_login;
 	 		$this->description  = $user->description;
 	 		$this->avatar 		= $this->get_avatar();
 	 		$this->address 	    = $this->get_address();
@@ -197,16 +198,7 @@ class User_Entity {
 
 	}
 
-	/**
-	 *	Display Sidebar on left side and next is main content 
-	 *
-	 * @since 1.0
-	 *
-	 * @return string
-	 */
-	public function get_website() {
-
-	}
+ 
 
 	/**
 	 *	Display Sidebar on left side and next is main content 
@@ -271,7 +263,7 @@ class User_Entity {
 		if( !empty($url) ){
 			return $url;
 		}
-		return 'placehold image here';
+		return opaljob_get_image_placeholder_src( 'banner' );
 	}
 
 	/**
@@ -355,5 +347,73 @@ class User_Entity {
 		$prop->status = array(); 
 
 		return $prop;
+	}
+
+	/**
+	 * Magic __get function to dispatch a call to retrieve a private job
+	 *
+	 * @since 1.0
+	 */
+	public function __get( $key ) {  
+
+		if( method_exists( $this, 'get_' . $key ) ) {
+			return call_user_func( array( $this, 'get_' . $key ) );
+		} else {
+			return $this->get_meta( $key );
+		}
+
+	}
+
+	/**
+	 * Render Sidebar
+	 *
+	 *	Display Sidebar on left side and next is main content 
+	 *
+	 * @since 1.0
+	 *
+	 * @return string
+	 */
+	protected function get_term_data( $meta_key, $tax ) {
+		$output = array(); 
+		$category = $this->get_meta( $meta_key ); 
+		if( $category ){
+			foreach ( $category as $slug ) {
+				$term = get_term_by( 'slug', $slug, $tax );
+				if( !is_wp_error( $term ) ) {
+					$output[] = array(
+						'name' => $term->name,
+						'link' => get_term_link( $term->term_id )
+					);
+				}
+			}
+		}
+
+		return $output;
+	}
+
+	/**
+	 * Render Sidebar
+	 *
+	 *	Display Sidebar on left side and next is main content 
+	 *
+	 * @since 1.0
+	 *
+	 * @return string
+	 */
+	public function get_location() {
+		return $this->get_meta( 'location' ); 
+	}
+
+	/**
+	 * Render Sidebar
+	 *
+	 *	Display Sidebar on left side and next is main content 
+	 *
+	 * @since 1.0
+	 *
+	 * @return string
+	 */
+	public function get_field_name( $key ) {
+		return OPAL_JOB_METABOX_PREFIX.$key;
 	}
 }

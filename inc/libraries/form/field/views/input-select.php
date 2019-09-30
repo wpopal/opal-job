@@ -73,9 +73,9 @@ if ( ! empty( $args['attributes'] ) ) {
 }
 
 $output = '<div class="opaljob-field-wrap opaljob-select-field-wrap form-group" id="' . sanitize_key( $this->form_id . $args['id'] ) . '-wrap" >';
-
-$output .= '<label class="opaljob-label" for="' . esc_attr( sanitize_key( str_replace( '-', '_', $this->form_id . $args['id'] ) ) ) . '">' . esc_html( $args['name'] ) . '</label>';
-
+if(  $this->show_label ) {
+	$output .= '<label class="opaljob-label" for="' . esc_attr( sanitize_key( str_replace( '-', '_', $this->form_id . $args['id'] ) ) ) . '">' . esc_html( $args['name'] ) . '</label>';
+}
 $output .= sprintf(
 	'<select id="%1$s" class="%2$s" name="%3$s"  %4$s>',
 	sanitize_key( $this->form_id . $args['id'] ),
@@ -86,6 +86,7 @@ $output .= sprintf(
 
 if ( $args['show_option_all'] ) {
 	if ( $args['multiple'] ) {
+		$value = $value ? $value : array();
 		$selected = selected( true, in_array( 0, $value ), false );
 	} else {
 		$selected = selected( $value, 0, false );

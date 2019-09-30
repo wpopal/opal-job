@@ -30,6 +30,8 @@ use Opal_Job\Common\Interfaces\Intergration;
 
 use Opal_Job\Libraries\User_Rating\User_Rating;
 use Opal_Job\API\Api_Register;
+use Opal_Job\Libraries\Form\Form;
+
 /**
  * The core plugin class.
  * Defines internationalization, admin-specific hooks, and public-facing site hooks.
@@ -76,6 +78,9 @@ class Init {
 	 */
 	protected $plugin_text_domain;
 
+	protected $currency;
+
+	public $form; 
 	/**
 	 * Initialize and define the core functionality of the plugin.
 	 */
@@ -102,6 +107,8 @@ class Init {
 
 		// Test user rating.
 		new User_Rating();
+		$this->currency = opaljob_options( 'default_currency', 'USD' );
+		$this->form     = Form::get_instance();
 	}
 
 	/**
@@ -157,7 +164,7 @@ class Init {
 		foreach ( $intergrations as $intergration ) {
 			$class  = "Opal_Job\\Common\\Integrations\\" . $intergration;
 			$object = new   $class();
-			if ( $object instanceof Intergration ) {
+			if ( $object instanceof Intergration ) {  
 				$this->loader->add_action( 'init', $object, 'register_frontend_actions', 1, 2 );
 				$this->loader->add_action( 'admin_init', $object, 'register_admin_actions', 1, 2 );
 			}
@@ -170,6 +177,14 @@ class Init {
 		$this->loader->add_action( 'init', $api, 'init', 1, 2 );
 	}
 
+	/**
+	 * Define the locale for this plugin for internationalization.
+	 *
+	 * Uses the Internationalization_I18n class in order to set the domain and to register the hook
+	 * with WordPress.
+	 *
+	 * @access    private
+	 */
 	public function load_vendors() {
 		if ( class_exists( 'OpalMembership' ) ) {
 			$class  = "Opal_Job\\Common\\Vendors\\Opalmembership\\Membership";
@@ -196,6 +211,10 @@ class Init {
 	 * @access    private
 	 */
 	private function define_global_init() {
+		global $opaljob_options;
+
+		$settings 		 = get_option( 'opaljob_settings' );
+		$opaljob_options = apply_filters( 'opaljob_get_settings', $settings );
 
 		$taxomoies = new Taxonomies();
 		$posttypes = new Posttypes();
@@ -222,7 +241,7 @@ class Init {
 		$this->load_shortcodes_hooks();
 
 
-		if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
+		if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {  
 			$this->load_controller( "User@register_ajax_hook_callbacks" );
 			$this->load_controller( "Job@register_ajax_hook_callbacks" );
 			$this->load_controller( "Email@register_ajax_hook_callbacks" );
@@ -306,7 +325,7 @@ class Init {
 					}
 				}
 				$this->loader->add_action( 'created_term', $metabox, 'save', 10, 3 );
-				$this->loader->add_action( 'edited_terms', $metabox, 'save_', 10, 3 );
+				$this->loader->add_action( 'edited_terms', $metabox, 'save', 10, 3 );
 
 				$this->loader->add_action( 'edited_terms', $metabox, 'delete', 10, 3 );
 
@@ -434,4 +453,13 @@ class Init {
 		return $this->plugin_text_domain;
 	}
 
+	/**
+	 * Retrieve the text domain of the plugin.
+	 *
+	 * @return    string    The text domain of the plugin.
+	 * @since     1.0.0
+	 */
+	public function get_currency() {
+		return $this->currency; 
+	}
 }

@@ -1,42 +1,48 @@
-<?php 
-global $member;
+<?php
+    global $member;
+    $category = $member->get_category();
+    $location = $member->get_location();
 ?>
-<article  class="candidate-list-style" data-id="job-<?php echo $job->ID; ?>">
-
-    <header class="entry-header">
-        <div class="opal-row">
-            <div class="col-md-6">
-              <div class="member-avatar">
-                    <a href="<?php echo $member->get_link(); ?>" class="member-thumb">
-                        <img src="<?php echo $member->get_avatar(); ?>">
-                    </a>
-                    <?php if( $member->is_featured() ): ?>
-                        <div class="agency-label">
-                            <span class="label label-featured" aria-label="<?php esc_html_e('Featured Agency', 'opaljob'); ?>"  title="<?php esc_html_e('Featured Agency', 'opaljob'); ?>">
-                                <?php echo esc_html_e('Featured','opaljob'); ?>
-                            </span>
-                        </div>
-                    <?php endif; ?>
-
-                    <?php if( $member->is_trusted() ): ?>
-                    <span class="trusted-label hint--top" aria-label="<?php esc_html_e('Trusted Member', 'opaljob'); ?>" title="<?php esc_html_e('Trusted Member', 'opaljob'); ?>">
-                        <i class="fa fa-star"></i>
-                    </span>
-                    <?php endif; ?> 
-                </div>  
-
-            </div>
-            <div class="col-md-2">
-                <div class="job-meta-card">
-                    <span class="meta-label"><?php esc_html_e( 'Location', 'opaljob' ); ?></span>
-                    <span class="meta-content"><?php esc_html_e( 'Newyork', 'opaljob' ); ?></span>
+<article  class="member-list-style" data-id="job-<?php echo $member->ID; ?>">
+        <div class="card-wrap">
+            <?php if( $member->is_featured() ): ?>
+                <div class="agency-label">
+                        <span class="label label-featured" aria-label="<?php esc_html_e('Featured Agency', 'opaljob'); ?>"  title="<?php esc_html_e('Featured Agency', 'opaljob'); ?>">
+                            <samp class="screen-reader-text"><?php esc_html_e( 'Featured', 'opaljob' ); ?></samp>
+                            <i class="fa fa-bolt" aria-hidden="true"></i>
+                        </span>
                 </div>
-            </div>    
-            <div class="col-md-3">
-                <span class="meta-label"><?php esc_html_e( 'Salary', 'opaljob' ); ?></span>
-                <span class="meta-content"><?php esc_html_e( 'Login to view', 'opaljob' ); ?></span>
-            </div>    
+            <?php endif; ?>
+            <div class="member-avatar card-logo">
+                <a href="<?php echo $member->get_link(); ?>" class="member-thumb">
+                    <img src="<?php echo $member->get_avatar(); ?>">
+                </a>
+            </div>
+            <div class="card-body">
+                <h4>
+                    <a href="<?php echo $member->get_link(); ?>" class="member-thumb">
+                        <?php echo $member->get_name(); ?>
+                    </a>
+                    <?php if( $member->is_trusted() ): ?>
+                        <sup class="trusted-label hint--top" aria-label="<?php esc_html_e('Trusted Member', 'opaljob'); ?>" title="<?php esc_html_e('Trusted Member', 'opaljob'); ?>">
+                            <i class="text-primary fa fa-check-circle " aria-hidden="true"></i>
+                        </sup>
+                    <?php endif; ?>
+                </h4>
+                <ul class="member-content-info list-style list-inline">
+                    <li class="member-address"><i class="fa fa-map-marker"></i> <?php echo $member->get_address(); ?></li>
+                    <li class="member-website"><a href="<?php echo $member->web; ?>" rel="nofollow" target="_blank"><?php echo $member->web; ?></a></li>
+                    <?php if( $category ): ?>
+                    <li class="member-category"><i class="fa fa-pencil"></i> <?php foreach( $category as $tax ): ?><a href="<?php echo $tax['link']; ?>"><span><?php echo $tax['name']; ?></span></a><?php endforeach; ?></li>
+                    <?php endif; ?>
+                    <?php if( $location ): ?>
+                    <li class="member-location"><i class="fa fa-location-arrow"></i> <span><?php echo $location; ?></span></li>
+                    <?php endif; ?>
+                </ul>
+            </div>
+
+        <div class="member-right">
+            <a href="<?php echo $member->get_link(); ?>" class="btn btn-primary "><?php echo sprintf( esc_html__('%s Open Jobs', 'opaljob'), $member->get_count_jobs() ); ?></a>
         </div>
-    </header>
-    <!-- .entry-header -->
+    </div><!-- .entry-header -->
 </article><!-- #post-## -->

@@ -91,7 +91,7 @@ class Roles {
 			'delete_post'        => true,
 		] );
 
-		add_role( 'opaljob_candidate', esc_html__( 'Opal Job Candicate', 'opaljob' ), [
+		add_role( 'opaljob_candidate', esc_html__( 'Opal Job Candidate', 'opaljob' ), [
 			'read'          => true,
 			'edit_posts'    => false,
 			'upload_files'  => true,

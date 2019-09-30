@@ -36,7 +36,35 @@ class Employer_Entity extends User_Entity{
 	 * @return string
 	 */
 	public function get_company(){
-		return $this->get_meta( 'company' );
+		$company = $this->get_meta( 'company' ); 
+
+		return $company ? $company : $this->get_name();
+	}
+
+	/**
+	 * Render Sidebar
+	 *
+	 *	Display Sidebar on left side and next is main content 
+	 *
+	 * @since 1.0
+	 *
+	 * @return string
+	 */
+	public function get_category() {
+		return $this->get_term_data( 'category', 'opaljob_category' ); 
+	}
+
+	/**
+	 * Render Sidebar
+	 *
+	 *	Display Sidebar on left side and next is main content 
+	 *
+	 * @since 1.0
+	 *
+	 * @return string
+	 */
+	public function get_tags() {
+		return $this->get_term_data( 'tags', 'opaljob_tag' ); 
 	}
 
 	/**
@@ -49,7 +77,7 @@ class Employer_Entity extends User_Entity{
 	 * @return string
 	 */
 	public function get_gallery() {
-		$gallery = $this->get_meta( 'gallery' );
+		$gallery = $this->get_meta( 'gallery' );  
 		return $gallery;
 	}
 
@@ -86,5 +114,32 @@ class Employer_Entity extends User_Entity{
 		}
 
 		update_user_meta( $this->ID, OPAL_JOB_METABOX_PREFIX.'count_followers', $count );
+	}
+
+	/**
+	 * Render Sidebar
+	 *
+	 *	Display Sidebar on left side and next is main content 
+	 *
+	 * @since 1.0
+	 *
+	 * @return string
+	 */
+	public function get_size () {
+		$sizes = opaljob_get_company_sizes_options(); 
+		$size  = $this->get_meta( 'company_size' );
+	}
+
+	/**
+	 * Render Sidebar
+	 *
+	 *	Display Sidebar on left side and next is main content 
+	 *
+	 * @since 1.0
+	 *
+	 * @return string
+	 */
+	public function get_count_jobs() {
+		return (int)$this->get_meta( 'count_jobs' );
 	}
 }

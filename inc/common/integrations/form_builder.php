@@ -10,7 +10,7 @@
  */
 namespace Opal_Job\Common\Integrations;
 
-use Opal_Job\Common\interfaces\Intergration;
+use Opal_Job\Common\Interfaces\Intergration;
 use Opal_Job\Libraries\Form_Builder\Ajax;
 use Opal_Job\Libraries\Form_Builder\Create_Fields;
 

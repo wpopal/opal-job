@@ -103,7 +103,10 @@ class Job_Query extends Query_Base {
 
 		global $post;
 
-		$results     = array();
+		$results     = array(
+			'founds'	 => 0, 
+			'collection' => array()
+		);
 		$this->collection = null;
 		$cache_key   = Cache_Data::get_key( 'opaljob_form_query', $this->args, false );
 		//$this->collection = Cache_Data::get_db_query( $cache_key );
@@ -147,7 +150,10 @@ class Job_Query extends Query_Base {
 					setup_postdata( $post );
 				}
 
-				$results = $this->collection;
+				$results = array(
+					'founds' 		=> $query->found_posts,
+					'collection'	=> $this->collection
+				);
 			}
 		}
 		return $results;

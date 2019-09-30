@@ -54,12 +54,10 @@ class Submission  extends Controller {
 	 * @since    1.0.0
 	 */
 	public function register_hook_callbacks() {
+		
 		add_action( "opaljob/dashboard/tab_content/submission", array( $this, 'render_submission_form' ) );
 		add_action( "opaljob/dashboard/tab_content/submission_edit", array( $this, 'render_submission_form' ) );
 		add_filter( "opaljob_job_edit_link", array( $this, 'get_edit_link' ) , 1 );
-		
-
-		// add_action( "init", array( $this, 'save' ) );
 	}	
 
 	/**
@@ -90,7 +88,7 @@ class Submission  extends Controller {
 	public function save () {
 
 		if( isset( $_POST['submission_action'] ) ){ 
-	 
+ 
 			$status = false;
 			$edit 	= false;
 			if ( wp_verify_nonce( $_POST['submission_action'], 'save-submission-data' ) ) {
@@ -186,15 +184,15 @@ class Submission  extends Controller {
 	 */
 	public function render_submission_form () {
 		
-		if( !opaljob_has_role('employer') ) {
+/*		if( !opaljob_has_role('employer') ) {
 			echo View::render_template( "dashboard/has-not-permission" );
-		} else {
+		} else { */
 			if( isset($_GET['do']) && $_GET['do'] == 'completed' ) {
 				echo View::render_template( "submission/completed" );
 			} else {
 
 				$metabox = new Metabox\Job_Metabox();  
-
+				
 				$post_id =  isset($_GET['post_id'] ) ? intval( $_GET['post_id'] ) : 0;  
 				$metabox->set_object_id (  $post_id  ); 
 
@@ -208,7 +206,7 @@ class Submission  extends Controller {
 					echo View::render_template( "submission/form-new", array( 'metabox' => $metabox, 'allow' => $allow, 'form_id' => 'metabox-submission-form' ) );
 				}
 			}
-		}
+		// }
 	}
 
 	/**

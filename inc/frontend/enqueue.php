@@ -63,7 +63,6 @@ class Enqueue {
 		$this->plugin_name = $plugin_name;
 		$this->version = $version;
 		$this->plugin_text_domain = $plugin_text_domain;
-
 	}
 
 	/**
@@ -109,6 +108,7 @@ class Enqueue {
 		 */
 
 		wp_enqueue_script( $this->plugin_name, OPAL_JOB_URL . 'assets/js/frontend.js', array( 'jquery' ), $this->version, false );
+
 		$this->register_3rd(); 
 
 		wp_localize_script( $this->plugin_name, 'opaljobJS',
@@ -124,6 +124,7 @@ class Enqueue {
 			'size_other'  => opaljob_options( 'upload_other_max_size', 0.8 )*1000000,
 			'mfile_other' => opaljob_options( 'upload_other_max_files', 10 )
 		] );
+		
 	}
 
 	/**
@@ -132,6 +133,7 @@ class Enqueue {
 	 * @since    1.0.0
 	 */
 	public function register_3rd(){
+
 		wp_register_script(
 			'jquery-modernizr',
 			OPAL_JOB_URL . '/assets/3rd/magnific-popup/jquery.magnific-popup.min.js',
@@ -145,11 +147,19 @@ class Enqueue {
 
 		// register using 3rd javascript libs
 		wp_register_script( 'jquery-sticky-kit', 
-			trailingslashit( OPAL_JOB_URL ) . 'assets/3rd/sticky/jquery.sticky-kit.min.js', array(),  null, true );
-		// wp_enqueue_script( 'jquery-sticky-kit' );
+			trailingslashit( OPAL_JOB_URL ) . 'assets/3rd/sticky/jquery.sticky-kit.min.js',
+			[],  
+			null, 
+			true 
+		);
+
 
 		wp_register_script( 'jquery-toast',
-			OPAL_JOB_URL . 'assets/3rd/toast/jquery.toast.js', array(),  null, true );
+			OPAL_JOB_URL . 'assets/3rd/toast/jquery.toast.js', 
+			[],  
+			null, 
+			true 
+		);
 
 		wp_enqueue_script( 'jquery-toast' );
 
@@ -166,14 +176,53 @@ class Enqueue {
 
         wp_enqueue_script( 'jquery-swiper' );
 
-		wp_enqueue_style( 'select2', OPAL_JOB_URL . 'assets/3rd/select2/css/select2.min.css', null, '4.0.7', false );
-		wp_enqueue_script( 'select2', OPAL_JOB_URL . 'assets/3rd/select2/js/select2.min.js', null, '4.0.7', false );
+		wp_enqueue_style( 'select2',
+			OPAL_JOB_URL . 'assets/3rd/select2/css/select2.min.css', 
+			null, 
+			'4.0.7', 
+			false 
+		);
+		wp_enqueue_script( 'select2', 
+			OPAL_JOB_URL . 'assets/3rd/select2/js/select2.min.js', 
+			null, 
+			'4.0.7', 
+			false 
+		);
 
 		/// maps google ////
-		wp_enqueue_script( 'opaljob-google-maps', $this->get_map_api_uri(), null, '0.0.1', false );
+		wp_enqueue_script( 'opaljob-google-maps', 
+			$this->get_map_api_uri(), 
+			null, 
+			'0.0.1', 
+			false );
 
-		wp_register_script( 'infobox', OPAL_JOB_URL . 'assets/js/infobox.js', [ 'jquery' ], 1.0, false );
-		wp_register_script( 'markerclusterer', OPAL_JOB_URL . 'assets/js/markerclusterer.js', [ 'jquery' ], '1.3', false );
+		wp_register_script( 'infobox', 
+			OPAL_JOB_URL . 'assets/js/infobox.js', 
+			[ 'jquery' ], 
+			1.0, 
+			false
+		);
+
+		wp_register_script( 'markerclusterer', 
+			OPAL_JOB_URL . 'assets/js/markerclusterer.js', 
+			[ 'jquery' ], 
+			'1.3', 
+			false 
+		);
+
+		/// tooltipster /// 
+		wp_enqueue_style( 'tooltipster',
+			OPAL_JOB_URL . 'assets/3rd/tooltipster/css/tooltipster.bundle.min.css', 
+			null, 
+			'4.0.7', 
+			false 
+		);
+		wp_enqueue_script( 'tooltipster', 
+			OPAL_JOB_URL . 'assets/3rd/tooltipster/js/tooltipster.bundle.min.js', 
+			null, 
+			'4.0.7', 
+			false 
+		);
 	}
 
 	/**

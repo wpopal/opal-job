@@ -52,9 +52,9 @@ if ( ! empty( $args['data-datepicker'] ) ) {
 }
 
 $output = '<div class="opaljob-field-wrap opaljob-date-field-wrap form-group" id="' . sanitize_key( $this->form_id . $args['id'] ) . '-wrap">';
-
-$output .= '<label class="opaljob-label" for="' . sanitize_key( $this->form_id . $args['id'] ) . '">' . esc_html( $args['name'] ) . '</label>';
-
+if( $args['show_label'] ) {
+$output .= '<label class="opaljob-label" for="' . sanitize_key( $this->form_id . $args['id'] ) . '">' . esc_html( $args['name'] ) . '</label>';	
+}
 $output .= '<input type="text" name="' . esc_attr( $args['id'] ) . '" id="' . esc_attr( $this->form_id . $args['id'] ) . '" value="' . esc_attr( $value ) . '" placeholder="' .
            esc_attr( $args['placeholder'] ) . '" class="' . $args['class'] . '" ' . $data . '' . $disabled . $data_datepicker . '/>';
 

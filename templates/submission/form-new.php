@@ -4,7 +4,11 @@
 		<?php do_action( "opaljob/submision/render_submit_form/before"); ?>
 		<?php if( $allow ): ?>
 		<form class="opaljob-submited-form" action="" method="post">
-			<?php $metabox->output(); ?>
+			<?php $metabox->output_tab_indexes(
+				array(
+					'label' => false
+				)
+			); ?>
 			<?php wp_nonce_field( 'save-submission-data', 'submission_action' ); ?>
 			<button type="submit" name="submit" value="submit">
 				<?php esc_html_e( 'Save', 'opaljob' ); ?>		

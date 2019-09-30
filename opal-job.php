@@ -34,7 +34,6 @@ if ( ! defined( 'WPINC' ) ) {
 /**
  * Define Constants
  */
-
 define( 'OPAL_JOB', 'opal-job' );
 define( 'OPAL_JOB_VERSION', '1.0.0' );
 define( 'OPAL_JOB_DIR', plugin_dir_path( __FILE__ ) );
@@ -49,10 +48,10 @@ define( 'OPAL_JOB_METABOX_PREFIX', '_' );
  */
 
 require_once( OPAL_JOB_DIR . 'vendor/autoload.php' );
-require_once( OPAL_JOB_DIR . 'inc/core/functions.php' );
+require_once( OPAL_JOB_DIR . 'inc/Core/functions.php' );
 
-require_once( OPAL_JOB_DIR . 'inc/frontend/hooks/template-functions.php' );
-require_once( OPAL_JOB_DIR . 'inc/frontend/hooks/single-functions.php' );
+require_once( OPAL_JOB_DIR . 'inc/Frontend/hooks/template-functions.php' );
+require_once( OPAL_JOB_DIR . 'inc/Frontend/hooks/single-functions.php' );
 /**
  * Register Activation and Deactivation Hooks
  * This action is documented in inc/core/class-activator.php

@@ -49,7 +49,7 @@ class User {
 	 */
 	public function register( ) {  
 		$shortcodes =  array(
-			'login' 		=> array( $this, 'render_login'),
+			'myaccount' 		=> array( $this, 'render_myaccount'),
 			'dashboard' 	=> array( $this, 'render_dashboard'),
 			'candidates'	=> array ( $this, 'render_candidates' ),
 			'employers'		=> array ( $this, 'render_employers' ),
@@ -80,7 +80,7 @@ class User {
 	 *
 	 * @since    1.0.0
 	 */
-	public function render_login () {  
+	public function render_myaccount () {  
 		return View::render_template( 'user/myaccount' );
 	}
 

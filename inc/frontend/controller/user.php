@@ -68,12 +68,113 @@ class User extends Controller {
 		add_action( 'wp_ajax_opaljob_get_candidates_map', array($this, 'get_candidates_map') );
 		add_action( 'wp_ajax_opaljob_get_employers_map',  array($this, 'get_employers_map') );
 		
+		///// Employers actions /////
+		add_action( 'wp_ajax_opaljob_following_employer', 		 array($this,'process_following_employer') );
+		add_action( 'wp_ajax_nopriv_opaljob_following_employer', array($this,'process_following_employer') );
+
+
+		/// 
+		add_action( 'wp_ajax_opaljob_toggle_candidate_favorite', array($this,'process_candidate_favorite') );
+		add_action( 'wp_ajax_nopriv_opaljob_toggle_candidate_favorite', array($this,'process_candidate_favorite') );
 		// call sub controller to process addition functions follow by role
 		if( !is_admin() && $this->get_control() ) {
 			$this->control->register_ajax_hook_callbacks();
 		}
 	}
  
+	/**
+	 * Process Save Data Post Profile
+	 *
+	 *	Display Sidebar on left side and next is main content 
+	 *
+	 * @since 1.0
+	 *
+	 * @return string
+	 */
+	public function process_following_employer () {
+		if( opaljob_has_role('candidate') ) {
+
+			if( isset($_POST['employer_id']) && intval($_POST['employer_id']) > 0 ){
+
+
+				$employer_id = intval( $_POST['employer_id'] ); 
+				$member 	 = opaljob_new_employer_object( $employer_id );
+
+				do_action( 'opaljob/user/following_employer/before', $employer_id, $member );
+
+				$status	 	 = $this->get_model()->toggle_following_employer( $employer_id );
+				
+				if( $status == false ) {
+					$msg = esc_html__( 'You unfollowed this employer.', 'opaljob' );
+				} else {
+					$msg = esc_html__( 'You followed this employer success.', 'opaljob' );
+				}
+				
+				$member->update_count_followers( $status );
+				$html 	 	 = $this->get_following_button( array('member' => $member ) );
+
+				return opaljob_output_msg_json(
+					true,
+					$msg,
+					array( 'html' => $html )
+				);
+			}
+		} else {
+			$msg = esc_html__( 'Sorry! you are not a candidate to follow this employer', 'opaljob' );
+			return opaljob_output_msg_json(
+				false,
+				$msg
+			);
+		}
+	}
+
+	/**
+	 * Process Save Data Post Profile
+	 *
+	 *	Display Sidebar on left side and next is main content 
+	 *
+	 * @since 1.0
+	 *
+	 * @return string
+	 */
+	protected function get_following_button( $args ) {
+
+		ob_start();
+		opaljob_following_button( $args );
+		$ouput = ob_get_contents();
+		ob_end_clean();
+
+		return $ouput;
+	}
+
+	/**
+	 * Process Save Data Post Profile
+	 *
+	 *	Display Sidebar on left side and next is main content 
+	 *
+	 * @since 1.0
+	 *
+	 * @return string
+	 */
+	public function process_candidate_favorite () {
+		
+		if( opaljob_has_role('employer') && isset( $_POST['member_id'] ) ) {
+			$member_id =  intval( $_POST['member_id'] ); 
+			$msg 	   = $this->get_model()->toggle_add_candidate( $member_id );
+			return opaljob_output_msg_json(
+				true,
+				$msg,
+				array( 'html' => opaljob_favorite_candidate_button( $member_id ) )
+			);
+		}
+
+		$msg = esc_html__( 'Sorry! you are not an employer to add this candidate into the list', 'opaljob' );
+		return opaljob_output_msg_json(
+			false,
+			$msg
+		);
+	}
+
 	/**
 	 * Register callbacks for actions and filters
 	 *
@@ -91,7 +192,7 @@ class User extends Controller {
 		// process login and register 
 		add_action( 'init', array( $this, 'process_login' ) );
 		add_action( 'init', array( $this, 'process_register' ) );
-		add_action( 'init', array( $this, 'load_form_enqueue' ) );
+		// add_action( 'init', array( $this, 'load_form_enqueue' ) );
 
 		// call sub controller to process addition functions follow by role
 	 	add_action( 'init', array( $this, 'load_role_control') ) ;

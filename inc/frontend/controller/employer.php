@@ -60,7 +60,6 @@ class Employer extends Controller {
 	 * @return string
 	 */
 	public function register_ajax_hook_callbacks () {
-		
 	}
 	
 
@@ -68,7 +67,7 @@ class Employer extends Controller {
 		add_action( 'opaljob/dashboard/tab_content/my_listing', [ $this, 'tab_content_my_listing' ] );
 		add_action( 'opaljob/dashboard/tab_content/summary', [$this, 'tab_content_summary'] );
 	}
-	
+
 	/**
 	 * Show Content Tab of My Listing 
 	 *

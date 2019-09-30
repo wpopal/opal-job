@@ -47,25 +47,29 @@ class Candidate_Api  extends  Base_Api {
 	 * @return avoid
 	 */
 	public function register_routes () {  
-	 	/// call http://domain.com/wp-json/job/v1/jobs  ////
+	 	/// call http://domain.com/wp-json/job-api/v1/jobs  ////
 		register_rest_route( $this->namespace, $this->base.'/list', array(
 			'methods' => 'GET',
 			'callback' => array( $this, 'get_list' ),
+			'permission_callback' => array( $this, 'validate_request'  ),
 		));
-		/// call http://domain.com/wp-json/job/v1/jobs  ////
+		/// call http://domain.com/wp-json/job-api/v1/jobs  ////
 		register_rest_route( $this->namespace, $this->base.'/create', array(
 			'methods' => 'GET',
 			'callback' => array( $this, 'create' ),
+			'permission_callback' => array( $this, 'validate_request'  ),
 		));
-		/// call http://domain.com/wp-json/job/v1/jobs  ////
+		/// call http://domain.com/wp-json/job-api/v1/jobs  ////
 		register_rest_route( $this->namespace, $this->base.'/edit', array(
 			'methods' => 'GET',
 			'callback' => array( $this, 'edit' ),
+			'permission_callback' => array( $this, 'validate_request'  ),
 		));
-		/// call http://domain.com/wp-json/job/v1/jobs  ////
+		/// call http://domain.com/wp-json/job-api/v1/jobs  ////
 		register_rest_route( $this->namespace, $this->base.'/delete', array(
 			'methods' => 'GET',
 			'callback' => array( $this, 'delete' ),
+			'permission_callback' => array( $this, 'validate_request'  ),
 		));
 
 	}

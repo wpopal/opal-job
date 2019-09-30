@@ -20,7 +20,7 @@ namespace Opal_Job\Common\Module;
  *
  * @author     WpOpal
  **/
-class Related_Job {
+class Nearby_Job {
 
 	public function get_name () {
 		return esc_html__( 'Related Jobs', 'opaljob' );

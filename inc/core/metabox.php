@@ -141,6 +141,9 @@ abstract class Metabox {
 	 */
 	public function get_needed_update_options() {
 		$form_meta_keys = $this->get_meta_keys_from_settings();
+		
+
+
 		$update_options = [];
 		if ( ! empty( $form_meta_keys ) ) {
 			foreach ( $form_meta_keys as $form_meta_key ) {
@@ -178,6 +181,8 @@ abstract class Metabox {
 									}
 								}
 
+			
+
 								// Arrange repeater field keys in order.
 								$form_meta_value = array_values( $form_meta_value );
 
@@ -212,7 +217,7 @@ abstract class Metabox {
 					}// End if().
 				}// End if().
 			}// End foreach().
-
+			
 			return $update_options;
 		}// End if().
 
@@ -541,6 +546,22 @@ abstract class Metabox {
 		$form->set_object_id( $this->object_id );
 		$args = [];
 		echo $form->render( $args, $this->get_settings() );
+	}	
+
+	/**
+	 * Get metabox id.
+	 *
+	 * @return string
+	 */
+	public function output_tab_indexes( $args=[] ) {
+
+		$this->get_before_render();
+
+		$form = Libraries\Form\Form::get_instance();
+
+		$form->set_type( $this->mode );
+		$form->set_object_id( $this->object_id );
+		echo $form->render( $args, $this->get_settings(), false );
 	}
 
 	/**

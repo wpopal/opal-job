@@ -26,4 +26,83 @@ use Opal_Job\Common\Model\Entity\User_Entity;
  **/
 class Candidate_Entity extends User_Entity {
 	
+	/**
+	 * Render Sidebar
+	 *
+	 *	Display Sidebar on left side and next is main content 
+	 *
+	 * @since 1.0
+	 *
+	 * @return string
+	 */
+	public function get_specialism() {
+		return $this->get_term_data( 'specialism', 'opaljob_specialism' ); 
+	}
+
+	/**
+	 * Render Sidebar
+	 *
+	 *	Display Sidebar on left side and next is main content 
+	 *
+	 * @since 1.0
+	 *
+	 * @return string
+	 */
+	public function get_resume_education () {
+		return $this->get_meta( 'resume_education' );
+	}
+
+	/**
+	 * Render Sidebar
+	 *
+	 *	Display Sidebar on left side and next is main content 
+	 *
+	 * @since 1.0
+	 *
+	 * @return string
+	 */
+	public function get_resume_award () {
+		return $this->get_meta( 'resume_award' );
+	}
+
+	/**
+	 * Render Sidebar
+	 *
+	 *	Display Sidebar on left side and next is main content 
+	 *
+	 * @since 1.0
+	 *
+	 * @return string
+	 */
+	public function get_resume_experience () {
+		return $this->get_meta( 'resume_experience' );
+	}
+
+	/**
+	 * Render Sidebar
+	 *
+	 *	Display Sidebar on left side and next is main content 
+	 *
+	 * @since 1.0
+	 *
+	 * @return string
+	 */
+	public function get_resume_portfolio () {
+		return $this->get_meta( 'resume_portfolio' );
+	}
+
+	/**
+	 * Render Sidebar
+	 *
+	 *	Display Sidebar on left side and next is main content 
+	 *
+	 * @since 1.0
+	 *
+	 * @return string
+	 */
+	public function get_resume_skill () {
+		return $this->get_meta( 'resume_skill' );
+	}
+
+	 
 }

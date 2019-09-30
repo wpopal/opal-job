@@ -258,6 +258,7 @@ class Job_Entity {
 	public function get_link_edit() {
 		return apply_filters( 'opaljob_job_edit_link', $this->ID );
 	}
+
 	/**
 	 * Edit Link
 	 *
@@ -269,6 +270,32 @@ class Job_Entity {
 	 */
 	public function edit_link() {
 		return URI::get_edit_job_url( $this->ID );
+	}
+
+	/**
+	 * Edit Link
+	 *
+	 *	Return link to edit the post related with user dashboard 
+	 *
+	 * @since 1.0
+	 *
+	 * @return string
+	 */
+	public function is_featured () {
+		return $this->get_meta( 'featured' );
+	}
+
+	/**
+	 * Edit Link
+	 *
+	 *	Return link to edit the post related with user dashboard 
+	 *
+	 * @since 1.0
+	 *
+	 * @return string
+	 */
+	public function is_hightlighted () {
+		return $this->get_meta( 'hightlighted' );
 	}
 
 	/**
@@ -440,7 +467,7 @@ class Job_Entity {
 	 * @param $single
 	 * @return string
 	 */
-	public function get_tag_tax() {
+	public function get_tags() {
 		$terms = wp_get_post_terms( $this->ID, 'opaljob_tag' );
 
 		return $terms;
@@ -501,7 +528,13 @@ class Job_Entity {
 	 * @return string
 	 */
 	public function get_salary() {
-		return $this->get_meta( 'salary_from' ) . ' - ' . $this->get_meta( 'salary_to' ) ;	
+		$currency    = $this->get_meta('currency') ? $this->get_meta('currency') : opaljob_options( 'currency' );
+		$salary_from = opaljob_get_money_format(  $this->get_meta( 'salary_from' ) , $currency );
+		$salary_to   = opaljob_get_money_format(  $this->get_meta( 'salary_to' ) , $currency );
+		if( empty( $salary_to ) || empty( $salary_from ) ) {
+			return esc_html__( 'Negotiable' , 'opaljob' );
+		}
+		return $salary_from . ' - ' . $salary_to ;	
 	}
 
 	/**
@@ -537,22 +570,46 @@ class Job_Entity {
 		
 	}
 
+	/**
+	 *	Display Sidebar on left side and next is main content 
+	 *
+	 * @since 1.0
+	 *
+	 * @return string
+	 */
 	public function status_label() {
 		return get_post_status( $this->ID );
 	}
 
+	/**
+	 *	Display Sidebar on left side and next is main content 
+	 *
+	 * @since 1.0
+	 *
+	 * @return string
+	 */
 	public function get_post_excerpt () {
 		return $this->post_excerpt;
 	}
 
-	public function get_tags() {
-
-	}
-
+	/**
+	 *	Display Sidebar on left side and next is main content 
+	 *
+	 * @since 1.0
+	 *
+	 * @return string
+	 */
 	public function get_employer_link() {
 		return get_author_posts_url( $this->post_author );
 	}
 	
+	/**
+	 *	Display Sidebar on left side and next is main content 
+	 *
+	 * @since 1.0
+	 *
+	 * @return string
+	 */
 	public function get_employer_avatar() {
 		$id  = $this->get_user_meta( 'avatar_id' ); 
 		$url = wp_get_attachment_url( $id );  
@@ -562,6 +619,13 @@ class Job_Entity {
 		return get_avatar_url( $id );
 	}
 
+	/**
+	 *	Display Sidebar on left side and next is main content 
+	 *
+	 * @since 1.0
+	 *
+	 * @return string
+	 */
 	public function get_user_meta ( $key ) {
 		return get_user_meta( $this->post_author, OPAL_JOB_METABOX_PREFIX.$key, true );
 	}
@@ -574,7 +638,7 @@ class Job_Entity {
 
 		$prop     	  = new stdClass();
 		$map      	  = $this->get_map( 'map' );
-	 	$url 		  = $this->get_employer_avatar().$this->post_author;
+	 	$url 		  = $this->get_employer_avatar();
  
 		$prop->id     = $this->ID;
 		$prop->title  = get_the_title();
@@ -608,5 +672,16 @@ class Job_Entity {
 		}
 
 		return $prop;
+	}
+
+	/**
+	 *	Display Sidebar on left side and next is main content 
+	 *
+	 * @since 1.0
+	 *
+	 * @return string
+	 */
+	public function get_posted_ago () {
+	    return human_time_diff( get_post_time( 'U' ), current_time( 'timestamp' ) ) . " " . esc_html__( 'ago', 'opaljob' );
 	}
 }

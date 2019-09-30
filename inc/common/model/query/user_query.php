@@ -232,7 +232,7 @@ class User_Query extends Query_Base {
 
         $collection = array();
         foreach ( $query->results as $user ) {
-       		$collection[] = new Candidate_Entity( $user->ID );  
+       		$collection[] = new Employer_Entity( $user->ID );  
         }
 
         return $collection;

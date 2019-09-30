@@ -6,6 +6,7 @@ $defaults = [
 	'description' => null,
 	'class'       => 'opaljob-checkbox form-control',
 	'data'        => [],
+	'default'	  => '',	
 	'disabled'    => false,
 ];
 
@@ -31,9 +32,9 @@ if ( ! empty( $args['data'] ) ) {
 }
 
 $output = '<div class="opaljob-field-wrap opaljob-checkbox-field-wrap form-group" id="' . sanitize_key( $this->form_id . $args['id'] ) . '-wrap">';
-
-$output .= '<label class="opaljob-label" for="' . sanitize_key( $this->form_id . $args['id'] ) . '">' . esc_html( $args['name'] ) . '</label>';
-
+if( $this->show_label ) {
+	$output .= '<label class="opaljob-label" for="' . sanitize_key( $this->form_id . $args['id'] ) . '">' . esc_html( $args['name'] ) . '</label>';
+}
 $output .= '<input type="checkbox" name="' . esc_attr( $args['id'] ) . '" id="' . esc_attr( $this->form_id . $args['id'] ) . '" value="on" class="' . $args['class'] . '" ' . checked( $value,
 		'on', false ) . ' ' . $data . ' />';
 

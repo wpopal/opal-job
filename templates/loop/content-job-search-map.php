@@ -35,7 +35,7 @@ global $job;
     <div class="job-content">
         <?php echo $job->get_post_excerpt(); ?>
         <div class="job-meta-tags">
-            <?php echo $job->get_tags(); ?>
+            <?php // echo $job->get_tags(); ?>
         </div>    
     </div>
     <!-- .entry-content -->

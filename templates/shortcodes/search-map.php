@@ -30,8 +30,8 @@
 				                <?php esc_html_e( "Sorry, we have not found any result to show.", "opaljob" ) ; ?>
 				            </div>  
 				            <?php endif; ?> 
-				        </div>
-				    </div>  
+			        </div>
+			    </div>  
 			</div>	
 		</div>	
 		<div class="col-md-8">

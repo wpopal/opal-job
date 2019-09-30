@@ -15,8 +15,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 use WP_Error;
 use WP_REST_Request;
-use Opal_Job\API\Base_Api;
-
+use Opal_Job\API\Base_API;
+use WP_REST_Response;
 /**
  * Api_Auth class for authorizing to access api resources 
  *
@@ -35,7 +35,14 @@ class Api_Auth extends Base_API {
 	 *
 	 * @return avoid
 	 */
-	public function register_routes() {
+	public function register_routes() {  
+		// check all request must to have public key and token
+		register_rest_route( $this->namespace, '/job/list', array(
+			'methods' => 'GET',
+			'permission_callback' => array( $this, 'validate_request' ),
+		), 9 );
+
+		////////////////// Check User Authorizcation must to have account logined
 		// check authorcation for all delete in route
 		register_rest_route($this->namespace, '/(?P<path>[\S]+)/delete', array(
 			'methods' => 'GET',
@@ -53,7 +60,7 @@ class Api_Auth extends Base_API {
 		));
 	}
 
-	
+
 	/**
 	 * Check authorization
 	 *

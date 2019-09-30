@@ -1,6 +1,6 @@
-<?php
-$featured = get_post_meta( get_the_ID(), OPALESTATE_PROPERTY_PREFIX.'featured', true );
-?>
-<?php //if( $featured != 0 ) { ?>
-    <span class="label-featured label"><?php esc_html_e( 'Featured', 'opaljob' ); ?></span>
-<?php //} ?>
+<?php if(  $job->is_featured() ): ?>
+    <span class="label-featured label tooltip" title="<?php esc_html_e( 'Featured', 'opaljob' ); ?>">
+        <samp class="screen-reader-text"><?php esc_html_e( 'Featured', 'opaljob' ); ?></samp>
+        <i class="fa fa-bolt" aria-hidden="true"></i>
+    </span>
+<?php endif;  ?>

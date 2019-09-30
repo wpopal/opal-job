@@ -77,4 +77,12 @@ class URI {
 		$tab  = 'my_listing';	
 		return self::get_dashboard_url( $tab, array('id' => $id, 'action' => 'job/delete' ) );
 	}
+
+	public static function get_search_url () {
+		$slug = opaljob_options( 'search_page' );
+		if( $slug ) {
+			return get_permalink ( get_page_by_path( $slug ) );
+		}
+		return;
+	}
 }
