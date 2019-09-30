@@ -91,8 +91,8 @@ class Employer_Fields extends User_Fields {
 		$prefix=OPAL_JOB_METABOX_PREFIX;
 		return [
 			[
-				'name'   => esc_html__( 'Avatar Pictures', 'cmb2' ),
-				'desc'   => esc_html__( 'This image will display in user detail and profile box information', 'cmb2' ),
+				'name'   => esc_html__( 'Avatar Pictures', 'opal-job' ),
+				'desc'   => esc_html__( 'This image will display in user detail and profile box information', 'opal-job' ),
 				'id'     => $prefix . 'avatar',
 				'type'   => 'file' ,
 				'single'	  => true,
@@ -100,8 +100,8 @@ class Employer_Fields extends User_Fields {
 			],
 
 			[
-				'name'   => esc_html__( 'Banner', 'cmb2' ),
-				'desc'   => esc_html__( 'This image will display in user detail and profile box information', 'cmb2' ),
+				'name'   => esc_html__( 'Banner', 'opal-job' ),
+				'desc'   => esc_html__( 'This image will display in user detail and profile box information', 'opal-job' ),
 				'id'     => $prefix . 'banner',
 				'type'   =>  'file' ,
 				'single'	  => true,
@@ -109,8 +109,8 @@ class Employer_Fields extends User_Fields {
 			],
 
 			[
-				'name'   => esc_html__( 'Gallery', 'cmb2' ),
-				'desc'   => esc_html__( 'This image will display in user detail and profile box information', 'cmb2' ),
+				'name'   => esc_html__( 'Gallery', 'opal-job' ),
+				'desc'   => esc_html__( 'This image will display in user detail and profile box information', 'opal-job' ),
 				'id'     => $prefix . 'gallery',
 				'type'   =>  'file_list' ,
 				'single'	  => true,

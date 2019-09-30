@@ -128,8 +128,8 @@ class User_Fields {
 		return [
 			 
 			[
-				'name'   => esc_html__( 'Avatar Pictures', 'cmb2' ),
-				'desc'   => esc_html__( 'This image will display in user detail and profile box information', 'cmb2' ),
+				'name'   => esc_html__( 'Avatar Pictures', 'opal-job' ),
+				'desc'   => esc_html__( 'This image will display in user detail and profile box information', 'opal-job' ),
 				'id'     => $prefix . 'avatar',
 				'type'   => 'file' ,
 				'single'	  => true,
