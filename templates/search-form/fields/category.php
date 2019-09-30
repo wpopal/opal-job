@@ -1,1 +1,0 @@
-<?php opaljob_select_category_field(); ?>
