@@ -1,0 +1,21 @@
+{
+	"name": "wpopal/opal-job",
+	"description": "Description",
+	"type": "wordpress-plugin",
+	"license": "GPL-2.0-or-later",
+	"minimum-stability": "stable",
+	"authors": [
+		{
+			"name": "wpopal",
+			"email": "info@wpopal.com"
+		}
+	],
+	"require": {
+		"php": ">=5.6.4"
+	},
+	"autoload": {
+		"psr-4": {
+			"Opal_Job\\": "inc/"
+		}
+	}
+}

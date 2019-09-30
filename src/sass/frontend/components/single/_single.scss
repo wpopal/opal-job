@@ -1,0 +1,56 @@
+.opaljob-member-summary {
+    h2 {
+        margin-bottom: 0px;
+    }
+
+    h5 {
+        margin-top: 0;
+    }
+}
+
+.job-types {
+    .type-item {
+        background-color: #fff1cc;
+        border-color: #fff1cc;
+        color: #d8a10d;
+
+        &:hover {
+            border-color: #fff1cc;
+        }
+    }
+}
+
+//content
+
+.opaljob-panel {
+    margin-bottom: 40px;
+}
+
+.panel-job-summary,
+.panel-job-meta {
+    .panel-body {
+        padding: 30px;
+        background-color: #f9f9f9;
+    }
+}
+
+.panel-contact-form {
+    .panel-body {
+        padding: 30px;
+        border: 1px solid $border-color;
+        border-radius: $border-radius;
+    }
+}
+
+.opaljob-single-employer-content {
+    @include opaljob-wrap(50px);
+}
+
+.job-content-sections {
+    .opaljob-panel {
+        &:not(:first-child) {
+            border-top: 1px solid $border-color;
+            padding-top: 40px;
+        }
+    }
+}

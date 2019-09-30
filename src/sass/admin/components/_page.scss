@@ -1,0 +1,84 @@
+
+$padding-base:15px; 
+/// post ///
+
+/////
+.opaljob-metabox-panel-wrap {
+ 	border-radius:5px;
+	display: flex;
+ 	justify-content: space-around;
+ 
+ 	background:#FFF;
+ 	padding:$padding-base; 
+	.opaljob-form-data-tabs {
+		background-color:#fafafa;
+		width:200px;
+		padding:00px;
+		a {
+			 
+			display:block;
+ 			padding:15px 20px;
+			text-decoration:none;		
+			font-weight:500;	
+			color:#000;
+			border-right:solid 3px #fafafa;
+
+		}
+		li {
+			display:block;
+			width:100%;
+		}
+		
+		li.active {
+			background:#EEE;
+			a {
+				border-right-color:$primary
+			}
+
+		}
+	}
+	.opaljob_options_panel {
+		display:none;
+		padding:15px;
+		width:calc(100% - 200px);
+	}	
+} 
+//////
+.opaljob-description {
+	color:#babab8;
+	font-size:90%;
+	margin-bottom:3px;	
+	font-style: italic;
+}
+
+///// Setting Page //// 
+.opaljob-settings-page {
+	background:#FFF;
+	padding:15px 30px;
+	margin:30px auto;
+
+	.setting-tab-head {
+		margin-bottom:30px;
+	}
+
+	.inline-list {
+		li {
+			display:inline-block;
+			padding-right:12px;
+			a {
+				color:#616f80;
+				padding:12px 15px;
+				border-radius:6%;
+				text-decoration:none;
+				font-weight:bold;
+				background-color:#e8e9eb
+			}
+			&.active {
+				a {
+					background-color:$primary;
+					color:#FFF;
+				}
+			}
+		}
+	}
+}

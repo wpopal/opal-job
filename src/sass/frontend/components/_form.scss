@@ -1,0 +1,193 @@
+.opaljob-description {
+    color: #babab8;
+    font-size: 90%;
+    margin-bottom: 3px;
+    font-style: italic;
+}
+
+.required {
+    color: $danger;
+}
+
+/////
+.opaljob-metabox-panel-wrap {
+    border-radius: 5px;
+    justify-content: space-around;
+    background: #FFF;
+    padding: 15px;
+
+    .opaljob-form-data-tabs {
+        background-color: #fafafa;
+        padding: 00px;
+
+        a {
+            display: block;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-bottom: solid 3px $border-color;
+        }
+
+        li {
+            display: inline-block;
+        }
+
+        li.active {
+            background: #EEE;
+
+            a {
+                border-bottom-color: $primary
+            }
+        }
+    }
+
+    .metabox-form-footer {
+        text-align: right;
+    }
+}
+
+//// 
+.opaljob-repeatable-field-section {
+    table {
+        width: 100%;
+    }
+
+    .opaljob-template {
+        display: none;
+    }
+
+    .button-action {
+        cursor: hand;
+        cursor: pointer;
+        padding-left: 5px;
+        padding-right: 5px;
+    }
+
+    .opal-row-body {
+        padding: 15px;
+        background-color: #fcfcfc
+    }
+
+    .button-action-group {
+        display: inline-block;
+        float: right;
+
+    }
+
+    .opal-row-head {
+        border-bottom: solid 3px $border-color;
+        position: relative;
+
+        padding: 8px 0px;
+
+        .repeat-title {
+            font-size: 14px;
+            margin: 0;
+            display: inline-block;
+        }
+    }
+
+    .opaljob-add-repeater-field-section-row-wrap {
+        padding: 15px;
+    }
+}
+
+.opaljob-field-wrap {
+    > span {
+        margin-right: 15px;
+        display: inline-block;
+    }
+
+    p.opaljob-description {
+        margin-top: 0;
+    }
+
+    input[type=radio] + label,
+    input[type=checkbox] + label {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+    }
+
+    input[type=radio],
+    input[type=checkbox] {
+        display: none;
+    }
+
+    input[type=checkbox] + label {
+        background-color: #f8f8f8;
+        display: inline-block;
+        border-radius: 50px;
+        padding: 5px 20px;
+        margin: 0 0 15px;
+    }
+
+    input[type=checkbox] + label:before,
+    input[type=radio] + label:before {
+        content: "\2713";
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        color: transparent;
+        transition: .2s;
+    }
+
+
+    input[type=radio] + label:before {
+        border: 2px solid $border-color;
+        width: 22px;
+        height: 22px;
+        padding: .2em;
+        margin-right: 10px;
+    }
+
+    input[type=checkbox] + label:before {
+        font-size: 0;
+    }
+
+    input[type=radio] + label:active:before,
+    input[type=checkbox] + label:active:before {
+        transform: scale(0);
+    }
+
+    input[type=radio]:checked + label:before,
+    input[type=checkbox]:checked + label:before {
+        color: inherit;
+        transform: scale(1);
+        font-size: inherit;
+    }
+
+    input[type=radio]:checked + label:before {
+        background-color: $primary;
+        border-color: $primary;
+    }
+
+    input[type=checkbox]:checked + label:before {
+        margin-right: 10px;
+    }
+
+    input[type=checkbox]:checked + label {
+        background-color: $primary;
+        color: $white;
+    }
+
+    input[type=radio] + label:before {
+        border-radius: 50%;
+    }
+
+    input[type=radio]:disabled + label:before,
+    input[type=checkbox]:disabled + label:before {
+        transform: scale(1);
+        border-color: #aaa;
+    }
+
+    input[type=radio]:checked:disabled + label:before,
+    input[type=checkbox]:checked:disabled + label:before {
+        transform: scale(1);
+        background-color: #bfb;
+        border-color: #bfb;
+    }
+}
+
+.opaljob-date-field-wrap {
+    max-width: 265px;
+}
